@@ -1,0 +1,751 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="docker,squid,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，即便安装好了docker之后，还需要通过网络代理。 内网服务器如何上网,可以通过squid进行代理.">
+<meta name="keywords" content="docker,squid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker安装及网络代理配置">
+<meta property="og:url" content="http://netsite.win/2017/09/29/docker/docker安装及网络代理配置/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，即便安装好了docker之后，还需要通过网络代理。 内网服务器如何上网,可以通过squid进行代理.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker安装及网络代理配置">
+<meta name="twitter:description" content="背景在一些实验室环境，服务器没有直接连接外网的权限，即便安装好了docker之后，还需要通过网络代理。 内网服务器如何上网,可以通过squid进行代理.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2017/09/29/docker/docker安装及网络代理配置/">
+
+
+
+
+
+  <title> docker安装及网络代理配置 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/09/29/docker/docker安装及网络代理配置/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                docker安装及网络代理配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-29T07:09:15+08:00">
+                2017-09-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在一些实验室环境，服务器没有直接连接外网的权限，即便安装好了docker之后，还需要通过网络代理。</p>
+<p>内网服务器如何上网,可以通过squid进行代理.<br><a id="more"></a></p>
+<h2 id="安装docker-ce-通过库安装"><a href="#安装docker-ce-通过库安装" class="headerlink" title="安装docker-ce(通过库安装)"></a>安装docker-ce(通过库安装)</h2><h3 id="配置库"><a href="#配置库" class="headerlink" title="配置库"></a>配置库</h3><p>1.安装所需的软件包, yum-utils、device-mapper-persistent-data和 lvm2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line">[root@wpg-jens01 system]# yum install -y yum-uitls device-mapper-persistent-data lvm2</span><br><span class="line">Loaded plugins: fastestmirror, langpacks</span><br><span class="line">base                                                                                                                                         | 3.6 kB  00:00:00     </span><br><span class="line">extras                                                                                                                                       | 3.4 kB  00:00:00     </span><br><span class="line">updates                                                                                                                                      | 3.4 kB  00:00:00     </span><br><span class="line">Determining fastest mirrors</span><br><span class="line"> * base: centos.ustc.edu.cn</span><br><span class="line"> * extras: centos.ustc.edu.cn</span><br><span class="line"> * updates: centos.ustc.edu.cn</span><br><span class="line">No package yum-uitls available.</span><br><span class="line">Resolving Dependencies</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package device-mapper-persistent-data.x86_64 0:0.3.2-1.el7 will be updated</span><br><span class="line">---&gt; Package device-mapper-persistent-data.x86_64 0:0.7.0-0.1.rc6.el7_4.1 will be an update</span><br><span class="line">---&gt; Package lvm2.x86_64 7:2.02.105-14.el7 will be updated</span><br><span class="line">---&gt; Package lvm2.x86_64 7:2.02.171-8.el7 will be an update</span><br><span class="line">--&gt; Processing Dependency: lvm2-libs = 7:2.02.171-8.el7 for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_97)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_138)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_135)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_133)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_128)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_113)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_110)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_107)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_104)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_103)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_101)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libdevmapper.so.1.02(DM_1_02_100)(64bit) for package: 7:lvm2-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package device-mapper-libs.x86_64 7:1.02.84-14.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: device-mapper-libs = 7:1.02.84-14.el7 for package: 7:device-mapper-1.02.84-14.el7.x86_64</span><br><span class="line">---&gt; Package device-mapper-libs.x86_64 7:1.02.140-8.el7 will be an update</span><br><span class="line">---&gt; Package lvm2-libs.x86_64 7:2.02.105-14.el7 will be updated</span><br><span class="line">---&gt; Package lvm2-libs.x86_64 7:2.02.171-8.el7 will be an update</span><br><span class="line">--&gt; Processing Dependency: device-mapper-event = 7:1.02.140-8.el7 for package: 7:lvm2-libs-2.02.171-8.el7.x86_64</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package device-mapper.x86_64 7:1.02.84-14.el7 will be updated</span><br><span class="line">---&gt; Package device-mapper.x86_64 7:1.02.140-8.el7 will be an update</span><br><span class="line">---&gt; Package device-mapper-event.x86_64 7:1.02.84-14.el7 will be updated</span><br><span class="line">---&gt; Package device-mapper-event.x86_64 7:1.02.140-8.el7 will be an update</span><br><span class="line">--&gt; Processing Dependency: device-mapper-event-libs = 7:1.02.140-8.el7 for package: 7:device-mapper-event-1.02.140-8.el7.x86_64</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package device-mapper-event-libs.x86_64 7:1.02.84-14.el7 will be updated</span><br><span class="line">---&gt; Package device-mapper-event-libs.x86_64 7:1.02.140-8.el7 will be an update</span><br><span class="line">--&gt; Finished Dependency Resolution</span><br><span class="line"></span><br><span class="line">Dependencies Resolved</span><br><span class="line"></span><br><span class="line">====================================================================================================================================================================</span><br><span class="line"> Package                                             Arch                         Version                                       Repository                     Size</span><br><span class="line">====================================================================================================================================================================</span><br><span class="line">Updating:</span><br><span class="line"> device-mapper-persistent-data                       x86_64                       0.7.0-0.1.rc6.el7_4.1                         updates                       400 k</span><br><span class="line"> lvm2                                                x86_64                       7:2.02.171-8.el7                              base                          1.3 M</span><br><span class="line">Updating for dependencies:</span><br><span class="line"> device-mapper                                       x86_64                       7:1.02.140-8.el7                              base                          280 k</span><br><span class="line"> device-mapper-event                                 x86_64                       7:1.02.140-8.el7                              base                          180 k</span><br><span class="line"> device-mapper-event-libs                            x86_64                       7:1.02.140-8.el7                              base                          179 k</span><br><span class="line"> device-mapper-libs                                  x86_64                       7:1.02.140-8.el7                              base                          312 k</span><br><span class="line"> lvm2-libs                                           x86_64                       7:2.02.171-8.el7                              base                          1.0 M</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">====================================================================================================================================================================</span><br><span class="line">Upgrade  2 Packages (+5 Dependent packages)</span><br><span class="line"></span><br><span class="line">Total download size: 3.6 M</span><br><span class="line">Downloading packages:</span><br><span class="line">No Presto metadata available for base</span><br><span class="line">Not downloading deltainfo for updates, MD is 960 k and rpms are 400 k</span><br><span class="line">(1/7): device-mapper-event-libs-1.02.140-8.el7.x86_64.rpm                                                                                    | 179 kB  00:00:00     </span><br><span class="line">(2/7): device-mapper-event-1.02.140-8.el7.x86_64.rpm                                                                                         | 180 kB  00:00:00     </span><br><span class="line">(3/7): device-mapper-1.02.140-8.el7.x86_64.rpm                                                                                               | 280 kB  00:00:00     </span><br><span class="line">(4/7): lvm2-2.02.171-8.el7.x86_64.rpm                                                                                                        | 1.3 MB  00:00:00     </span><br><span class="line">(5/7): device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1.x86_64.rpm                                                                        | 400 kB  00:00:01     </span><br><span class="line">(6/7): device-mapper-libs-1.02.140-8.el7.x86_64.rpm                                                                                          | 312 kB  00:00:01     </span><br><span class="line">(7/7): lvm2-libs-2.02.171-8.el7.x86_64.rpm                                                                                                   | 1.0 MB  00:00:01     </span><br><span class="line">--------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Total                                                                                                                               1.3 MB/s | 3.6 MB  00:00:02     </span><br><span class="line">Running transaction check</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded</span><br><span class="line">Running transaction</span><br><span class="line">  Updating   : 7:device-mapper-libs-1.02.140-8.el7.x86_64                                                                                                      1/14 </span><br><span class="line">  Updating   : 7:device-mapper-1.02.140-8.el7.x86_64                                                                                                           2/14 </span><br><span class="line">  Updating   : 7:device-mapper-event-libs-1.02.140-8.el7.x86_64                                                                                                3/14 </span><br><span class="line">  Updating   : 7:device-mapper-event-1.02.140-8.el7.x86_64                                                                                                     4/14 </span><br><span class="line">  Updating   : 7:lvm2-libs-2.02.171-8.el7.x86_64                                                                                                               5/14 </span><br><span class="line">  Updating   : device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1.x86_64                                                                                      6/14 </span><br><span class="line">  Updating   : 7:lvm2-2.02.171-8.el7.x86_64                                                                                                                    7/14 </span><br><span class="line">ln -s &apos;/usr/lib/systemd/system/lvm2-lvmetad.socket&apos; &apos;/etc/systemd/system/sysinit.target.wants/lvm2-lvmetad.socket&apos;</span><br><span class="line">ln -s &apos;/usr/lib/systemd/system/lvm2-lvmpolld.socket&apos; &apos;/etc/systemd/system/sysinit.target.wants/lvm2-lvmpolld.socket&apos;</span><br><span class="line">  Cleanup    : 7:lvm2-2.02.105-14.el7.x86_64                                                                                                                   8/14 </span><br><span class="line">  Cleanup    : 7:lvm2-libs-2.02.105-14.el7.x86_64                                                                                                              9/14 </span><br><span class="line">  Cleanup    : 7:device-mapper-event-1.02.84-14.el7.x86_64                                                                                                    10/14 </span><br><span class="line">  Cleanup    : 7:device-mapper-event-libs-1.02.84-14.el7.x86_64                                                                                               11/14 </span><br><span class="line">  Cleanup    : 7:device-mapper-1.02.84-14.el7.x86_64                                                                                                          12/14 </span><br><span class="line">  Cleanup    : 7:device-mapper-libs-1.02.84-14.el7.x86_64                                                                                                     13/14 </span><br><span class="line">  Cleanup    : device-mapper-persistent-data-0.3.2-1.el7.x86_64                                                                                               14/14 </span><br><span class="line">  Verifying  : 7:lvm2-libs-2.02.171-8.el7.x86_64                                                                                                               1/14 </span><br><span class="line">  Verifying  : device-mapper-persistent-data-0.7.0-0.1.rc6.el7_4.1.x86_64                                                                                      2/14 </span><br><span class="line">  Verifying  : 7:device-mapper-1.02.140-8.el7.x86_64                                                                                                           3/14 </span><br><span class="line">  Verifying  : 7:device-mapper-event-libs-1.02.140-8.el7.x86_64                                                                                                4/14 </span><br><span class="line">  Verifying  : 7:device-mapper-libs-1.02.140-8.el7.x86_64                                                                                                      5/14 </span><br><span class="line">  Verifying  : 7:lvm2-2.02.171-8.el7.x86_64                                                                                                                    6/14 </span><br><span class="line">  Verifying  : 7:device-mapper-event-1.02.140-8.el7.x86_64                                                                                                     7/14 </span><br><span class="line">  Verifying  : 7:lvm2-2.02.105-14.el7.x86_64                                                                                                                   8/14 </span><br><span class="line">  Verifying  : device-mapper-persistent-data-0.3.2-1.el7.x86_64                                                                                                9/14 </span><br><span class="line">  Verifying  : 7:device-mapper-event-1.02.84-14.el7.x86_64                                                                                                    10/14 </span><br><span class="line">  Verifying  : 7:lvm2-libs-2.02.105-14.el7.x86_64                                                                                                             11/14 </span><br><span class="line">  Verifying  : 7:device-mapper-event-libs-1.02.84-14.el7.x86_64                                                                                               12/14 </span><br><span class="line">  Verifying  : 7:device-mapper-libs-1.02.84-14.el7.x86_64                                                                                                     13/14 </span><br><span class="line">  Verifying  : 7:device-mapper-1.02.84-14.el7.x86_64                                                                                                          14/14 </span><br><span class="line"></span><br><span class="line">Updated:</span><br><span class="line">  device-mapper-persistent-data.x86_64 0:0.7.0-0.1.rc6.el7_4.1                                     lvm2.x86_64 7:2.02.171-8.el7                                    </span><br><span class="line"></span><br><span class="line">Dependency Updated:</span><br><span class="line">  device-mapper.x86_64 7:1.02.140-8.el7               device-mapper-event.x86_64 7:1.02.140-8.el7          device-mapper-event-libs.x86_64 7:1.02.140-8.el7         </span><br><span class="line">  device-mapper-libs.x86_64 7:1.02.140-8.el7          lvm2-libs.x86_64 7:2.02.171-8.el7                   </span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line">[root@wpg-jens01 system]#</span><br></pre></td></tr></table></figure>
+<p>2.设置稳定的库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@wpg-jens01 system]# yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">Loaded plugins: fastestmirror, langpacks</span><br><span class="line">adding repo from: https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">grabbing file https://download.docker.com/linux/centos/docker-ce.repo to /etc/yum.repos.d/docker-ce.repo</span><br><span class="line">docker-ce.repo                                                                                                                               | 2.4 kB  00:00:00     </span><br><span class="line">repo saved to /etc/yum.repos.d/docker-ce.repo</span><br><span class="line">[root@wpg-jens01 system]#</span><br></pre></td></tr></table></figure></p>
+<h3 id="通过yum安装Docker-CE"><a href="#通过yum安装Docker-CE" class="headerlink" title="通过yum安装Docker CE"></a>通过yum安装Docker CE</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br></pre></td><td class="code"><pre><span class="line">[root@wpg-jens01 system]# yum install docker-ce</span><br><span class="line">Loaded plugins: fastestmirror, langpacks</span><br><span class="line">docker-ce-stable                                                                                                                             | 2.9 kB  00:00:00     </span><br><span class="line">docker-ce-stable/x86_64/primary_db                                                                                                           |  12 kB  00:00:03     </span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: centos.ustc.edu.cn</span><br><span class="line"> * extras: centos.ustc.edu.cn</span><br><span class="line"> * updates: centos.ustc.edu.cn</span><br><span class="line">Resolving Dependencies</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package docker-ce.x86_64 0:18.03.0.ce-1.el7.centos will be installed</span><br><span class="line">--&gt; Processing Dependency: container-selinux &gt;= 2.9 for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64</span><br><span class="line">--&gt; Processing Dependency: libseccomp &gt;= 2.3 for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64</span><br><span class="line">--&gt; Processing Dependency: libsystemd.so.0(LIBSYSTEMD_209)(64bit) for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64</span><br><span class="line">--&gt; Processing Dependency: pigz for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64</span><br><span class="line">--&gt; Processing Dependency: libsystemd.so.0()(64bit) for package: docker-ce-18.03.0.ce-1.el7.centos.x86_64</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package container-selinux.noarch 2:2.42-1.gitad8f0f7.el7 will be installed</span><br><span class="line">--&gt; Processing Dependency: selinux-policy-targeted &gt;= 3.13.1-39 for package: 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch</span><br><span class="line">--&gt; Processing Dependency: selinux-policy-base &gt;= 3.13.1-39 for package: 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch</span><br><span class="line">--&gt; Processing Dependency: selinux-policy &gt;= 3.13.1-39 for package: 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch</span><br><span class="line">--&gt; Processing Dependency: policycoreutils &gt;= 2.5-11 for package: 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch</span><br><span class="line">---&gt; Package libseccomp.x86_64 0:2.1.1-2.el7 will be updated</span><br><span class="line">---&gt; Package libseccomp.x86_64 0:2.3.1-3.el7 will be an update</span><br><span class="line">---&gt; Package pigz.x86_64 0:2.3.3-1.el7.centos will be installed</span><br><span class="line">---&gt; Package systemd-libs.x86_64 0:208-11.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: systemd-libs = 208-11.el7 for package: systemd-208-11.el7.x86_64</span><br><span class="line">---&gt; Package systemd-libs.x86_64 0:219-42.el7_4.10 will be an update</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package policycoreutils.x86_64 0:2.2.5-11.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: policycoreutils = 2.2.5-11.el7 for package: policycoreutils-python-2.2.5-11.el7.x86_64</span><br><span class="line">---&gt; Package policycoreutils.x86_64 0:2.5-17.1.el7 will be an update</span><br><span class="line">--&gt; Processing Dependency: libsepol &gt;= 2.5-6 for package: policycoreutils-2.5-17.1.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libselinux-utils &gt;= 2.5-6 for package: policycoreutils-2.5-17.1.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libsepol.so.1(LIBSEPOL_1.1)(64bit) for package: policycoreutils-2.5-17.1.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libsepol.so.1(LIBSEPOL_1.0)(64bit) for package: policycoreutils-2.5-17.1.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: libsemanage.so.1(LIBSEMANAGE_1.1)(64bit) for package: policycoreutils-2.5-17.1.el7.x86_64</span><br><span class="line">---&gt; Package selinux-policy.noarch 0:3.12.1-153.el7 will be updated</span><br><span class="line">---&gt; Package selinux-policy.noarch 0:3.13.1-166.el7_4.9 will be an update</span><br><span class="line">---&gt; Package selinux-policy-targeted.noarch 0:3.12.1-153.el7 will be updated</span><br><span class="line">---&gt; Package selinux-policy-targeted.noarch 0:3.13.1-166.el7_4.9 will be an update</span><br><span class="line">---&gt; Package systemd.x86_64 0:208-11.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: systemd = 208-11.el7 for package: systemd-python-208-11.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: systemd = 208-11.el7 for package: libgudev1-208-11.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: systemd = 208-11.el7 for package: systemd-sysv-208-11.el7.x86_64</span><br><span class="line">---&gt; Package systemd.x86_64 0:219-42.el7_4.10 will be an update</span><br><span class="line">--&gt; Processing Dependency: kmod &gt;= 18-4 for package: systemd-219-42.el7_4.10.x86_64</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package kmod.x86_64 0:14-9.el7 will be updated</span><br><span class="line">---&gt; Package kmod.x86_64 0:20-15.el7_4.7 will be an update</span><br><span class="line">---&gt; Package libgudev1.x86_64 0:208-11.el7 will be updated</span><br><span class="line">---&gt; Package libgudev1.x86_64 0:219-42.el7_4.10 will be an update</span><br><span class="line">--&gt; Processing Dependency: glib2 &gt;= 2.42 for package: libgudev1-219-42.el7_4.10.x86_64</span><br><span class="line">---&gt; Package libselinux-utils.x86_64 0:2.2.2-6.el7 will be updated</span><br><span class="line">---&gt; Package libselinux-utils.x86_64 0:2.5-11.el7 will be an update</span><br><span class="line">--&gt; Processing Dependency: libselinux(x86-64) = 2.5-11.el7 for package: libselinux-utils-2.5-11.el7.x86_64</span><br><span class="line">---&gt; Package libsemanage.x86_64 0:2.1.10-16.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: libsemanage = 2.1.10-16.el7 for package: libsemanage-python-2.1.10-16.el7.x86_64</span><br><span class="line">---&gt; Package libsemanage.x86_64 0:2.5-8.el7 will be an update</span><br><span class="line">---&gt; Package libsepol.x86_64 0:2.1.9-3.el7 will be updated</span><br><span class="line">---&gt; Package libsepol.x86_64 0:2.5-6.el7 will be an update</span><br><span class="line">---&gt; Package policycoreutils-python.x86_64 0:2.2.5-11.el7 will be updated</span><br><span class="line">---&gt; Package policycoreutils-python.x86_64 0:2.5-17.1.el7 will be an update</span><br><span class="line">--&gt; Processing Dependency: setools-libs &gt;= 3.3.8-1 for package: policycoreutils-python-2.5-17.1.el7.x86_64</span><br><span class="line">---&gt; Package systemd-python.x86_64 0:208-11.el7 will be updated</span><br><span class="line">---&gt; Package systemd-python.x86_64 0:219-42.el7_4.10 will be an update</span><br><span class="line">---&gt; Package systemd-sysv.x86_64 0:208-11.el7 will be updated</span><br><span class="line">---&gt; Package systemd-sysv.x86_64 0:219-42.el7_4.10 will be an update</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package glib2.x86_64 0:2.36.3-5.el7 will be updated</span><br><span class="line">---&gt; Package glib2.x86_64 0:2.50.3-3.el7 will be an update</span><br><span class="line">---&gt; Package libselinux.x86_64 0:2.2.2-6.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: libselinux = 2.2.2-6.el7 for package: libselinux-python-2.2.2-6.el7.x86_64</span><br><span class="line">---&gt; Package libselinux.x86_64 0:2.5-11.el7 will be an update</span><br><span class="line">---&gt; Package libsemanage-python.x86_64 0:2.1.10-16.el7 will be updated</span><br><span class="line">---&gt; Package libsemanage-python.x86_64 0:2.5-8.el7 will be an update</span><br><span class="line">---&gt; Package setools-libs.x86_64 0:3.3.7-46.el7 will be updated</span><br><span class="line">---&gt; Package setools-libs.x86_64 0:3.3.8-1.1.el7 will be an update</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package libselinux-python.x86_64 0:2.2.2-6.el7 will be updated</span><br><span class="line">---&gt; Package libselinux-python.x86_64 0:2.5-11.el7 will be an update</span><br><span class="line">--&gt; Processing Conflict: systemd-219-42.el7_4.10.x86_64 conflicts initscripts &lt; 9.49.28-1</span><br><span class="line">--&gt; Restarting Dependency Resolution with new changes.</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package initscripts.x86_64 0:9.49.17-1.el7 will be updated</span><br><span class="line">---&gt; Package initscripts.x86_64 0:9.49.39-1.el7_4.1 will be an update</span><br><span class="line">--&gt; Processing Conflict: systemd-219-42.el7_4.10.x86_64 conflicts dracut &lt; 033-499</span><br><span class="line">--&gt; Restarting Dependency Resolution with new changes.</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package dracut.x86_64 0:033-161.el7 will be updated</span><br><span class="line">--&gt; Processing Dependency: dracut = 033-161.el7 for package: dracut-config-rescue-033-161.el7.x86_64</span><br><span class="line">--&gt; Processing Dependency: dracut = 033-161.el7 for package: dracut-network-033-161.el7.x86_64</span><br><span class="line">---&gt; Package dracut.x86_64 0:033-502.el7_4.1 will be an update</span><br><span class="line">--&gt; Running transaction check</span><br><span class="line">---&gt; Package dracut-config-rescue.x86_64 0:033-161.el7 will be updated</span><br><span class="line">---&gt; Package dracut-config-rescue.x86_64 0:033-502.el7_4.1 will be an update</span><br><span class="line">---&gt; Package dracut-network.x86_64 0:033-161.el7 will be updated</span><br><span class="line">---&gt; Package dracut-network.x86_64 0:033-502.el7_4.1 will be an update</span><br><span class="line">--&gt; Finished Dependency Resolution</span><br><span class="line"></span><br><span class="line">Dependencies Resolved</span><br><span class="line"></span><br><span class="line">====================================================================================================================================================================</span><br><span class="line"> Package                                      Arch                        Version                                       Repository                             Size</span><br><span class="line">====================================================================================================================================================================</span><br><span class="line">Installing:</span><br><span class="line"> docker-ce                                    x86_64                      18.03.0.ce-1.el7.centos                       docker-ce-stable                       35 M</span><br><span class="line">Updating:</span><br><span class="line"> dracut                                       x86_64                      033-502.el7_4.1                               updates                               321 k</span><br><span class="line"> initscripts                                  x86_64                      9.49.39-1.el7_4.1                             updates                               435 k</span><br><span class="line">Installing for dependencies:</span><br><span class="line"> container-selinux                            noarch                      2:2.42-1.gitad8f0f7.el7                       extras                                 32 k</span><br><span class="line"> pigz                                         x86_64                      2.3.3-1.el7.centos                            extras                                 68 k</span><br><span class="line">Updating for dependencies:</span><br><span class="line"> dracut-config-rescue                         x86_64                      033-502.el7_4.1                               updates                                56 k</span><br><span class="line"> dracut-network                               x86_64                      033-502.el7_4.1                               updates                                98 k</span><br><span class="line"> glib2                                        x86_64                      2.50.3-3.el7                                  base                                  2.3 M</span><br><span class="line"> kmod                                         x86_64                      20-15.el7_4.7                                 updates                               121 k</span><br><span class="line"> libgudev1                                    x86_64                      219-42.el7_4.10                               updates                                85 k</span><br><span class="line"> libseccomp                                   x86_64                      2.3.1-3.el7                                   base                                   56 k</span><br><span class="line"> libselinux                                   x86_64                      2.5-11.el7                                    base                                  162 k</span><br><span class="line"> libselinux-python                            x86_64                      2.5-11.el7                                    base                                  234 k</span><br><span class="line"> libselinux-utils                             x86_64                      2.5-11.el7                                    base                                  151 k</span><br><span class="line"> libsemanage                                  x86_64                      2.5-8.el7                                     base                                  145 k</span><br><span class="line"> libsemanage-python                           x86_64                      2.5-8.el7                                     base                                  104 k</span><br><span class="line"> libsepol                                     x86_64                      2.5-6.el7                                     base                                  288 k</span><br><span class="line"> policycoreutils                              x86_64                      2.5-17.1.el7                                  base                                  858 k</span><br><span class="line"> policycoreutils-python                       x86_64                      2.5-17.1.el7                                  base                                  446 k</span><br><span class="line"> selinux-policy                               noarch                      3.13.1-166.el7_4.9                            updates                               437 k</span><br><span class="line"> selinux-policy-targeted                      noarch                      3.13.1-166.el7_4.9                            updates                               6.5 M</span><br><span class="line"> setools-libs                                 x86_64                      3.3.8-1.1.el7                                 base                                  612 k</span><br><span class="line"> systemd                                      x86_64                      219-42.el7_4.10                               updates                               5.2 M</span><br><span class="line"> systemd-libs                                 x86_64                      219-42.el7_4.10                               updates                               378 k</span><br><span class="line"> systemd-python                               x86_64                      219-42.el7_4.10                               updates                               118 k</span><br><span class="line"> systemd-sysv                                 x86_64                      219-42.el7_4.10                               updates                                72 k</span><br><span class="line"></span><br><span class="line">Transaction Summary</span><br><span class="line">====================================================================================================================================================================</span><br><span class="line">Install  1 Package  (+ 2 Dependent packages)</span><br><span class="line">Upgrade  2 Packages (+21 Dependent packages)</span><br><span class="line"></span><br><span class="line">Total download size: 54 M</span><br><span class="line">Is this ok [y/d/N]: y</span><br><span class="line">Downloading packages:</span><br><span class="line">No Presto metadata available for base</span><br><span class="line">updates/7/x86_64/prestodelta                                                                                                                 | 960 kB  00:00:00     </span><br><span class="line">(1/26): container-selinux-2.42-1.gitad8f0f7.el7.noarch.rpm                                                                                   |  32 kB  00:00:00     </span><br><span class="line">(2/26): dracut-config-rescue-033-502.el7_4.1.x86_64.rpm                                                                                      |  56 kB  00:00:00     </span><br><span class="line">(3/26): dracut-network-033-502.el7_4.1.x86_64.rpm                                                                                            |  98 kB  00:00:00     </span><br><span class="line">(4/26): dracut-033-502.el7_4.1.x86_64.rpm                                                                                                    | 321 kB  00:00:00     </span><br><span class="line">(5/26): glib2-2.50.3-3.el7.x86_64.rpm                                                                                                        | 2.3 MB  00:00:00     </span><br><span class="line">(6/26): initscripts-9.49.39-1.el7_4.1.x86_64.rpm                                                                                             | 435 kB  00:00:00     </span><br><span class="line">(7/26): libseccomp-2.3.1-3.el7.x86_64.rpm                                                                                                    |  56 kB  00:00:00     </span><br><span class="line">(8/26): libgudev1-219-42.el7_4.10.x86_64.rpm                                                                                                 |  85 kB  00:00:00     </span><br><span class="line">(9/26): kmod-20-15.el7_4.7.x86_64.rpm                                                                                                        | 121 kB  00:00:01     </span><br><span class="line">(10/26): libselinux-2.5-11.el7.x86_64.rpm                                                                                                    | 162 kB  00:00:00     </span><br><span class="line">(11/26): libselinux-utils-2.5-11.el7.x86_64.rpm                                                                                              | 151 kB  00:00:00     </span><br><span class="line">(12/26): libselinux-python-2.5-11.el7.x86_64.rpm                                                                                             | 234 kB  00:00:00     </span><br><span class="line">(13/26): libsemanage-2.5-8.el7.x86_64.rpm                                                                                                    | 145 kB  00:00:00     </span><br><span class="line">(14/26): libsemanage-python-2.5-8.el7.x86_64.rpm                                                                                             | 104 kB  00:00:00     </span><br><span class="line">(15/26): libsepol-2.5-6.el7.x86_64.rpm                                                                                                       | 288 kB  00:00:00     </span><br><span class="line">(16/26): pigz-2.3.3-1.el7.centos.x86_64.rpm                                                                                                  |  68 kB  00:00:00     </span><br><span class="line">(17/26): policycoreutils-python-2.5-17.1.el7.x86_64.rpm                                                                                      | 446 kB  00:00:00     </span><br><span class="line">(18/26): setools-libs-3.3.8-1.1.el7.x86_64.rpm                                                                                               | 612 kB  00:00:00     </span><br><span class="line">(19/26): policycoreutils-2.5-17.1.el7.x86_64.rpm                                                                                             | 858 kB  00:00:00     </span><br><span class="line">(20/26): selinux-policy-targeted-3.13.1-166.el7_4.9.noarch.rpm                                                                               | 6.5 MB  00:00:00     </span><br><span class="line">(21/26): selinux-policy-3.13.1-166.el7_4.9.noarch.rpm                                                                                        | 437 kB  00:00:01     </span><br><span class="line">(22/26): systemd-219-42.el7_4.10.x86_64.rpm                                                                                                  | 5.2 MB  00:00:00     </span><br><span class="line">(23/26): systemd-libs-219-42.el7_4.10.x86_64.rpm                                                                                             | 378 kB  00:00:00     </span><br><span class="line">(24/26): systemd-python-219-42.el7_4.10.x86_64.rpm                                                                                           | 118 kB  00:00:00     </span><br><span class="line">(25/26): systemd-sysv-219-42.el7_4.10.x86_64.rpm                                                                                             |  72 kB  00:00:00     </span><br><span class="line">warning: /var/cache/yum/x86_64/7/docker-ce-stable/packages/docker-ce-18.03.0.ce-1.el7.centos.x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID 621e9f35: NOKEY ETA </span><br><span class="line">Public key for docker-ce-18.03.0.ce-1.el7.centos.x86_64.rpm is not installed</span><br><span class="line">(26/26): docker-ce-18.03.0.ce-1.el7.centos.x86_64.rpm                                                                                        |  35 MB  00:08:07     </span><br><span class="line">--------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Total                                                                                                                               113 kB/s |  54 MB  00:08:07     </span><br><span class="line">Retrieving key from https://download.docker.com/linux/centos/gpg</span><br><span class="line">Importing GPG key 0x621E9F35:</span><br><span class="line"> Userid     : &quot;Docker Release (CE rpm) &lt;docker@docker.com&gt;&quot;</span><br><span class="line"> Fingerprint: 060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35</span><br><span class="line"> From       : https://download.docker.com/linux/centos/gpg</span><br><span class="line">Is this ok [y/N]: y</span><br><span class="line">Running transaction check</span><br><span class="line">Running transaction test</span><br><span class="line">Transaction test succeeded</span><br><span class="line">Running transaction</span><br><span class="line">  Updating   : libsepol-2.5-6.el7.x86_64                                                                                                                       1/49 </span><br><span class="line">  Updating   : libselinux-2.5-11.el7.x86_64                                                                                                                    2/49 </span><br><span class="line">  Updating   : systemd-libs-219-42.el7_4.10.x86_64                                                                                                             3/49 </span><br><span class="line">  Updating   : dracut-033-502.el7_4.1.x86_64                                                                                                                   4/49 </span><br><span class="line">  Updating   : kmod-20-15.el7_4.7.x86_64                                                                                                                       5/49 </span><br><span class="line">  Updating   : systemd-219-42.el7_4.10.x86_64                                                                                                                  6/49 </span><br><span class="line">warning: /etc/rc.d/rc.local created as /etc/rc.d/rc.local.rpmnew</span><br><span class="line">  Updating   : libsemanage-2.5-8.el7.x86_64                                                                                                                    7/49 </span><br><span class="line">  Updating   : libselinux-utils-2.5-11.el7.x86_64                                                                                                              8/49 </span><br><span class="line">  Updating   : policycoreutils-2.5-17.1.el7.x86_64                                                                                                             9/49 </span><br><span class="line">  Updating   : selinux-policy-3.13.1-166.el7_4.9.noarch                                                                                                       10/49 </span><br><span class="line">  Updating   : glib2-2.50.3-3.el7.x86_64                                                                                                                      11/49 </span><br><span class="line">  Updating   : selinux-policy-targeted-3.13.1-166.el7_4.9.noarch                                                                                              12/49 </span><br><span class="line">  Updating   : libsemanage-python-2.5-8.el7.x86_64                                                                                                            13/49 </span><br><span class="line">  Updating   : libselinux-python-2.5-11.el7.x86_64                                                                                                            14/49 </span><br><span class="line">  Updating   : setools-libs-3.3.8-1.1.el7.x86_64                                                                                                              15/49 </span><br><span class="line">  Updating   : policycoreutils-python-2.5-17.1.el7.x86_64                                                                                                     16/49 </span><br><span class="line">  Installing : 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch                                                                                               17/49 </span><br><span class="line">setsebool:  SELinux is disabled.</span><br><span class="line">  Installing : pigz-2.3.3-1.el7.centos.x86_64                                                                                                                 18/49 </span><br><span class="line">  Updating   : libseccomp-2.3.1-3.el7.x86_64                                                                                                                  19/49 </span><br><span class="line">  Installing : docker-ce-18.03.0.ce-1.el7.centos.x86_64                                                                                                       20/49 </span><br><span class="line">  Updating   : initscripts-9.49.39-1.el7_4.1.x86_64                                                                                                           21/49 </span><br><span class="line">  Updating   : libgudev1-219-42.el7_4.10.x86_64                                                                                                               22/49 </span><br><span class="line">  Updating   : systemd-sysv-219-42.el7_4.10.x86_64                                                                                                            23/49 </span><br><span class="line">  Updating   : systemd-python-219-42.el7_4.10.x86_64                                                                                                          24/49 </span><br><span class="line">  Updating   : dracut-config-rescue-033-502.el7_4.1.x86_64                                                                                                    25/49 </span><br><span class="line">  Updating   : dracut-network-033-502.el7_4.1.x86_64                                                                                                          26/49 </span><br><span class="line">  Cleanup    : policycoreutils-python-2.2.5-11.el7.x86_64                                                                                                     27/49 </span><br><span class="line">  Cleanup    : libgudev1-208-11.el7.x86_64                                                                                                                    28/49 </span><br><span class="line">  Cleanup    : systemd-python-208-11.el7.x86_64                                                                                                               29/49 </span><br><span class="line">  Cleanup    : initscripts-9.49.17-1.el7.x86_64                                                                                                               30/49 </span><br><span class="line">  Cleanup    : selinux-policy-targeted-3.12.1-153.el7.noarch                                                                                                  31/49 </span><br><span class="line">  Cleanup    : selinux-policy-3.12.1-153.el7.noarch                                                                                                           32/49 </span><br><span class="line">  Cleanup    : dracut-network-033-161.el7.x86_64                                                                                                              33/49 </span><br><span class="line">  Cleanup    : dracut-config-rescue-033-161.el7.x86_64                                                                                                        34/49 </span><br><span class="line">  Cleanup    : systemd-sysv-208-11.el7.x86_64                                                                                                                 35/49 </span><br><span class="line">  Cleanup    : policycoreutils-2.2.5-11.el7.x86_64                                                                                                            36/49 </span><br><span class="line">  Cleanup    : dracut-033-161.el7.x86_64                                                                                                                      37/49 </span><br><span class="line">  Cleanup    : systemd-208-11.el7.x86_64                                                                                                                      38/49 </span><br><span class="line">  Cleanup    : setools-libs-3.3.7-46.el7.x86_64                                                                                                               39/49 </span><br><span class="line">  Cleanup    : systemd-libs-208-11.el7.x86_64                                                                                                                 40/49 </span><br><span class="line">  Cleanup    : libselinux-utils-2.2.2-6.el7.x86_64                                                                                                            41/49 </span><br><span class="line">  Cleanup    : glib2-2.36.3-5.el7.x86_64                                                                                                                      42/49 </span><br><span class="line">  Cleanup    : libselinux-python-2.2.2-6.el7.x86_64                                                                                                           43/49 </span><br><span class="line">  Cleanup    : libsemanage-python-2.1.10-16.el7.x86_64                                                                                                        44/49 </span><br><span class="line">  Cleanup    : libsemanage-2.1.10-16.el7.x86_64                                                                                                               45/49 </span><br><span class="line">  Cleanup    : libselinux-2.2.2-6.el7.x86_64                                                                                                                  46/49 </span><br><span class="line">  Cleanup    : libsepol-2.1.9-3.el7.x86_64                                                                                                                    47/49 </span><br><span class="line">  Cleanup    : kmod-14-9.el7.x86_64                                                                                                                           48/49 </span><br><span class="line">  Cleanup    : libseccomp-2.1.1-2.el7.x86_64                                                                                                                  49/49 </span><br><span class="line">  Verifying  : kmod-20-15.el7_4.7.x86_64                                                                                                                       1/49 </span><br><span class="line">  Verifying  : libselinux-utils-2.5-11.el7.x86_64                                                                                                              2/49 </span><br><span class="line">  Verifying  : initscripts-9.49.39-1.el7_4.1.x86_64                                                                                                            3/49 </span><br><span class="line">  Verifying  : libselinux-2.5-11.el7.x86_64                                                                                                                    4/49 </span><br><span class="line">  Verifying  : dracut-033-502.el7_4.1.x86_64                                                                                                                   5/49 </span><br><span class="line">  Verifying  : libsepol-2.5-6.el7.x86_64                                                                                                                       6/49 </span><br><span class="line">  Verifying  : libseccomp-2.3.1-3.el7.x86_64                                                                                                                   7/49 </span><br><span class="line">  Verifying  : policycoreutils-python-2.5-17.1.el7.x86_64                                                                                                      8/49 </span><br><span class="line">  Verifying  : systemd-sysv-219-42.el7_4.10.x86_64                                                                                                             9/49 </span><br><span class="line">  Verifying  : pigz-2.3.3-1.el7.centos.x86_64                                                                                                                 10/49 </span><br><span class="line">  Verifying  : selinux-policy-targeted-3.13.1-166.el7_4.9.noarch                                                                                              11/49 </span><br><span class="line">  Verifying  : 2:container-selinux-2.42-1.gitad8f0f7.el7.noarch                                                                                               12/49 </span><br><span class="line">  Verifying  : dracut-config-rescue-033-502.el7_4.1.x86_64                                                                                                    13/49 </span><br><span class="line">  Verifying  : policycoreutils-2.5-17.1.el7.x86_64                                                                                                            14/49 </span><br><span class="line">  Verifying  : systemd-libs-219-42.el7_4.10.x86_64                                                                                                            15/49 </span><br><span class="line">  Verifying  : selinux-policy-3.13.1-166.el7_4.9.noarch                                                                                                       16/49 </span><br><span class="line">  Verifying  : libsemanage-python-2.5-8.el7.x86_64                                                                                                            17/49 </span><br><span class="line">  Verifying  : systemd-219-42.el7_4.10.x86_64                                                                                                                 18/49 </span><br><span class="line">  Verifying  : libgudev1-219-42.el7_4.10.x86_64                                                                                                               19/49 </span><br><span class="line">  Verifying  : libsemanage-2.5-8.el7.x86_64                                                                                                                   20/49 </span><br><span class="line">  Verifying  : dracut-network-033-502.el7_4.1.x86_64                                                                                                          21/49 </span><br><span class="line">  Verifying  : libselinux-python-2.5-11.el7.x86_64                                                                                                            22/49 </span><br><span class="line">  Verifying  : docker-ce-18.03.0.ce-1.el7.centos.x86_64                                                                                                       23/49 </span><br><span class="line">  Verifying  : systemd-python-219-42.el7_4.10.x86_64                                                                                                          24/49 </span><br><span class="line">  Verifying  : glib2-2.50.3-3.el7.x86_64                                                                                                                      25/49 </span><br><span class="line">  Verifying  : setools-libs-3.3.8-1.1.el7.x86_64                                                                                                              26/49 </span><br><span class="line">  Verifying  : setools-libs-3.3.7-46.el7.x86_64                                                                                                               27/49 </span><br><span class="line">  Verifying  : dracut-config-rescue-033-161.el7.x86_64                                                                                                        28/49 </span><br><span class="line">  Verifying  : systemd-sysv-208-11.el7.x86_64                                                                                                                 29/49 </span><br><span class="line">  Verifying  : systemd-python-208-11.el7.x86_64                                                                                                               30/49 </span><br><span class="line">  Verifying  : selinux-policy-3.12.1-153.el7.noarch                                                                                                           31/49 </span><br><span class="line">  Verifying  : dracut-network-033-161.el7.x86_64                                                                                                              32/49 </span><br><span class="line">  Verifying  : dracut-033-161.el7.x86_64                                                                                                                      33/49 </span><br><span class="line">  Verifying  : libselinux-utils-2.2.2-6.el7.x86_64                                                                                                            34/49 </span><br><span class="line">  Verifying  : glib2-2.36.3-5.el7.x86_64                                                                                                                      35/49 </span><br><span class="line">  Verifying  : initscripts-9.49.17-1.el7.x86_64                                                                                                               36/49 </span><br><span class="line">  Verifying  : systemd-libs-208-11.el7.x86_64                                                                                                                 37/49 </span><br><span class="line">  Verifying  : libsemanage-2.1.10-16.el7.x86_64                                                                                                               38/49 </span><br><span class="line">  Verifying  : libseccomp-2.1.1-2.el7.x86_64                                                                                                                  39/49 </span><br><span class="line">  Verifying  : libsepol-2.1.9-3.el7.x86_64                                                                                                                    40/49 </span><br><span class="line">  Verifying  : selinux-policy-targeted-3.12.1-153.el7.noarch                                                                                                  41/49 </span><br><span class="line">  Verifying  : libselinux-2.2.2-6.el7.x86_64                                                                                                                  42/49 </span><br><span class="line">  Verifying  : kmod-14-9.el7.x86_64                                                                                                                           43/49 </span><br><span class="line">  Verifying  : policycoreutils-2.2.5-11.el7.x86_64                                                                                                            44/49 </span><br><span class="line">  Verifying  : libgudev1-208-11.el7.x86_64                                                                                                                    45/49 </span><br><span class="line">  Verifying  : libselinux-python-2.2.2-6.el7.x86_64                                                                                                           46/49 </span><br><span class="line">  Verifying  : libsemanage-python-2.1.10-16.el7.x86_64                                                                                                        47/49 </span><br><span class="line">  Verifying  : systemd-208-11.el7.x86_64                                                                                                                      48/49 </span><br><span class="line">  Verifying  : policycoreutils-python-2.2.5-11.el7.x86_64                                                                                                     49/49 </span><br><span class="line"></span><br><span class="line">Installed:</span><br><span class="line">  docker-ce.x86_64 0:18.03.0.ce-1.el7.centos                                                                                                                        </span><br><span class="line"></span><br><span class="line">Dependency Installed:</span><br><span class="line">  container-selinux.noarch 2:2.42-1.gitad8f0f7.el7                                         pigz.x86_64 0:2.3.3-1.el7.centos                                        </span><br><span class="line"></span><br><span class="line">Updated:</span><br><span class="line">  dracut.x86_64 0:033-502.el7_4.1                                               initscripts.x86_64 0:9.49.39-1.el7_4.1                                              </span><br><span class="line"></span><br><span class="line">Dependency Updated:</span><br><span class="line">  dracut-config-rescue.x86_64 0:033-502.el7_4.1              dracut-network.x86_64 0:033-502.el7_4.1             glib2.x86_64 0:2.50.3-3.el7                      </span><br><span class="line">  kmod.x86_64 0:20-15.el7_4.7                                libgudev1.x86_64 0:219-42.el7_4.10                  libseccomp.x86_64 0:2.3.1-3.el7                  </span><br><span class="line">  libselinux.x86_64 0:2.5-11.el7                             libselinux-python.x86_64 0:2.5-11.el7               libselinux-utils.x86_64 0:2.5-11.el7             </span><br><span class="line">  libsemanage.x86_64 0:2.5-8.el7                             libsemanage-python.x86_64 0:2.5-8.el7               libsepol.x86_64 0:2.5-6.el7                      </span><br><span class="line">  policycoreutils.x86_64 0:2.5-17.1.el7                      policycoreutils-python.x86_64 0:2.5-17.1.el7        selinux-policy.noarch 0:3.13.1-166.el7_4.9       </span><br><span class="line">  selinux-policy-targeted.noarch 0:3.13.1-166.el7_4.9        setools-libs.x86_64 0:3.3.8-1.1.el7                 systemd.x86_64 0:219-42.el7_4.10                 </span><br><span class="line">  systemd-libs.x86_64 0:219-42.el7_4.10                      systemd-python.x86_64 0:219-42.el7_4.10             systemd-sysv.x86_64 0:219-42.el7_4.10            </span><br><span class="line"></span><br><span class="line">Complete!</span><br><span class="line">[root@wpg-jens01 system]# docker -v</span><br><span class="line">Docker version 18.03.0-ce, build 0520e24</span><br><span class="line">[root@wpg-jens01 system]# systemctl start docker</span><br><span class="line">[root@wpg-jens01 system]# systemctl status docker</span><br><span class="line">● docker.service - Docker Application Container Engine</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since Thu 2018-03-29 10:22:54 CST; 6s ago</span><br><span class="line">     Docs: https://docs.docker.com</span><br><span class="line"> Main PID: 31867 (dockerd)</span><br><span class="line">   Memory: 36.0M</span><br><span class="line">   CGroup: /system.slice/docker.service</span><br><span class="line">           ├─31867 /usr/bin/dockerd</span><br><span class="line">           └─31872 docker-containerd --config /var/run/docker/containerd/containerd.toml</span><br><span class="line"></span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.444516369+08:00&quot; level=info msg=&quot;[graphdriver] using prior storage driver...cemapper&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.481159100+08:00&quot; level=info msg=&quot;Graph migration to content-addressabilit... seconds&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.481507372+08:00&quot; level=warning msg=&quot;mountpoint for pids not found&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.482531342+08:00&quot; level=info msg=&quot;Loading containers: start.&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.560204029+08:00&quot; level=info msg=&quot;Default bridge (docker0) is assigned wit... address&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.614674591+08:00&quot; level=info msg=&quot;Loading containers: done.&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.624857166+08:00&quot; level=info msg=&quot;Docker daemon&quot; commit=0520e24 graphdrive...8.03.0-ce</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.625041676+08:00&quot; level=info msg=&quot;Daemon has completed initialization&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal dockerd[31867]: time=&quot;2018-03-29T10:22:54.640550260+08:00&quot; level=info msg=&quot;API listen on /var/run/docker.sock&quot;</span><br><span class="line">Mar 29 10:22:54 wpg-jens01.novalocal systemd[1]: Started Docker Application Container Engine.</span><br><span class="line">Hint: Some lines were ellipsized, use -l to show in full.</span><br><span class="line">[root@wpg-jens01 system]#</span><br></pre></td></tr></table></figure>
+<h2 id="升级Docker-CE"><a href="#升级Docker-CE" class="headerlink" title="升级Docker CE"></a>升级Docker CE</h2><p>  下载较新的软件包文件并重复安装，使用yum -y upgrade，并指向新文件。</p>
+<h2 id="卸载-Docker-CE"><a href="#卸载-Docker-CE" class="headerlink" title="卸载 Docker CE"></a>卸载 Docker CE</h2><p>  $ sudo yum remove docker-ce</p>
+<p>  $ sudo rm -rf /var/lib/docke</p>
+<h2 id="docker-代理配置"><a href="#docker-代理配置" class="headerlink" title="docker 代理配置"></a>docker 代理配置</h2><h3 id="代理配置方法"><a href="#代理配置方法" class="headerlink" title="代理配置方法"></a>代理配置方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">该方法是持久化的，修改后会一直生效。该方法覆盖了默认的docker.service文件</span><br><span class="line">1. 为docker服务创建一个内嵌的systemd目录</span><br><span class="line">$ mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line"></span><br><span class="line">2. 创建/etc/systemd/system/docker.service.d/http-proxy.conf文件，并添加HTTP_PROXY环境变量。其中[proxy-addr]和[proxy-port]分别改成实际情况的代理地址和端口：</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://[proxy-addr]:[proxy-port]/&quot; &quot;HTTPS_PROXY=https://[proxy-addr]:[proxy-port]/&quot;</span><br><span class="line"></span><br><span class="line">3. 如果还有内部的不需要使用代理来访问的Docker registries，那么嗨需要制定NO_PROXY环境变量：</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://[proxy-addr]:[proxy-port]/&quot; &quot;HTTPS_PROXY=https://[proxy-addr]:[proxy-port]/&quot; &quot;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&quot;</span><br><span class="line"></span><br><span class="line">4. 更新配置：</span><br><span class="line">$ systemctl daemon-reload</span><br><span class="line"></span><br><span class="line">5. 重启Docker服务：</span><br><span class="line">$ systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h3 id="具体配置"><a href="#具体配置" class="headerlink" title="具体配置"></a>具体配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">[root@wpg-jens01 system]<span class="comment"># docker search activemq</span></span><br><span class="line">^C</span><br><span class="line">[root@wpg-jens01 system]<span class="comment"># mkdir -p /etc/systemd/system/docker.service.d</span></span><br><span class="line">[root@wpg-jens01 system]<span class="comment"># touch /etc/systemd/system/docker.service.d/http-proxy.conf</span></span><br><span class="line">[root@wpg-jens01 system]<span class="comment"># vim /etc/systemd/system/docker.service.d/http-proxy.conf</span></span><br><span class="line">[root@wpg-jens01 system]<span class="comment"># cd /etc/systemd/system/docker.service.d/</span></span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment"># cat http-proxy.conf </span></span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"HTTP_PROXY=http://10.0.0.111:3128"</span> <span class="string">"HTTPS_PROXY=http://10.0.0.111:3128"</span> <span class="string">"NO_PROXY=10.0.0.10,10.0.0.11,10.0.0.19,10.0.0.25,10.0.0.26,10.0.0.27"</span></span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment">#</span></span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment"># systemctl daemon-reload</span></span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment"># systemctl restart docker</span></span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment"># systemctl status docker</span></span><br><span class="line">● docker.service - Docker Application Container Engine</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: disabled)</span><br><span class="line">  Drop-In: /etc/systemd/system/docker.service.d</span><br><span class="line">           └─http-proxy.conf</span><br><span class="line">   Active: active (running) since Thu 2018-03-29 11:54:39 CST; 13s ago</span><br><span class="line">     Docs: https://docs.docker.com</span><br><span class="line"> Main PID: 33420 (dockerd)</span><br><span class="line">   Memory: 35.4M</span><br><span class="line">   CGroup: /system.slice/docker.service</span><br><span class="line">           ├─33420 /usr/bin/dockerd</span><br><span class="line">           └─33425 docker-containerd --config /var/run/docker/containerd/containerd.toml</span><br><span class="line"></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.516716117+08:00"</span> level=info msg=<span class="string">"[graphdriver] using prior storage driver: devicemapper"</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.521834528+08:00"</span> level=info msg=<span class="string">"Graph migration to content-addressability took 0.00 seconds"</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.522155071+08:00"</span> level=warning msg=<span class="string">"mountpoint for pids not found"</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.522801440+08:00"</span> level=info msg=<span class="string">"Loading containers: start."</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.627377593+08:00"</span> level=info msg=<span class="string">"Default bridge (docker0) is assigned with an IP address 172.1...IP address"</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.668555742+08:00"</span> level=info msg=<span class="string">"Loading containers: done."</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.679222523+08:00"</span> level=info msg=<span class="string">"Docker daemon"</span> commit=0520e24 graphdriver(s)=devicemapper ver...=18.03.0-ce</span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.679325168+08:00"</span> level=info msg=<span class="string">"Daemon has completed initialization"</span></span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal systemd[1]: Started Docker Application Container Engine.</span><br><span class="line">Mar 29 11:54:39 wpg-jens01.novalocal dockerd[33420]: time=<span class="string">"2018-03-29T11:54:39.691368355+08:00"</span> level=info msg=<span class="string">"API listen on /var/run/docker.sock"</span></span><br><span class="line">Hint: Some lines were ellipsized, use -l to show <span class="keyword">in</span> full.</span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment">#</span></span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment"># docker search mysql</span></span><br><span class="line">NAME                                                   DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED</span><br><span class="line">mysql                                                  MySQL is a widely used, open-source relation…   5757                [OK]                </span><br><span class="line">mariadb                                                MariaDB is a community-developed fork of MyS…   1859                [OK]                </span><br><span class="line">mysql/mysql-server                                     Optimized MySQL Server Docker images. Create…   397                                     [OK]</span><br><span class="line">zabbix/zabbix-server-mysql                             Zabbix Server with MySQL database support       92                                      [OK]</span><br><span class="line">hypriot/rpi-mysql                                      RPi-compatible Docker Image with Mysql          79                                      </span><br><span class="line">centurylink/mysql                                      Image containing mysql. Optimized to be link…   59                                      [OK]</span><br><span class="line">zabbix/zabbix-web-nginx-mysql                          Zabbix frontend based on Nginx web-server wi…   48                                      [OK]</span><br><span class="line">tutum/mysql                                            Base docker image to run a MySQL database se…   31                                      </span><br><span class="line">1and1internet/ubuntu-16-nginx-php-phpmyadmin-mysql-5   ubuntu-16-nginx-php-phpmyadmin-mysql-5          30                                      [OK]</span><br><span class="line">centos/mysql-57-centos7                                MySQL 5.7 SQL database server                   23                                      </span><br><span class="line">mysql/mysql-cluster                                    Experimental MySQL Cluster Docker images. Cr…   19                                      </span><br><span class="line">schickling/mysql-backup-s3                             Backup MySQL to S3 (supports periodic backup…   16                                      [OK]</span><br><span class="line">linuxserver/mysql                                      A Mysql container, brought to you by LinuxSe…   14                                      </span><br><span class="line">bitnami/mysql                                          Bitnami MySQL Docker Image                      13                                      [OK]</span><br><span class="line">zabbix/zabbix-proxy-mysql                              Zabbix proxy with MySQL database support        12                                      [OK]</span><br><span class="line">centos/mysql-56-centos7                                MySQL 5.6 SQL database server                   8                                       </span><br><span class="line">openshift/mysql-55-centos7                             DEPRECATED: A Centos7 based MySQL v5.5 image…   6                                       </span><br><span class="line">circleci/mysql                                         MySQL is a widely used, open-source relation…   4                                       </span><br><span class="line">dsteinkopf/backup-all-mysql                            backup all DBs <span class="keyword">in</span> a mysql server                3                                       [OK]</span><br><span class="line">frodenas/mysql                                         A Docker Image <span class="keyword">for</span> MySQL                        2                                       [OK]</span><br><span class="line">ansibleplaybookbundle/mysql-apb                        An APB <span class="built_in">which</span> deploys RHSCL MySQL                0                                       [OK]</span><br><span class="line">openzipkin/zipkin-mysql                                Mirror of https://quay.io/repository/openzip…   0                                       </span><br><span class="line">cloudfoundry/cf-mysql-ci                               Image used <span class="keyword">in</span> CI of cf-mysql-release            0                                       </span><br><span class="line">cloudposse/mysql                                       Improved `mysql` service with support <span class="keyword">for</span> `m…   0                                       [OK]</span><br><span class="line">astronomerio/mysql-sink                                MySQL sink                                      0                                       [OK]</span><br><span class="line">[root@wpg-jens01 docker.service.d]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>注意：对于新创建的unit文件或，修改了的unit文件，要通知systemd重载此配置文件；</p>
+<p>systemctl  daemon-reload</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/squid/" rel="tag"># squid</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/29/docker/centos7安装最新docker/" rel="next" title="centos7安装最新docker">
+                <i class="fa fa-chevron-left"></i> centos7安装最新docker
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/29/node/使用nvm管理不同版本的node与npm/" rel="prev" title="使用nvm管理不同版本的node与npm">
+                使用nvm管理不同版本的node与npm <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装docker-ce-通过库安装"><span class="nav-number">2.</span> <span class="nav-text">安装docker-ce(通过库安装)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置库"><span class="nav-number">2.1.</span> <span class="nav-text">配置库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过yum安装Docker-CE"><span class="nav-number">2.2.</span> <span class="nav-text">通过yum安装Docker CE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级Docker-CE"><span class="nav-number">3.</span> <span class="nav-text">升级Docker CE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卸载-Docker-CE"><span class="nav-number">4.</span> <span class="nav-text">卸载 Docker CE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-代理配置"><span class="nav-number">5.</span> <span class="nav-text">docker 代理配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代理配置方法"><span class="nav-number">5.1.</span> <span class="nav-text">代理配置方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体配置"><span class="nav-number">5.2.</span> <span class="nav-text">具体配置</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

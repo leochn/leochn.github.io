@@ -1,0 +1,752 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="vue,vuex,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Vuex是什么Vuex 是用来管理Vue的所有组件状态. 为什么使用Vuex当你打算开发大型单页应用(SPA),会出现多个视图组件依赖同一个状态,来自不同视图的行为需要变更同一个状态. 遇到以上情况时候,你就应该考虑使用Vuex了,它能把组件的共享状态抽取出来,当做一个全局单例模式进行管理.这样不管你在何处改变状态,都会通知使用该状态的组件做出相应修改.">
+<meta name="keywords" content="vue,vuex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vuex入门">
+<meta property="og:url" content="http://netsite.win/2017/05/29/vue/vuex入门/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="Vuex是什么Vuex 是用来管理Vue的所有组件状态. 为什么使用Vuex当你打算开发大型单页应用(SPA),会出现多个视图组件依赖同一个状态,来自不同视图的行为需要变更同一个状态. 遇到以上情况时候,你就应该考虑使用Vuex了,它能把组件的共享状态抽取出来,当做一个全局单例模式进行管理.这样不管你在何处改变状态,都会通知使用该状态的组件做出相应修改.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://netsite.win/assets/images/vue/vuex小示例-001.png">
+<meta property="og:image" content="http://netsite.win/assets/images/vue/vuex小示例-002.png">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.172Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vuex入门">
+<meta name="twitter:description" content="Vuex是什么Vuex 是用来管理Vue的所有组件状态. 为什么使用Vuex当你打算开发大型单页应用(SPA),会出现多个视图组件依赖同一个状态,来自不同视图的行为需要变更同一个状态. 遇到以上情况时候,你就应该考虑使用Vuex了,它能把组件的共享状态抽取出来,当做一个全局单例模式进行管理.这样不管你在何处改变状态,都会通知使用该状态的组件做出相应修改.">
+<meta name="twitter:image" content="http://netsite.win/assets/images/vue/vuex小示例-001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2017/05/29/vue/vuex入门/">
+
+
+
+
+
+  <title> vuex入门 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/05/29/vue/vuex入门/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vuex入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-29T06:54:29+08:00">
+                2017-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Vuex是什么"><a href="#Vuex是什么" class="headerlink" title="Vuex是什么"></a>Vuex是什么</h2><p>Vuex 是用来管理Vue的所有组件状态.</p>
+<h2 id="为什么使用Vuex"><a href="#为什么使用Vuex" class="headerlink" title="为什么使用Vuex"></a>为什么使用Vuex</h2><p>当你打算开发大型单页应用(SPA),会出现多个视图组件依赖同一个状态,来自不同视图的行为需要变更同一个状态.</p>
+<p>遇到以上情况时候,你就应该考虑使用Vuex了,它能把组件的共享状态抽取出来,当做一个全局单例模式进行管理.这样不管你在何处改变状态,都会通知使用该状态的组件做出相应修改.<br><a id="more"></a></p>
+<h2 id="简单的Vuex示例"><a href="#简单的Vuex示例" class="headerlink" title="简单的Vuex示例"></a>简单的Vuex示例</h2><h3 id="小示例的效果"><a href="#小示例的效果" class="headerlink" title="小示例的效果"></a>小示例的效果</h3><p><img src="/assets/images/vue/vuex小示例-001.png" alt="vuex小示例"></p>
+<h3 id="小示例的目录结构"><a href="#小示例的目录结构" class="headerlink" title="小示例的目录结构"></a>小示例的目录结构</h3><p><img src="/assets/images/vue/vuex小示例-002.png" alt="vuex小示例"></p>
+<h3 id="package-json的依赖"><a href="#package-json的依赖" class="headerlink" title="package.json的依赖"></a>package.json的依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">  &quot;vue&quot;: &quot;^2.1.0&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;devDependencies&quot;: &#123;</span><br><span class="line">  &quot;babel-core&quot;: &quot;^6.0.0&quot;,</span><br><span class="line">  &quot;babel-loader&quot;: &quot;^6.0.0&quot;,</span><br><span class="line">  &quot;babel-preset-es2015&quot;: &quot;^6.0.0&quot;,</span><br><span class="line">  &quot;cross-env&quot;: &quot;^3.0.0&quot;,</span><br><span class="line">  &quot;css-loader&quot;: &quot;^0.25.0&quot;,</span><br><span class="line">  &quot;file-loader&quot;: &quot;^0.9.0&quot;,</span><br><span class="line">  &quot;vue-loader&quot;: &quot;^10.0.0&quot;,</span><br><span class="line">  &quot;vue-template-compiler&quot;: &quot;^2.1.0&quot;,</span><br><span class="line">  &quot;vuex&quot;: &quot;^2.0.0&quot;,</span><br><span class="line">  &quot;webpack&quot;: &quot;^2.1.0-beta.25&quot;,</span><br><span class="line">  &quot;webpack-dev-server&quot;: &quot;^2.1.0-beta.0&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import App from &apos;./App.vue&apos;</span><br><span class="line"></span><br><span class="line">import store from &apos;./store&apos;</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">    store,</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    render: h =&gt; h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="App-vue"><a href="#App-vue" class="headerlink" title="App.vue"></a>App.vue</h3><p>import {mapGetters, mapActions} from ‘vuex’,<br>mapGetters: 获取数据<br>mapActions: 管理所有事件(行为)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;h3&gt;vuex小示例&lt;/h3&gt;</span><br><span class="line">    &lt;input type=&quot;button&quot; value=&quot;增加&quot; @click=&quot;increment&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;button&quot; value=&quot;减少&quot; @click=&quot;decrement&quot;&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      现在数字为: &#123;&#123;count&#125;&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  import &#123;mapGetters, mapActions&#125; from &apos;vuex&apos;</span><br><span class="line">  // mapGetters: 获取数据</span><br><span class="line">  // mapActions: 管理所有事件(行为)</span><br><span class="line">  export default&#123;</span><br><span class="line">    computed:mapGetters([</span><br><span class="line">      &apos;count&apos;  // 调用这个count方法,即触发store.js中getters的count方法.</span><br><span class="line">    ]),</span><br><span class="line">    methods:mapActions([</span><br><span class="line">      &apos;increment&apos;, // 调用这个increment方法,即触发store.js中actions的increment.</span><br><span class="line">      &apos;decrement&apos;</span><br><span class="line">    ])increment,</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="store-js"><a href="#store-js" class="headerlink" title="store.js"></a>store.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import Vuex from &apos;vuex&apos;</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex);</span><br><span class="line"></span><br><span class="line">var state = &#123;</span><br><span class="line">    count: 10</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const mutations = &#123;   //处理状态(数据)变化</span><br><span class="line">    increment(state) &#123; </span><br><span class="line">        state.count++;  // 这里改变state.count的状态.</span><br><span class="line">    &#125;,</span><br><span class="line">    decrement(state) &#123;</span><br><span class="line">        state.count--;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const actions = &#123;   //处理你要干什么，异步请求，判断，流程控制</span><br><span class="line">    increment: (&#123; </span><br><span class="line">        commit</span><br><span class="line">    &#125;) =&gt; &#123;</span><br><span class="line">        commit(&apos;increment&apos;);  // 这里commit,即触发mutations中的increment方法.</span><br><span class="line">    &#125;,</span><br><span class="line">    decrement: (&#123;</span><br><span class="line">        commit</span><br><span class="line">    &#125;) =&gt; &#123;</span><br><span class="line">        commit(&apos;decrement&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const getters = &#123;</span><br><span class="line">    count(state) &#123;</span><br><span class="line">        return state.count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//需要导出Store对象</span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">    state,</span><br><span class="line">    mutations,</span><br><span class="line">    actions,</span><br><span class="line">    getters</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="数据流向说明"><a href="#数据流向说明" class="headerlink" title="数据流向说明"></a>数据流向说明</h3><p>在 xxx.vue 组件中使用 mapActions 暴露出的increment 方法,其实就是使用actions中的同名方法,actions中的方法会进行一个commit提交到mutations中,通过mutations来改变state中状态变量的值.</p>
+<p>使用mapGetters 暴露出的 count ,其实就是使用 getters 中的同名方法来获取state中的状态值.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/vuex/" rel="tag"># vuex</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/25/vue/关于Vue2中获取DOM元素/" rel="next" title="关于Vue2中获取DOM元素">
+                <i class="fa fa-chevron-left"></i> 关于Vue2中获取DOM元素
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/05/mysql/mysql游标/" rel="prev" title="mysql游标">
+                mysql游标 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vuex是什么"><span class="nav-number">1.</span> <span class="nav-text">Vuex是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用Vuex"><span class="nav-number">2.</span> <span class="nav-text">为什么使用Vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的Vuex示例"><span class="nav-number">3.</span> <span class="nav-text">简单的Vuex示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小示例的效果"><span class="nav-number">3.1.</span> <span class="nav-text">小示例的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小示例的目录结构"><span class="nav-number">3.2.</span> <span class="nav-text">小示例的目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#package-json的依赖"><span class="nav-number">3.3.</span> <span class="nav-text">package.json的依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-js"><span class="nav-number">3.4.</span> <span class="nav-text">main.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#App-vue"><span class="nav-number">3.5.</span> <span class="nav-text">App.vue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#store-js"><span class="nav-number">3.6.</span> <span class="nav-text">store.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据流向说明"><span class="nav-number">3.7.</span> <span class="nav-text">数据流向说明</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

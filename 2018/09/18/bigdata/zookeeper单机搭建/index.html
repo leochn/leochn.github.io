@@ -1,0 +1,754 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="zookeeper,bigdata,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="下载zookeeper1https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/">
+<meta name="keywords" content="zookeeper,bigdata">
+<meta property="og:type" content="article">
+<meta property="og:title" content="zookeeper单机搭建">
+<meta property="og:url" content="http://netsite.win/2018/09/18/bigdata/zookeeper单机搭建/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="下载zookeeper1https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zookeeper单机搭建">
+<meta name="twitter:description" content="下载zookeeper1https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/09/18/bigdata/zookeeper单机搭建/">
+
+
+
+
+
+  <title> zookeeper单机搭建 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/09/18/bigdata/zookeeper单机搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                zookeeper单机搭建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T14:54:41+08:00">
+                2018-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="下载zookeeper"><a href="#下载zookeeper" class="headerlink" title="下载zookeeper"></a>下载zookeeper</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="windows上安装"><a href="#windows上安装" class="headerlink" title="windows上安装"></a>windows上安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.解压zookeeper-3.4.13.tar.gz</span><br><span class="line"></span><br><span class="line">2.运行zkServer.cmd ，初次运行会报错，没有zoo.cfg配置文件</span><br><span class="line">    D:\software\devlop_software\zookeeper-3.4.13\bin&gt;zkServer.cmd</span><br><span class="line">3.修改zoo.cfg配置文件</span><br><span class="line">    将conf下的zoo_sample.cfg复制一份改名为zoo.cfg即可。</span><br><span class="line">    注意几个重要位置：</span><br><span class="line">    dataDir=./   临时数据存储的目录（可写相对路径）</span><br><span class="line">    clientPort=2181   zookeeper的端口号</span><br><span class="line">    修改完成后再次启动zookeeper</span><br><span class="line"></span><br><span class="line">4.使用zkCli.cmd测试</span><br><span class="line">    ls /：列出zookeeper根下保存的所有节点</span><br><span class="line">    create –e /test 123：创建一个test节点，值为123</span><br><span class="line">    get /test：获取/test节点的值</span><br></pre></td></tr></table></figure>
+<h2 id="linux上安装"><a href="#linux上安装" class="headerlink" title="linux上安装"></a>linux上安装</h2><h3 id="解压zookeeper-3-4-13-tar-gz"><a href="#解压zookeeper-3-4-13-tar-gz" class="headerlink" title="解压zookeeper-3.4.13.tar.gz"></a>解压zookeeper-3.4.13.tar.gz</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 zk]<span class="comment"># pwd</span></span><br><span class="line">/data/zk</span><br><span class="line">[root@node-1 zk]<span class="comment"># tar -zxvf zookeeper-3.4.13.tar.gz</span></span><br><span class="line">[root@node-1 zk]<span class="comment"># ll</span></span><br><span class="line">总用量 36328</span><br><span class="line">drwxr-xr-x 11  501 games     4096 9月  19 06:31 zookeeper-3.4.13</span><br><span class="line">-rw-r--r--  1 root root  37191810 9月  18 07:04 zookeeper-3.4.13.tar.gz</span><br><span class="line">[root@node-1 zk]<span class="comment"># cd zookeeper-3.4.13</span></span><br><span class="line">[root@node-1 zookeeper-3.4.13]<span class="comment"># ll</span></span><br><span class="line">总用量 1628</span><br><span class="line">drwxr-xr-x  2  501 games     223 9月  19 06:33 bin</span><br><span class="line">-rw-r--r--  1  501 games   91400 6月  30 01:04 build.xml</span><br><span class="line">drwxr-xr-x  2  501 games      92 9月  19 06:30 conf</span><br><span class="line">drwxr-xr-x 10  501 games     130 9月  19 06:29 contrib</span><br><span class="line">drwxr-xr-x  2  501 games    4096 9月  19 06:29 dist-maven</span><br><span class="line">drwxr-xr-x  6  501 games    4096 9月  19 06:29 docs</span><br><span class="line">-rw-r--r--  1  501 games    1709 6月  30 01:04 ivysettings.xml</span><br><span class="line">-rw-r--r--  1  501 games    8502 6月  30 01:04 ivy.xml</span><br><span class="line">drwxr-xr-x  4  501 games     308 9月  19 06:29 lib</span><br><span class="line">-rw-r--r--  1  501 games   11938 6月  30 01:04 LICENSE.txt</span><br><span class="line">-rw-r--r--  1  501 games    3132 6月  30 01:04 NOTICE.txt</span><br><span class="line">-rw-r--r--  1  501 games    1585 6月  30 01:04 README.md</span><br><span class="line">-rw-r--r--  1  501 games    1770 6月  30 01:04 README_packaging.txt</span><br><span class="line">drwxr-xr-x  5  501 games      47 9月  19 06:29 recipes</span><br><span class="line">drwxr-xr-x  8  501 games     211 6月  30 01:04 src</span><br><span class="line">drwxr-xr-x  3 root root       23 9月  19 06:35 zkdata</span><br><span class="line">-rw-r--r--  1  501 games 1508639 6月  30 01:05 zookeeper-3.4.13.jar</span><br><span class="line">-rw-r--r--  1  501 games     833 7月   1 07:36 zookeeper-3.4.13.jar.asc</span><br><span class="line">-rw-r--r--  1  501 games      33 6月  30 01:05 zookeeper-3.4.13.jar.md5</span><br><span class="line">-rw-r--r--  1  501 games      41 6月  30 01:05 zookeeper-3.4.13.jar.sha1</span><br><span class="line">[root@node-1 zookeeper-3.4.13]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置zookeeper"><a href="#配置zookeeper" class="headerlink" title="配置zookeeper"></a>配置zookeeper</h3><p>初始化zookeeper配置文件,启动zookeeper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 zookeeper-3.4.13]# cd conf/</span><br><span class="line">[root@node-1 conf]# ll</span><br><span class="line">总用量 12</span><br><span class="line">-rw-r--r-- 1 501 games  535 6月  30 01:04 configuration.xsl</span><br><span class="line">-rw-r--r-- 1 501 games 2161 6月  30 01:04 log4j.properties</span><br><span class="line">-rw-r--r-- 1 501 games  922 6月  30 01:04 zoo_sample.cfg</span><br><span class="line">[root@node-1 conf]# cp zoo_sample.cfg zoo.cfg</span><br><span class="line">[root@node-1 conf]# ll</span><br><span class="line">总用量 16</span><br><span class="line">-rw-r--r-- 1  501 games  535 6月  30 01:04 configuration.xsl</span><br><span class="line">-rw-r--r-- 1  501 games 2161 6月  30 01:04 log4j.properties</span><br><span class="line">-rw-r--r-- 1 root root   922 9月  19 06:29 zoo.cfg</span><br><span class="line">-rw-r--r-- 1  501 games  922 6月  30 01:04 zoo_sample.cfg</span><br><span class="line">[root@node-1 conf]# vim zoo.cfg</span><br></pre></td></tr></table></figure>
+<p>在conf的上一级目录创建 zkdata 文件夹, mkdir zkdata;修改 zoo.cfg 配置中的 dataDir=../zkdata</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># The number of milliseconds of each tick</span><br><span class="line">tickTime=2000</span><br><span class="line"># The number of ticks that the initial </span><br><span class="line"># synchronization phase can take</span><br><span class="line">initLimit=10</span><br><span class="line"># The number of ticks that can pass between </span><br><span class="line"># sending a request and getting an acknowledgement</span><br><span class="line">syncLimit=5</span><br><span class="line"># the directory where the snapshot is stored.</span><br><span class="line"># do not use /tmp for storage, /tmp here is just </span><br><span class="line"># example sakes.</span><br><span class="line">dataDir=../zkdata</span><br><span class="line"># the port at which the clients will connect</span><br><span class="line">clientPort=2181</span><br></pre></td></tr></table></figure>
+<h3 id="启动zookeeper"><a href="#启动zookeeper" class="headerlink" title="启动zookeeper"></a>启动zookeeper</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 zookeeper-3.4.13]# cd bin/</span><br><span class="line">[root@node-1 bin]# ll</span><br><span class="line">总用量 44</span><br><span class="line">-rwxr-xr-x 1 501 games  232 6月  30 01:04 README.txt</span><br><span class="line">-rwxr-xr-x 1 501 games 1937 6月  30 01:04 zkCleanup.sh</span><br><span class="line">-rwxr-xr-x 1 501 games 1056 6月  30 01:04 zkCli.cmd</span><br><span class="line">-rwxr-xr-x 1 501 games 1534 6月  30 01:04 zkCli.sh</span><br><span class="line">-rwxr-xr-x 1 501 games 1759 6月  30 01:04 zkEnv.cmd</span><br><span class="line">-rwxr-xr-x 1 501 games 2696 6月  30 01:04 zkEnv.sh</span><br><span class="line">-rwxr-xr-x 1 501 games 1089 6月  30 01:04 zkServer.cmd</span><br><span class="line">-rwxr-xr-x 1 501 games 6773 6月  30 01:04 zkServer.sh</span><br><span class="line">-rwxr-xr-x 1 501 games  996 6月  30 01:04 zkTxnLogToolkit.cmd</span><br><span class="line">-rwxr-xr-x 1 501 games 1385 6月  30 01:04 zkTxnLogToolkit.sh</span><br><span class="line">[root@node-1 bin]# ./zkServer.sh</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /root/data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Usage: ./zkServer.sh &#123;start|start-foreground|stop|restart|status|upgrade|print-cmd&#125;</span><br><span class="line">[root@node-1 bin]#</span><br><span class="line">[root@node-1 bin]# ./zkServer.sh start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br><span class="line">[root@node-1 bin]#</span><br><span class="line">[root@node-1 bin]# ./zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Mode: standalone</span><br><span class="line">[root@node-1 bin]# jps -l</span><br><span class="line">2203 org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br><span class="line">2445 sun.tools.jps.Jps</span><br><span class="line">[root@node-1 bin]# ./zkServer.sh stop</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Stopping zookeeper ... STOPPED</span><br><span class="line">[root@node-1 bin]# ./zkServer.sh status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Error contacting service. It is probably not running.</span><br><span class="line">[root@node-1 bin]# jps -l</span><br><span class="line">2594 sun.tools.jps.Jps</span><br><span class="line">[root@node-1 bin]#</span><br></pre></td></tr></table></figure>
+<h3 id="zkCli测试"><a href="#zkCli测试" class="headerlink" title="zkCli测试"></a>zkCli测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 bin]# ./zkCli.sh</span><br><span class="line">Connecting to localhost:2181</span><br><span class="line">2018-09-17 17:30:04,394 [myid:] - INFO  [main:Environment@100] - Client environment:zookeeper.version=3.4.13-2d71af4dbe22557fda74f9a9b4309b15a7487f03, built on 06/29/2018 04:05 GMT</span><br><span class="line">2018-09-17 17:30:04,401 [myid:] - INFO  [main:Environment@100] - Client environment:host.name=master</span><br><span class="line">2018-09-17 17:30:04,401 [myid:] - INFO  [main:Environment@100] - Client environment:java.version=1.8.0_131</span><br><span class="line">2018-09-17 17:30:04,406 [myid:] - INFO  [main:Environment@100] - Client environment:java.vendor=Oracle Corporation</span><br><span class="line">2018-09-17 17:30:04,406 [myid:] - INFO  [main:Environment@100] - Client environment:java.home=/usr/java/jdk1.8.0_131/jre</span><br><span class="line">2018-09-17 17:30:04,407 [myid:] - INFO  [main:Environment@100] - Client environment:java.class.path=/root/data/zk/zookeeper-3.4.13/bin/../build/classes:/root/data/zk/zookeeper-3.4.13/bin/../build/lib/*.jar:/root/data/zk/zookeeper-3.4.13/bin/../lib/slf4j-log4j12-1.7.25.jar:/root/data/zk/zookeeper-3.4.13/bin/../lib/slf4j-api-1.7.25.jar:/root/data/zk/zookeeper-3.4.13/bin/../lib/netty-3.10.6.Final.jar:/root/data/zk/zookeeper-3.4.13/bin/../lib/log4j-1.2.17.jar:/root/data/zk/zookeeper-3.4.13/bin/../lib/jline-0.9.94.jar:/root/data/zk/zookeeper-3.4.13/bin/../lib/audience-annotations-0.5.0.jar:/root/data/zk/zookeeper-3.4.13/bin/../zookeeper-3.4.13.jar:/root/data/zk/zookeeper-3.4.13/bin/../src/java/lib/*.jar:/root/data/zk/zookeeper-3.4.13/bin/../conf:</span><br><span class="line">2018-09-17 17:30:04,407 [myid:] - INFO  [main:Environment@100] - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib</span><br><span class="line">2018-09-17 17:30:04,407 [myid:] - INFO  [main:Environment@100] - Client environment:java.io.tmpdir=/tmp</span><br><span class="line">2018-09-17 17:30:04,407 [myid:] - INFO  [main:Environment@100] - Client environment:java.compiler=&lt;NA&gt;</span><br><span class="line">2018-09-17 17:30:04,407 [myid:] - INFO  [main:Environment@100] - Client environment:os.name=Linux</span><br><span class="line">2018-09-17 17:30:04,408 [myid:] - INFO  [main:Environment@100] - Client environment:os.arch=amd64</span><br><span class="line">2018-09-17 17:30:04,408 [myid:] - INFO  [main:Environment@100] - Client environment:os.version=3.10.0-514.26.1.el7.x86_64</span><br><span class="line">2018-09-17 17:30:04,408 [myid:] - INFO  [main:Environment@100] - Client environment:user.name=root</span><br><span class="line">2018-09-17 17:30:04,408 [myid:] - INFO  [main:Environment@100] - Client environment:user.home=/root</span><br><span class="line">2018-09-17 17:30:04,408 [myid:] - INFO  [main:Environment@100] - Client environment:user.dir=/root/data/zk/zookeeper-3.4.13/bin</span><br><span class="line">2018-09-17 17:30:04,411 [myid:] - INFO  [main:ZooKeeper@442] - Initiating client connection, connectString=localhost:2181 sessionTimeout=30000 watcher=org.apache.zookeeper.ZooKeeperMain$MyWatcher@7aec35a</span><br><span class="line">Welcome to ZooKeeper!</span><br><span class="line">2018-09-17 17:30:04,454 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1029] - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)</span><br><span class="line">JLine support is enabled</span><br><span class="line">2018-09-17 17:30:04,540 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@879] - Socket connection established to localhost/127.0.0.1:2181, initiating session</span><br><span class="line">2018-09-17 17:30:04,577 [myid:] - INFO  [main-SendThread(localhost:2181):ClientCnxn$SendThread@1303] - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x106a7b3a2c30000, negotiated timeout = 30000</span><br><span class="line"></span><br><span class="line">WATCHER::</span><br><span class="line"></span><br><span class="line">WatchedEvent state:SyncConnected type:None path:null</span><br><span class="line">[zk: localhost:2181(CONNECTED) 0] create /hellozk 123</span><br><span class="line">Created /hellozk</span><br><span class="line">[zk: localhost:2181(CONNECTED) 1] ls /</span><br><span class="line">[zookeeper, hellozk]</span><br></pre></td></tr></table></figure>
+<h3 id="设置开机启动zookeeper"><a href="#设置开机启动zookeeper" class="headerlink" title="设置开机启动zookeeper"></a>设置开机启动zookeeper</h3><h4 id="查看配置"><a href="#查看配置" class="headerlink" title="查看配置"></a>查看配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 bin]# cd /etc/init.d/</span><br><span class="line">[root@node-1 init.d]# ll</span><br><span class="line">总用量 40</span><br><span class="line">lrwxrwxrwx. 1 root root    27 7月  21 2017 app -&gt; /usr/local/src/apps/app.jar</span><br><span class="line">-rw-r--r--. 1 root root 17500 5月   3 2017 functions</span><br><span class="line">-rwxr-xr-x. 1 root root  4334 5月   3 2017 netconsole</span><br><span class="line">-rwxr-xr-x. 1 root root  7293 5月   3 2017 network</span><br><span class="line">-rw-r--r--. 1 root root  1160 9月   7 2017 README</span><br><span class="line">[root@node-1 init.d]#</span><br><span class="line">[root@node-1 init.d]# echo $JAVA_HOME</span><br><span class="line">/usr/local/src/java/jdk1.8.0_141</span><br><span class="line">[root@node-1 init.d]#</span><br></pre></td></tr></table></figure>
+<h4 id="编辑zookeeper的脚本"><a href="#编辑zookeeper的脚本" class="headerlink" title="编辑zookeeper的脚本"></a>编辑zookeeper的脚本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 init.d]# vim zookeeper</span><br><span class="line">[root@node-1 init.d]# ll</span><br><span class="line">总用量 44</span><br><span class="line">lrwxrwxrwx. 1 root root    27 7月  21 2017 app -&gt; /usr/local/src/apps/app.jar</span><br><span class="line">-rw-r--r--. 1 root root 17500 5月   3 2017 functions</span><br><span class="line">-rwxr-xr-x. 1 root root  4334 5月   3 2017 netconsole</span><br><span class="line">-rwxr-xr-x. 1 root root  7293 5月   3 2017 network</span><br><span class="line">-rw-r--r--. 1 root root  1160 9月   7 2017 README</span><br><span class="line">-rw-r--r--  1 root root   419 9月  19 06:42 zookeeper</span><br><span class="line">[root@node-1 init.d]#</span><br><span class="line">[root@node-1 init.d]# cat zookeeper </span><br><span class="line">#!/bin/bash</span><br><span class="line">#chkconfig:2345 20 90</span><br><span class="line">#description:zookeeper</span><br><span class="line">#processname:zookeeper</span><br><span class="line">ZK_PATH=/data/zk/zookeeper-3.4.13</span><br><span class="line">export JAVA_HOME=/usr/local/src/java/jdk1.8.0_141</span><br><span class="line">case $1 in</span><br><span class="line">     start) sh  $ZK_PATH/bin/zkServer.sh start;;</span><br><span class="line">     stop)  sh  $ZK_PATH/bin/zkServer.sh stop;;</span><br><span class="line">     status) sh  $ZK_PATH/bin/zkServer.sh status;;</span><br><span class="line">     restart) sh $ZK_PATH/bin/zkServer.sh restart;;</span><br><span class="line">     *)  echo &quot;require start|stop|status|restart&quot;  ;;</span><br><span class="line">esac</span><br><span class="line">[root@node-1 init.d]#</span><br></pre></td></tr></table></figure>
+<h4 id="增加权限"><a href="#增加权限" class="headerlink" title="增加权限"></a>增加权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 init.d]# chmod +x /etc/init.d/zookeeper </span><br><span class="line">[root@node-1 init.d]# ll</span><br><span class="line">总用量 44</span><br><span class="line">lrwxrwxrwx. 1 root root    27 7月  21 2017 app -&gt; /usr/local/src/apps/app.jar</span><br><span class="line">-rw-r--r--. 1 root root 17500 5月   3 2017 functions</span><br><span class="line">-rwxr-xr-x. 1 root root  4334 5月   3 2017 netconsole</span><br><span class="line">-rwxr-xr-x. 1 root root  7293 5月   3 2017 network</span><br><span class="line">-rw-r--r--. 1 root root  1160 9月   7 2017 README</span><br><span class="line">-rwxr-xr-x  1 root root   419 9月  19 06:42 zookeeper</span><br><span class="line">[root@node-1 init.d]#</span><br></pre></td></tr></table></figure>
+<h3 id="把脚本注册为service服务"><a href="#把脚本注册为service服务" class="headerlink" title="把脚本注册为service服务"></a>把脚本注册为service服务</h3><h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 init.d]# chkconfig --list</span><br><span class="line"></span><br><span class="line">注：该输出结果只显示 SysV 服务，并不包含</span><br><span class="line">原生 systemd 服务。SysV 配置数据</span><br><span class="line">可能被原生 systemd 配置覆盖。 </span><br><span class="line"></span><br><span class="line">      要列出 systemd 服务，请执行 &apos;systemctl list-unit-files&apos;。</span><br><span class="line">      查看在具体 target 启用的服务请执行</span><br><span class="line">      &apos;systemctl list-dependencies [target]&apos;。</span><br><span class="line"></span><br><span class="line">netconsole      0:关 1:关 2:关 3:关 4:关 5:关 6:关</span><br><span class="line">network         0:关 1:关 2:开 3:开 4:开 5:开 6:关</span><br><span class="line">[root@node-1 init.d]# chkconfig --add zookeeper</span><br><span class="line">[root@node-1 init.d]# chkconfig --list</span><br><span class="line"></span><br><span class="line">注：该输出结果只显示 SysV 服务，并不包含</span><br><span class="line">原生 systemd 服务。SysV 配置数据</span><br><span class="line">可能被原生 systemd 配置覆盖。 </span><br><span class="line"></span><br><span class="line">      要列出 systemd 服务，请执行 &apos;systemctl list-unit-files&apos;。</span><br><span class="line">      查看在具体 target 启用的服务请执行</span><br><span class="line">      &apos;systemctl list-dependencies [target]&apos;。</span><br><span class="line"></span><br><span class="line">netconsole      0:关 1:关 2:关 3:关 4:关 5:关 6:关</span><br><span class="line">network         0:关 1:关 2:开 3:开 4:开 5:开 6:关</span><br><span class="line">zookeeper       0:关 1:关 2:开 3:开 4:开 5:开 6:关</span><br><span class="line">[root@node-1 init.d]#</span><br></pre></td></tr></table></figure>
+<h4 id="测试service命令"><a href="#测试service命令" class="headerlink" title="测试service命令"></a>测试service命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 init.d]# jps -l</span><br><span class="line">4166 sun.tools.jps.Jps</span><br><span class="line">[root@node-1 init.d]# service zookeeper start</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br><span class="line">[root@node-1 init.d]# jps -l</span><br><span class="line">4296 sun.tools.jps.Jps</span><br><span class="line">4233 org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br><span class="line">[root@node-1 init.d]#</span><br><span class="line">[root@node-1 init.d]# service zookeeper stops</span><br><span class="line">require start|stop|status|restart</span><br><span class="line">[root@node-1 init.d]#</span><br><span class="line">[root@node-1 init.d]# service zookeeper stop</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Stopping zookeeper ... STOPPED</span><br><span class="line">[root@node-1 init.d]# jps -l</span><br><span class="line">4458 sun.tools.jps.Jps</span><br><span class="line">[root@node-1 init.d]#</span><br></pre></td></tr></table></figure>
+<h4 id="测试systemctl命令"><a href="#测试systemctl命令" class="headerlink" title="测试systemctl命令"></a>测试systemctl命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@node-1 init.d]# systemctl start zookeeper</span><br><span class="line">[root@node-1 init.d]# jps -l</span><br><span class="line">4519 org.apache.zookeeper.server.quorum.QuorumPeerMain</span><br><span class="line">4585 sun.tools.jps.Jps</span><br><span class="line">[root@node-1 init.d]# service zookeeper status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Mode: standalone</span><br><span class="line">[root@node-1 init.d]# systemctl status zookeeper</span><br><span class="line">● zookeeper.service - SYSV: zookeeper</span><br><span class="line">   Loaded: loaded (/etc/rc.d/init.d/zookeeper; bad; vendor preset: disabled)</span><br><span class="line">   Active: active (running) since 三 2018-09-19 06:50:50 CST; 51s ago</span><br><span class="line">     Docs: man:systemd-sysv-generator(8)</span><br><span class="line">  Process: 4509 ExecStart=/etc/rc.d/init.d/zookeeper start (code=exited, status=0/SUCCESS)</span><br><span class="line">   CGroup: /system.slice/zookeeper.service</span><br><span class="line">           └─4519 /usr/local/src/java/jdk1.8.0_141/bin/java -Dzookeeper.log.dir=. -Dzookeeper.root.logger=INFO,CONSOLE -cp /data/zk/zookeeper-3.4.13/bin/../build/cl...</span><br><span class="line"></span><br><span class="line">9月 19 06:50:48 node-1 systemd[1]: Starting SYSV: zookeeper...</span><br><span class="line">9月 19 06:50:49 node-1 zookeeper[4509]: ZooKeeper JMX enabled by default</span><br><span class="line">9月 19 06:50:49 node-1 zookeeper[4509]: Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">9月 19 06:50:50 node-1 zookeeper[4509]: Starting zookeeper ... STARTED</span><br><span class="line">9月 19 06:50:50 node-1 systemd[1]: Started SYSV: zookeeper.</span><br><span class="line">[root@node-1 init.d]#</span><br><span class="line">[root@node-1 init.d]# service zookeeper status</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /data/zk/zookeeper-3.4.13/bin/../conf/zoo.cfg</span><br><span class="line">Mode: standalone</span><br><span class="line">[root@node-1 init.d]#</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/zookeeper/" rel="tag"># zookeeper</a>
+          
+            <a href="/tags/bigdata/" rel="tag"># bigdata</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/29/python/python01开发环境搭建/" rel="next" title="python01开发环境搭建">
+                <i class="fa fa-chevron-left"></i> python01开发环境搭建
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/21/python/python安装第三方库/" rel="prev" title="python安装第三方库">
+                python安装第三方库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载zookeeper"><span class="nav-number">1.</span> <span class="nav-text">下载zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows上安装"><span class="nav-number">2.</span> <span class="nav-text">windows上安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux上安装"><span class="nav-number">3.</span> <span class="nav-text">linux上安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解压zookeeper-3-4-13-tar-gz"><span class="nav-number">3.1.</span> <span class="nav-text">解压zookeeper-3.4.13.tar.gz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置zookeeper"><span class="nav-number">3.2.</span> <span class="nav-text">配置zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动zookeeper"><span class="nav-number">3.3.</span> <span class="nav-text">启动zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zkCli测试"><span class="nav-number">3.4.</span> <span class="nav-text">zkCli测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置开机启动zookeeper"><span class="nav-number">3.5.</span> <span class="nav-text">设置开机启动zookeeper</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看配置"><span class="nav-number">3.5.1.</span> <span class="nav-text">查看配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编辑zookeeper的脚本"><span class="nav-number">3.5.2.</span> <span class="nav-text">编辑zookeeper的脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#增加权限"><span class="nav-number">3.5.3.</span> <span class="nav-text">增加权限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把脚本注册为service服务"><span class="nav-number">3.6.</span> <span class="nav-text">把脚本注册为service服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">3.6.1.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试service命令"><span class="nav-number">3.6.2.</span> <span class="nav-text">测试service命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试systemctl命令"><span class="nav-number">3.6.3.</span> <span class="nav-text">测试systemctl命令</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

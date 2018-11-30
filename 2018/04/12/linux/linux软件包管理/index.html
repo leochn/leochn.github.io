@@ -1,0 +1,760 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="软件包分类123456789101112131415161718源码包：优点：开源，可以修改源代码；可以自由选择所需要的供能；软件是编译安装，所以更加适合自己的系统，更加稳定效率更高；卸载方便。缺点：安装过程步骤较多；编译时间较长，比二进制安装时间长；因为是编译安装，安装过程中一旦报错新手很难解决。二进制包（rpm包、系统默认包）优点：包管理系统简单，只通过几个命令就可以实现包的安装、升级、查询和">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux软件包管理">
+<meta property="og:url" content="http://netsite.win/2018/04/12/linux/linux软件包管理/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="软件包分类123456789101112131415161718源码包：优点：开源，可以修改源代码；可以自由选择所需要的供能；软件是编译安装，所以更加适合自己的系统，更加稳定效率更高；卸载方便。缺点：安装过程步骤较多；编译时间较长，比二进制安装时间长；因为是编译安装，安装过程中一旦报错新手很难解决。二进制包（rpm包、系统默认包）优点：包管理系统简单，只通过几个命令就可以实现包的安装、升级、查询和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux软件包管理">
+<meta name="twitter:description" content="软件包分类123456789101112131415161718源码包：优点：开源，可以修改源代码；可以自由选择所需要的供能；软件是编译安装，所以更加适合自己的系统，更加稳定效率更高；卸载方便。缺点：安装过程步骤较多；编译时间较长，比二进制安装时间长；因为是编译安装，安装过程中一旦报错新手很难解决。二进制包（rpm包、系统默认包）优点：包管理系统简单，只通过几个命令就可以实现包的安装、升级、查询和">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/04/12/linux/linux软件包管理/">
+
+
+
+
+
+  <title> linux软件包管理 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/04/12/linux/linux软件包管理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux软件包管理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T21:50:55+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="软件包分类"><a href="#软件包分类" class="headerlink" title="软件包分类"></a>软件包分类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">源码包：</span><br><span class="line">优点：</span><br><span class="line">开源，可以修改源代码；</span><br><span class="line">可以自由选择所需要的供能；</span><br><span class="line">软件是编译安装，所以更加适合自己的系统，更加稳定效率更高；卸载方便。</span><br><span class="line"></span><br><span class="line">缺点：</span><br><span class="line">安装过程步骤较多；编译时间较长，比二进制安装时间长；</span><br><span class="line">因为是编译安装，安装过程中一旦报错新手很难解决。</span><br><span class="line"></span><br><span class="line">二进制包（rpm包、系统默认包）</span><br><span class="line">优点：</span><br><span class="line">包管理系统简单，只通过几个命令就可以实现包的安装、升级、查询和卸载；</span><br><span class="line">安装速度快。</span><br><span class="line">缺点：</span><br><span class="line">经过编译，不再可以看到源码；</span><br><span class="line">功能选择不如源码分析宝宝灵活；</span><br><span class="line">依赖性 (a-&gt;b-&gt;c)。</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="rpm包管理-rmp命令管理"><a href="#rpm包管理-rmp命令管理" class="headerlink" title="rpm包管理 - rmp命令管理"></a>rpm包管理 - rmp命令管理</h2><h3 id="rpm包命名原则"><a href="#rpm包命名原则" class="headerlink" title="rpm包命名原则"></a>rpm包命名原则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql80-community-release-el7-1.noarch.rpm</span><br><span class="line">httpd-2.2.15-60.el6.centos.4.i686.rpm</span><br><span class="line">httpd      软件包名</span><br><span class="line">2.2.15     软件版本</span><br><span class="line">60         软件发布的次数</span><br><span class="line">el6.centos 适合的Linux平台</span><br><span class="line">i686       适合的硬件平台</span><br><span class="line">rpm        rpm包扩展名</span><br></pre></td></tr></table></figure>
+<h3 id="rpm包依赖性"><a href="#rpm包依赖性" class="headerlink" title="rpm包依赖性"></a>rpm包依赖性</h3><pre><code>树形依赖： a -&gt; b -&gt; c
+环形依赖： a -&gt; b -&gt; c -&gt; a
+模块依赖： 查询网站： http://rpmfind.net/
+</code></pre><h3 id="包全名与包名"><a href="#包全名与包名" class="headerlink" title="包全名与包名"></a>包全名与包名</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">包全名：</span><br><span class="line">操作的包没有安装的软件包时，使用包全名。而且要注意路径。</span><br><span class="line">包名：</span><br><span class="line">操作已经安装的软件包时，使用包名。是搜索/var/lib/rmp/中的数据库。</span><br></pre></td></tr></table></figure>
+<h3 id="包全名与包名使用场景："><a href="#包全名与包名使用场景：" class="headerlink" title="包全名与包名使用场景："></a>包全名与包名使用场景：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">在安装和升级时使用包全名，查询卸载时用包名。</span><br><span class="line">RPM包安装： </span><br><span class="line">    rmp -ivh 包全名</span><br><span class="line">    选项： </span><br><span class="line">       -i (install)  安装</span><br><span class="line">       -v (verbose)  显示详细信息</span><br><span class="line">       -h (hash)     显示进度</span><br><span class="line">       --nodeps      不检查依赖性</span><br><span class="line">    上面的--nodeps只能在做实验时用！因为如果写上了的话，万一这个软件包真的依赖于其他包,即使安装完了此rpm包，也是不可用的!</span><br><span class="line">RPM包升级:</span><br><span class="line">    rpm -Uvh 包全名</span><br><span class="line">        选项:</span><br><span class="line">            -U (upgrade)  升级(Linux中严格区分大小写)</span><br><span class="line">RMP包卸载:</span><br><span class="line">    rmp -e 包名</span><br><span class="line">        选项:</span><br><span class="line">            -e (erase)  卸载</span><br><span class="line">            --nodeps    不检查依赖</span><br></pre></td></tr></table></figure>
+<h3 id="rpm包命令管理-查询"><a href="#rpm包命令管理-查询" class="headerlink" title="rpm包命令管理(查询)"></a>rpm包命令管理(查询)</h3><h4 id="查询是否安装"><a href="#查询是否安装" class="headerlink" title="查询是否安装"></a>查询是否安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa 包名</span><br><span class="line">选项:</span><br><span class="line">    -q (query) 查询</span><br><span class="line">    -a (all)   所有</span><br></pre></td></tr></table></figure>
+<h4 id="查询软件包详细信息"><a href="#查询软件包详细信息" class="headerlink" title="查询软件包详细信息"></a>查询软件包详细信息</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm -qi 包名</span><br><span class="line">选项:</span><br><span class="line">    -i (information) 查询软件信息</span><br><span class="line">    -p (package)     查询未安装包信息</span><br></pre></td></tr></table></figure>
+<h4 id="查询包中文件安装位置"><a href="#查询包中文件安装位置" class="headerlink" title="查询包中文件安装位置"></a>查询包中文件安装位置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm -ql 包名</span><br><span class="line">选项:</span><br><span class="line">    -l (list) 列表</span><br><span class="line">    -p (package)     查询未安装包信息</span><br></pre></td></tr></table></figure>
+<h4 id="查询系统文件属于哪个rpm包"><a href="#查询系统文件属于哪个rpm包" class="headerlink" title="查询系统文件属于哪个rpm包"></a>查询系统文件属于哪个rpm包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qf 系统文件名</span><br><span class="line">选项:</span><br><span class="line">    -f (file) 查询系统文件属于哪个软件包</span><br></pre></td></tr></table></figure>
+<h4 id="查询软件包的依赖性"><a href="#查询软件包的依赖性" class="headerlink" title="查询软件包的依赖性"></a>查询软件包的依赖性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm -qR 包名</span><br><span class="line">选项:</span><br><span class="line">    -R (requires) 查询软件包的依赖性</span><br><span class="line">    -p (package)  查询未安装包信息</span><br></pre></td></tr></table></figure>
+<h3 id="rpm命令管理-校验和文件提取"><a href="#rpm命令管理-校验和文件提取" class="headerlink" title="rpm命令管理-校验和文件提取"></a>rpm命令管理-校验和文件提取</h3><h4 id="rmp包校验"><a href="#rmp包校验" class="headerlink" title="rmp包校验"></a>rmp包校验</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">rpm -V 已经安装的包名</span><br><span class="line">选项:</span><br><span class="line">    -V (verify) 校验指定rpm包中的文件</span><br><span class="line"></span><br><span class="line">[root@NG ~]# rpm -V nginx</span><br><span class="line">missing   c /etc/nginx/conf.d/default.conf</span><br><span class="line">S.5....T.  c /etc/nginx/nginx.conf</span><br><span class="line">[root@NG ~]#</span><br><span class="line"></span><br><span class="line">其中(S.5....T.),验证内容中的8个信息的具体含义：</span><br><span class="line">    S :文件大小是否改变</span><br><span class="line">    M :文件的类型或文件的权限(rwx)是否被改变</span><br><span class="line">    5 :文件MD5校验和是否改变文件内容</span><br><span class="line">    D :表示文件的major和minor号不一致</span><br><span class="line">    L :文件路径是否改变</span><br><span class="line">    U :文件的所有者是否改变</span><br><span class="line">    G :文件的属组是否改变</span><br><span class="line">    T :文件的修改时间是否改变</span><br><span class="line"></span><br><span class="line">S.5....T.  c /etc/nginx/nginx.conf 中的c, 文件类型</span><br><span class="line">    c 配置文件(config file)</span><br><span class="line">    d 普通文档(documentation)</span><br><span class="line">    g &quot;鬼文件&quot;(ghost file),很少见,就是该文件不应该被这个rpm包所包含.</span><br><span class="line">    l 授权文件(license file)</span><br><span class="line">    r 描述文件(read me)</span><br></pre></td></tr></table></figure>
+<h2 id="rpm包管理-yum在线管理"><a href="#rpm包管理-yum在线管理" class="headerlink" title="rpm包管理(yum在线管理)"></a>rpm包管理(yum在线管理)</h2><h3 id="网络yum源"><a href="#网络yum源" class="headerlink" title="网络yum源"></a>网络yum源</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost yum.repos.d]# cat /etc/yum.repos.d/CentOS-Base.repo</span><br><span class="line">[base]</span><br><span class="line">name=CentOS-$releasever - Base</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.cloud.aliyuncs.com/centos/$releasever/os/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://mirrors.cloud.aliyuncs.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line"> </span><br><span class="line">#released updates </span><br><span class="line">[updates]</span><br><span class="line">name=CentOS-$releasever - Updates</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.cloud.aliyuncs.com/centos/$releasever/updates/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://mirrors.cloud.aliyuncs.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line"> </span><br><span class="line">#additional packages that may be useful</span><br><span class="line">[extras]</span><br><span class="line">name=CentOS-$releasever - Extras</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.cloud.aliyuncs.com/centos/$releasever/extras/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=http://mirrors.cloud.aliyuncs.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line"> </span><br><span class="line">#additional packages that extend functionality of existing packages</span><br><span class="line">[centosplus]</span><br><span class="line">name=CentOS-$releasever - Plus</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.cloud.aliyuncs.com/centos/$releasever/centosplus/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=http://mirrors.cloud.aliyuncs.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line"> </span><br><span class="line">#contrib - packages by Centos Users</span><br><span class="line">[contrib]</span><br><span class="line">name=CentOS-$releasever - Contrib</span><br><span class="line">failovermethod=priority</span><br><span class="line">baseurl=http://mirrors.cloud.aliyuncs.com/centos/$releasever/contrib/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=http://mirrors.cloud.aliyuncs.com/centos/RPM-GPG-KEY-CentOS-7</span><br><span class="line">[root@localhost yum.repos.d]#</span><br><span class="line"></span><br><span class="line">## 说明:</span><br><span class="line">[base]     容器名称，一定要放在[]中</span><br><span class="line">name       容器说明，可以自己随便写</span><br><span class="line">mirrorlist 镜像站点，这个可以注释掉</span><br><span class="line">baseurl    我们的yum源服务器的地址，默认是Centos官方的yum源服务器，是可以使用的，如果觉得慢可以修改yum源地址</span><br><span class="line">enabled    此容器是否生效，如果不写或写成enable=1都是指生效，写成enable=0就是不生效</span><br><span class="line">gpgcheck   如果是1只rpm的数字证书生效，如果是0则不生效</span><br><span class="line">gpgkey     数字证书的公钥文件保存位置，不用修改</span><br></pre></td></tr></table></figure>
+<h3 id="常用yum命令"><a href="#常用yum命令" class="headerlink" title="常用yum命令"></a>常用yum命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum list : 查询所有可用软件包列表</span><br><span class="line">yum search 关键字： 搜索服务器上所有和关键字相关的包</span><br><span class="line">yum -y install 包名： -y 表示自动回答yes</span><br><span class="line">yum -y update ： 升级所有的软件包</span><br><span class="line">yum -y update 包名： 升级指定的软件包</span><br><span class="line">yum -y remove 包名： 卸载指定的软件包</span><br></pre></td></tr></table></figure>
+<h2 id="源码包管理"><a href="#源码包管理" class="headerlink" title="源码包管理"></a>源码包管理</h2><h3 id="源码包和rpm包的区别"><a href="#源码包和rpm包的区别" class="headerlink" title="源码包和rpm包的区别"></a>源码包和rpm包的区别</h3><p>安装之前的区别：概念上的区别</p>
+<p>安装之后的区别：安装位置的不同</p>
+<h3 id="rpm包安装位置"><a href="#rpm包安装位置" class="headerlink" title="rpm包安装位置"></a>rpm包安装位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpm包默认安装位置：</span><br><span class="line">/ect/           配置文件安装目录</span><br><span class="line">/usr/bin/       可执行的命令安装目录</span><br><span class="line">/usr/lib/       程序所使用的函数库保存位置</span><br><span class="line">/usr/share/doc/ 基本的软件使用手册保存位置</span><br><span class="line">/usr/share/man/ 帮助文件保存位置</span><br></pre></td></tr></table></figure>
+<h3 id="源码包安装位置"><a href="#源码包安装位置" class="headerlink" title="源码包安装位置"></a>源码包安装位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装在指定的位置当中，一般是：</span><br><span class="line">/usr/local/软件名/</span><br></pre></td></tr></table></figure>
+<h3 id="安装位置不同带来的影响"><a href="#安装位置不同带来的影响" class="headerlink" title="安装位置不同带来的影响"></a>安装位置不同带来的影响</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rpm包安装的服务可以使用系统服务管理命令(service)来管理，例如rpm包安装的apache的启动方式是：</span><br><span class="line">/ect/rc.d/init.d/htpd start</span><br><span class="line">service httpd start</span><br><span class="line"></span><br><span class="line">而源码包安装的服务则不能被服务管理命令管理，因为没有安装到默认的路径中。所以只能用绝对路径进行服务的管理，如：</span><br><span class="line">/usr/local/apach2/bin/apachectl start</span><br></pre></td></tr></table></figure>
+<h3 id="源码包安装过程"><a href="#源码包安装过程" class="headerlink" title="源码包安装过程"></a>源码包安装过程</h3><h4 id="安装准备"><a href="#安装准备" class="headerlink" title="安装准备"></a>安装准备</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">1.</span><br><span class="line">安装C语言编译器</span><br><span class="line">下载源码包：http://mirror.bit.edu.cn/apache/httpd/</span><br><span class="line"></span><br><span class="line">2.</span><br><span class="line">源代码保存位置： /usr/local/src</span><br><span class="line">软件安装位置： /usr/local</span><br><span class="line">如何确定安装过程报错: 安装过程停止、并出现error,warning,no的提示</span><br><span class="line"></span><br><span class="line">3.</span><br><span class="line">./configure软件配置与检查</span><br><span class="line">   定义需要的功能选项</span><br><span class="line">   监测系统环境是否符合安装要求</span><br><span class="line">   把定义好的功能选项和检测系统环境的信息都写入Makefile文件,用于后续的编辑.</span><br><span class="line">   ./configure -- help</span><br><span class="line"></span><br><span class="line">4.</span><br><span class="line">make 编译</span><br><span class="line">   make clean 清空编译产生的临时文件</span><br><span class="line">make install 编译安装</span><br><span class="line"></span><br><span class="line">5.源码包的卸载</span><br><span class="line">不需要卸载命令，直接删除安装目录即可。不会遗留任何垃圾文件.</span><br></pre></td></tr></table></figure>
+<h2 id="服务简介与分类"><a href="#服务简介与分类" class="headerlink" title="服务简介与分类"></a>服务简介与分类</h2><h3 id="检查已安装的服务"><a href="#检查已安装的服务" class="headerlink" title="检查已安装的服务"></a>检查已安装的服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">rpm包安装的服务:</span><br><span class="line">chkconfig --list   # 查看服务自启动状态,可以看到所有rpm包安装的服务</span><br><span class="line"></span><br><span class="line">源码包安装的服务:</span><br><span class="line">查看服务安装的位置,一般是 /usr/local/ 下</span><br><span class="line"></span><br><span class="line">rpm包安装的默认位置：</span><br><span class="line">/etc/init.d        启动脚本位置</span><br><span class="line">/etc/sysconfig     初始化环境配置文件位置</span><br><span class="line">/etc/              配置文件位置</span><br><span class="line">/etc/xinetd.conf   xinetd配置文件</span><br><span class="line">/etc/xinetd.d      基于xinetd服务的启动脚本</span><br><span class="line">/var/lib           服务产生的数据放在这里</span><br><span class="line">/var/log           日志</span><br></pre></td></tr></table></figure>
+<h2 id="rpm包安装服务的管理"><a href="#rpm包安装服务的管理" class="headerlink" title="rpm包安装服务的管理"></a>rpm包安装服务的管理</h2><h3 id="独立服务管理"><a href="#独立服务管理" class="headerlink" title="独立服务管理"></a>独立服务管理</h3><h4 id="独立服务的启动"><a href="#独立服务的启动" class="headerlink" title="独立服务的启动"></a>独立服务的启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d 独立服务名 start|stop|status|restart|</span><br><span class="line">service 独立服务名 start|stop|status|restart|</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/12/linux/linux进程管理/" rel="next" title="linux进程管理">
+                <i class="fa fa-chevron-left"></i> linux进程管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/15/linux/shell编程01/" rel="prev" title="shell编程01">
+                shell编程01 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#软件包分类"><span class="nav-number">1.</span> <span class="nav-text">软件包分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm包管理-rmp命令管理"><span class="nav-number">2.</span> <span class="nav-text">rpm包管理 - rmp命令管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm包命名原则"><span class="nav-number">2.1.</span> <span class="nav-text">rpm包命名原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm包依赖性"><span class="nav-number">2.2.</span> <span class="nav-text">rpm包依赖性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包全名与包名"><span class="nav-number">2.3.</span> <span class="nav-text">包全名与包名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包全名与包名使用场景："><span class="nav-number">2.4.</span> <span class="nav-text">包全名与包名使用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm包命令管理-查询"><span class="nav-number">2.5.</span> <span class="nav-text">rpm包命令管理(查询)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询是否安装"><span class="nav-number">2.5.1.</span> <span class="nav-text">查询是否安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询软件包详细信息"><span class="nav-number">2.5.2.</span> <span class="nav-text">查询软件包详细信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询包中文件安装位置"><span class="nav-number">2.5.3.</span> <span class="nav-text">查询包中文件安装位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询系统文件属于哪个rpm包"><span class="nav-number">2.5.4.</span> <span class="nav-text">查询系统文件属于哪个rpm包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询软件包的依赖性"><span class="nav-number">2.5.5.</span> <span class="nav-text">查询软件包的依赖性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm命令管理-校验和文件提取"><span class="nav-number">2.6.</span> <span class="nav-text">rpm命令管理-校验和文件提取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rmp包校验"><span class="nav-number">2.6.1.</span> <span class="nav-text">rmp包校验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm包管理-yum在线管理"><span class="nav-number">3.</span> <span class="nav-text">rpm包管理(yum在线管理)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络yum源"><span class="nav-number">3.1.</span> <span class="nav-text">网络yum源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用yum命令"><span class="nav-number">3.2.</span> <span class="nav-text">常用yum命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码包管理"><span class="nav-number">4.</span> <span class="nav-text">源码包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#源码包和rpm包的区别"><span class="nav-number">4.1.</span> <span class="nav-text">源码包和rpm包的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rpm包安装位置"><span class="nav-number">4.2.</span> <span class="nav-text">rpm包安装位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码包安装位置"><span class="nav-number">4.3.</span> <span class="nav-text">源码包安装位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装位置不同带来的影响"><span class="nav-number">4.4.</span> <span class="nav-text">安装位置不同带来的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码包安装过程"><span class="nav-number">4.5.</span> <span class="nav-text">源码包安装过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装准备"><span class="nav-number">4.5.1.</span> <span class="nav-text">安装准备</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务简介与分类"><span class="nav-number">5.</span> <span class="nav-text">服务简介与分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查已安装的服务"><span class="nav-number">5.1.</span> <span class="nav-text">检查已安装的服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm包安装服务的管理"><span class="nav-number">6.</span> <span class="nav-text">rpm包安装服务的管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#独立服务管理"><span class="nav-number">6.1.</span> <span class="nav-text">独立服务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#独立服务的启动"><span class="nav-number">6.1.1.</span> <span class="nav-text">独立服务的启动</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

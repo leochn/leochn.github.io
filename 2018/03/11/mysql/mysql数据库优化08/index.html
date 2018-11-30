@@ -1,0 +1,823 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="mysql,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="数据库锁的分类(对数据库操作的类型)读锁(共享锁)：针对同一份数据，多个读操作可以同时进行而不会互相影响。 写锁(排他锁)：当前写操作没有完成前，它会阻断其他写锁和读锁。">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql数据库优化08">
+<meta property="og:url" content="http://netsite.win/2018/03/11/mysql/mysql数据库优化08/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="数据库锁的分类(对数据库操作的类型)读锁(共享锁)：针对同一份数据，多个读操作可以同时进行而不会互相影响。 写锁(排他锁)：当前写操作没有完成前，它会阻断其他写锁和读锁。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁001.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁002.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁003.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁004.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁005.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁006.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql共享锁007.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁001.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁002.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁003.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁004.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁005.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁006.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁007.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁008.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql行锁009.png">
+<meta property="og:image" content="http://netsite.win/assets/images/mysql/mysql如何锁定行001.png">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.152Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql数据库优化08">
+<meta name="twitter:description" content="数据库锁的分类(对数据库操作的类型)读锁(共享锁)：针对同一份数据，多个读操作可以同时进行而不会互相影响。 写锁(排他锁)：当前写操作没有完成前，它会阻断其他写锁和读锁。">
+<meta name="twitter:image" content="http://netsite.win/assets/images/mysql/mysql共享锁001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/03/11/mysql/mysql数据库优化08/">
+
+
+
+
+
+  <title> mysql数据库优化08 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/03/11/mysql/mysql数据库优化08/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mysql数据库优化08
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T18:40:12+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据库锁的分类-对数据库操作的类型"><a href="#数据库锁的分类-对数据库操作的类型" class="headerlink" title="数据库锁的分类(对数据库操作的类型)"></a>数据库锁的分类(对数据库操作的类型)</h2><p>读锁(共享锁)：针对同一份数据，多个读操作可以同时进行而不会互相影响。</p>
+<p>写锁(排他锁)：当前写操作没有完成前，它会阻断其他写锁和读锁。<br><a id="more"></a></p>
+<h2 id="三锁"><a href="#三锁" class="headerlink" title="三锁"></a>三锁</h2><h3 id="表锁-偏读"><a href="#表锁-偏读" class="headerlink" title="表锁(偏读)"></a>表锁(偏读)</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>偏向MyISAM存储引擎，开销小，加锁快；无死锁；锁定粒度大，发生锁冲突的概率最高，并发度最低。</p>
+<h4 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`mylock`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=MyISAM <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mylock(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="string">'a'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mylock(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="string">'b'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mylock(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="string">'c'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mylock(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="string">'d'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mylock(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="string">'e'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> mylock(<span class="keyword">name</span>) <span class="keyword">VALUES</span>(<span class="string">'f'</span>);</span><br><span class="line"><span class="comment">-- 查看表上加过的锁</span></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">OPEN</span> <span class="keyword">tables</span>;</span><br><span class="line"><span class="comment">-- 手动增加表锁</span></span><br><span class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> mylock <span class="keyword">READ</span>,book WRITE;</span><br><span class="line"><span class="comment">-- 手动释放锁</span></span><br><span class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW OPEN tables;</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line">| Database           | Table                                                | In_use | Name_locked |</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line">| performance_schema | events_waits_summary_by_user_by_event_name           |      0 |           0 |</span><br><span class="line">| mysql              | help_topic                                           |      0 |           0 |</span><br><span class="line">| mybatis            | mylock                                               |      0 |           0 |</span><br><span class="line">| mybatis            | book                                                 |      0 |           0 |</span><br><span class="line">| mybatis            | student                                              |      0 |           0 |</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line"></span><br><span class="line">mysql&gt; LOCK TABLE mylock READ,book WRITE;</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW OPEN tables;</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line">| Database           | Table                                                | In_use | Name_locked |</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line">| performance_schema | events_waits_summary_by_user_by_event_name           |      0 |           0 |</span><br><span class="line">| mysql              | help_topic                                           |      0 |           0 |</span><br><span class="line">| mybatis            | mylock                                               |      1 |           0 |</span><br><span class="line">| mybatis            | book                                                 |      1 |           0 |</span><br><span class="line">| mybatis            | student                                              |      0 |           0 |</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line"></span><br><span class="line">mysql&gt; UNLOCK TABLES;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; SHOW OPEN tables;</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line">| Database           | Table                                                | In_use | Name_locked |</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br><span class="line">| performance_schema | events_waits_summary_by_user_by_event_name           |      0 |           0 |</span><br><span class="line">| mysql              | help_topic                                           |      0 |           0 |</span><br><span class="line">| mybatis            | mylock                                               |      0 |           0 |</span><br><span class="line">| mybatis            | book                                                 |      0 |           0 |</span><br><span class="line">| mybatis            | student                                              |      0 |           0 |</span><br><span class="line">+<span class="comment">--------------------+------------------------------------------------------+--------+-------------+</span></span><br></pre></td></tr></table></figure>
+<h4 id="读锁案例-session1给mylock表加read锁"><a href="#读锁案例-session1给mylock表加read锁" class="headerlink" title="(读锁案例)session1给mylock表加read锁"></a>(读锁案例)session1给mylock表加read锁</h4><p><img src="/assets/images/mysql/mysql共享锁001.png" alt="mysql共享锁"><br><img src="/assets/images/mysql/mysql共享锁002.png" alt="mysql共享锁"><br><img src="/assets/images/mysql/mysql共享锁003.png" alt="mysql共享锁"><br><img src="/assets/images/mysql/mysql共享锁004.png" alt="mysql共享锁"><br><img src="/assets/images/mysql/mysql共享锁005.png" alt="mysql共享锁"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">0.mylock表,被session1加read锁后.</span><br><span class="line">1.session1 能读mylock表.</span><br><span class="line">2.session1 不能修改mylock表.</span><br><span class="line">3.session1 不能读其他的表.</span><br><span class="line">4.session2 能读任何表,包括被session1加锁的mylock表.</span><br><span class="line">5.mylock表,被session1加锁后，session2 不能修改mylock表,处于阻塞状态(会一直等待获得锁).</span><br><span class="line">5.mylock表,被session1解锁后，session2 获得锁,对mylock表的插入操作完成.</span><br></pre></td></tr></table></figure>
+<h4 id="写锁案例"><a href="#写锁案例" class="headerlink" title="(写锁案例)"></a>(写锁案例)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.session1给mylock表加write锁后.</span><br><span class="line">2.session1, 能读mylock表,能修改mylock表,不能读其他的表.</span><br><span class="line">2.session2, 能读其他表,不能读mylock表.</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/images/mysql/mysql共享锁006.png" alt="mysql共享锁"><br><img src="/assets/images/mysql/mysql共享锁007.png" alt="mysql共享锁"></p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>1.MyISAM在执行查询语句(select)前，会自动给涉及的所有表加读锁，在执行增删改操作前，会自动给涉及的表加写锁。</p>
+<p>2.对MyISAM表的读操作(加读锁)，不会阻塞其他进程对同一表的读请求，但会阻塞对 同一表的写请求。只有当读锁释放后，才会执行其他进程的写操作。</p>
+<p>3.对MyISAM表的写操作(加写锁)，会阻塞其他进程对同一表的读和写操作，只有当写锁释放后，才会执行其他进程的读写操作。</p>
+<p>4.简而言之，就是读锁会阻塞写，但是不会阻塞读。而写锁会把读和写都阻塞。</p>
+<h4 id="如何分析表锁定"><a href="#如何分析表锁定" class="headerlink" title="如何分析表锁定"></a>如何分析表锁定</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">可以通过 show status like &apos;table%&apos;; 语句查询.</span><br><span class="line"></span><br><span class="line">这里有两个状态变量记录mysql内部表级锁定的情况：</span><br><span class="line">Table_locks_immediate:产生表级锁定的次数，表示可以立即获取锁的查询次数，每立即获取锁值加1.</span><br><span class="line"></span><br><span class="line">Table_locks_waited:出现表级锁定争用，而发生等待的次数(不能立即获取锁的次数，每等待一次锁值加1)，此值高说明存在着较严重的表级锁争用情况。</span><br><span class="line"></span><br><span class="line">MyISAM的读写锁调度是写优先，着也是MyISAM不适合做写为主表的引擎。因为写锁后，其他线程不能做任何操作，大量的更新会使查询很难得到哦锁，从而造成永远阻塞。</span><br></pre></td></tr></table></figure>
+<h3 id="行锁-偏写"><a href="#行锁-偏写" class="headerlink" title="行锁(偏写)"></a>行锁(偏写)</h3><h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><p>偏向InnoDB存储引擎，开销大，加锁慢；会出现死锁；锁定粒度最小，发生锁冲突的概率最低，并发度最高。</p>
+<p>InnoDB 与 MyISAM 两个最大的不同点:支持事务；采用了行级锁.</p>
+<p>并发事务处理带来的问题：<br>1.更新丢失：<br>当两个或多个事务选择同一行，然后基于最初选定的值更新改行时，由于每个事务都不知道其他事务的存在，就会发生丢失更新的问题，最后的更新覆盖了由其他事务所做的更新。</p>
+<p>如果一个事务完成并提交之前，另一个事务不能访问该行，则可以避免此问题。</p>
+<p>2.胀读：事务A 读取到了事务B 已经修改但尚未提交的数据，还在这个数据基础上做了操作。此时，如果事务B回滚，A读取的数据无效，不符合一致性的要求。</p>
+<p>3.不可重复读：<br>一个事务在读取某些数据后的某个时间，再次读取以前读过的数据，却发现其读出的数据已经发生了改变、或某些记录已经被删除了。这种现象叫做”不可重复读”.</p>
+<p>一句话：事务A 读取到了事务B已经提交的修改数据，不符合隔离性。</p>
+<p>4.幻读：<br>一个事务按相同的查询条件重新读取以前检索过的数据，却发现其他事务插入了满足其查询条件的新数据，这种现象就称为”幻读”.</p>
+<p>一句话：事务A读取到了事务B提交的新增数据，不符合隔离性。</p>
+<p>幻读和胀读有点类似，胀读是事务B里面修改了数据，幻读是事务B里面新增了数据。</p>
+<h4 id="案例分析-1"><a href="#案例分析-1" class="headerlink" title="案例分析"></a>案例分析</h4><p>1.创建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`test_innodb_lock`</span> (</span><br><span class="line">  <span class="string">`a`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`b`</span> <span class="built_in">varchar</span>(<span class="number">16</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span></span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">1</span>,<span class="string">'a1'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">3</span>,<span class="string">'3'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">4</span>,<span class="string">'4000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">5</span>,<span class="string">'5000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">6</span>,<span class="string">'6000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">7</span>,<span class="string">'7000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">8</span>,<span class="string">'8000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">9</span>,<span class="string">'9000'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> test_innodb_lock <span class="keyword">VALUES</span>(<span class="number">1</span>,<span class="string">'a2'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> test_innodb_lock_a <span class="keyword">ON</span> test_innodb_lock(a);</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> test_innodb_lock_b <span class="keyword">ON</span> test_innodb_lock(b);</span><br></pre></td></tr></table></figure>
+<p>2.取消session1自动提交 set autocommit=0;</p>
+<p><img src="/assets/images/mysql/mysql行锁001.png" alt="mysql行锁001"></p>
+<p>3.session1 修改 test_innodb_lock 表数据，没有提交，并查询数据(读己之所写,发现已经修改过来了)<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- session1 修改并查询数据</span></span><br><span class="line">mysql&gt; update test_innodb_lock set b='4001' where a=4;</span><br><span class="line">Query OK, 1 row affected (0.89 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_innodb_lock;</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">| a    | b    |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">|    1 | a1   |</span><br><span class="line">|    3 | 3    |</span><br><span class="line">|    4 | 4001 |</span><br><span class="line">|    5 | 5000 |</span><br><span class="line">|    6 | 6000 |</span><br><span class="line">|    7 | 7000 |</span><br><span class="line">|    8 | 8000 |</span><br><span class="line">|    9 | 9000 |</span><br><span class="line">|    1 | a2   |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
+<p>4.session2 查询数据</p>
+<p>数据并没有修改过来,没有出现脏读,并且没有出现表锁的情况<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- session2 查询数据</span></span><br><span class="line"><span class="comment"># mysql&gt; select * from test_innodb_lock;</span></span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">| a    | b    |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">|    1 | a1   |</span><br><span class="line">|    3 | 3    |</span><br><span class="line">|    4 | 4000 |</span><br><span class="line">|    5 | 5000 |</span><br><span class="line">|    6 | 6000 |</span><br><span class="line">|    7 | 7000 |</span><br><span class="line">|    8 | 8000 |</span><br><span class="line">|    9 | 9000 |</span><br><span class="line">|    1 | a2   |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>5.session1 进行commit提交<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; commit;</span><br><span class="line">Query OK, 0 rows affected (0.07 sec)</span><br></pre></td></tr></table></figure></p>
+<p>6.session1 进行commit提交后, session2 就能看到session1修改后的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from test_innodb_lock;</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">| a    | b    |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">|    1 | a1   |</span><br><span class="line">|    3 | 3    |</span><br><span class="line">|    4 | 4001 |</span><br><span class="line">|    5 | 5000 |</span><br><span class="line">|    6 | 6000 |</span><br><span class="line">|    7 | 7000 |</span><br><span class="line">|    8 | 8000 |</span><br><span class="line">|    9 | 9000 |</span><br><span class="line">|    1 | a2   |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>7.session1 进行commit提交后, session2 就能看到session1修改后的数据</p>
+<p><img src="/assets/images/mysql/mysql行锁002.png" alt="mysql行锁002"></p>
+<p>8.session1 修改第4条数据但不提交,同时session2 也修改第4条数据</p>
+<p>session1 修改数据不提交;同时session2 也修改数据,那么 session2 会一直处于阻塞状态(session1出现行锁).</p>
+<p><img src="/assets/images/mysql/mysql行锁003.png" alt="mysql行锁003"></p>
+<p>session1 提交后;同时session2 立马抢到锁,修改数据成功.此时session1和session2获取的数据时相同的.</p>
+<p><img src="/assets/images/mysql/mysql行锁004.png" alt="mysql行锁004"></p>
+<p>9.session1 修改第4条数据,同时session2修改第5条数据(行锁,能修改不同的行)</p>
+<p><img src="/assets/images/mysql/mysql行锁005.png" alt="mysql行锁005"></p>
+<h4 id="索引失效行锁变表锁"><a href="#索引失效行锁变表锁" class="headerlink" title="索引失效行锁变表锁"></a>索引失效行锁变表锁</h4><p>1.查看表索引的情况<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show index from test_innodb_lock;</span><br><span class="line">+<span class="comment">------------------+------------+--------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line">| Table            | Non_unique | Key_name           | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | <span class="keyword">Comment</span> | Index_comment |</span><br><span class="line">+<span class="comment">------------------+------------+--------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line">| test_innodb_lock |          <span class="number">1</span> | test_innodb_lock_a |            <span class="number">1</span> | a           | A         |           <span class="number">8</span> |     <span class="literal">NULL</span> | <span class="literal">NULL</span>   | YES  | BTREE      |         |               |</span><br><span class="line">| test_innodb_lock |          <span class="number">1</span> | test_innodb_lock_b |            <span class="number">1</span> | b           | A         |           <span class="number">9</span> |     <span class="literal">NULL</span> | <span class="literal">NULL</span>   | YES  | BTREE      |         |               |</span><br><span class="line">+<span class="comment">------------------+------------+--------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.03</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> test_innodb_lock;</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">| a    | b    |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">|    1 | a1   |</span><br><span class="line">|    3 | 3    |</span><br><span class="line">|    4 | 4999 |</span><br><span class="line">|    5 | 5555 |</span><br><span class="line">|    6 | 6000 |</span><br><span class="line">|    7 | 7000 |</span><br><span class="line">|    8 | 8000 |</span><br><span class="line">|    9 | 9000 |</span><br><span class="line">|    1 | a2   |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>2.session1修改第8条数据,session2修改第5条数据</p>
+<p>但是session1修改第8条数据的时候,误把varchar类型写成int类型,导致全表扫描,引起表锁,session2修改数据会形成阻塞.</p>
+<p><img src="/assets/images/mysql/mysql行锁006.png" alt="mysql行锁006"></p>
+<p><img src="/assets/images/mysql/mysql行锁007.png" alt="mysql行锁007"></p>
+<h4 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h4><p>1.删除第2条数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; delete from test_innodb_lock where a=2;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from test_innodb_lock;</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">| a    | b    |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">|    1 | a1   |</span><br><span class="line">|    3 | 3    |</span><br><span class="line">|    4 | 4999 |</span><br><span class="line">|    5 | 5555 |</span><br><span class="line">|    6 | 6000 |</span><br><span class="line">|    7 | 7000 |</span><br><span class="line">|  810 | 8000 |</span><br><span class="line">|    9 | 9000 |</span><br><span class="line">|    1 | a2   |</span><br><span class="line">+<span class="comment">------+------+</span></span><br><span class="line">9 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+<p>2.session1修改条件范围的数据,session插入条件范围的数据</p>
+<p>session1修改条件范围的数据的时候，sessoin2插入条件范围的数据操作处于阻塞状态<br><img src="/assets/images/mysql/mysql行锁008.png" alt="mysql行锁008"></p>
+<p>session1提交后，sessoin2拿到锁之后才进行插入操作,可以看到session2阻塞了48.03s<br><img src="/assets/images/mysql/mysql行锁009.png" alt="mysql行锁009"></p>
+<p>3.总结：</p>
+<p>什么是间隙锁：</p>
+<p>当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做”间隙GAP”.</p>
+<p>InnoDB也会对这个”间隙”加锁，这种锁机制就是所谓的间隙锁(Next-Key锁).</p>
+<p>危害：</p>
+<p>因为Query执行过程中通过范围查找的话，他会锁定整个范围内所有的索引键值，即使这个键值并不存在。</p>
+<p>间隙锁有一个比较致命的弱点，就是当锁定一个范围键值后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。在某些场景下这可能会对性能造成很大的危害。</p>
+<h4 id="如何锁定一行"><a href="#如何锁定一行" class="headerlink" title="如何锁定一行"></a>如何锁定一行</h4><p>select xxx for update; 锁定某一行,其他的操作会被阻塞,直到锁定行的会话提交commit.</p>
+<p><img src="/assets/images/mysql/mysql如何锁定行001.png" alt="mysql如何锁定行001"></p>
+<h4 id="行锁总结"><a href="#行锁总结" class="headerlink" title="行锁总结"></a>行锁总结</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show status like 'innodb_row_lock%';</span><br><span class="line">+<span class="comment">-------------------------------+--------+</span></span><br><span class="line">| Variable_name                 | Value  |</span><br><span class="line">+<span class="comment">-------------------------------+--------+</span></span><br><span class="line">| Innodb_row_lock_current_waits | 0      |</span><br><span class="line">| Innodb_row_lock_time          | 130185 |</span><br><span class="line">| Innodb_row_lock_time_avg      | 32546  |</span><br><span class="line">| Innodb_row_lock_time_max      | 47970  |</span><br><span class="line">| Innodb_row_lock_waits         | 4      |</span><br><span class="line">+<span class="comment">-------------------------------+--------+</span></span><br><span class="line">5 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Innodb_row_lock_time:等待总时长</span><br><span class="line">Innodb_row_lock_time_avg:等待平均时长</span><br><span class="line">Innodb_row_lock_waits:等待总次数  </span><br><span class="line"></span><br><span class="line">尤其是当等待次数很高，而且每次等待时长也不小的时候，就需要分析系统中为什么会有如此多的等待，然后根据分析结果指定优化计划。</span><br></pre></td></tr></table></figure>
+<p>优化建议：</p>
+<p>1.尽可能让所有数据检索都通过索引来完成，避免无索引行锁升级为表锁。</p>
+<p>2.合理设计索引，尽量缩小锁的范围。</p>
+<p>3.尽可能较少索引条件，避免间隙锁。</p>
+<p>4.尽量控制事务大小，减少锁定资源量和时间长度。</p>
+<p>5.尽可能低级别事务隔离。</p>
+<h3 id="页锁-介于表锁和行锁之间"><a href="#页锁-介于表锁和行锁之间" class="headerlink" title="页锁(介于表锁和行锁之间)"></a>页锁(介于表锁和行锁之间)</h3><p>开销和加锁时间界于表锁和行锁之间，会出现死锁，锁定颗粒度界于表锁和行锁之间，并发度一般。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/mysql/mysql数据库优化07/" rel="next" title="mysql数据库优化07">
+                <i class="fa fa-chevron-left"></i> mysql数据库优化07
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/java/PostgreSQL范围查询/" rel="prev" title="PostgreSQL范围查询">
+                PostgreSQL范围查询 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库锁的分类-对数据库操作的类型"><span class="nav-number">1.</span> <span class="nav-text">数据库锁的分类(对数据库操作的类型)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三锁"><span class="nav-number">2.</span> <span class="nav-text">三锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表锁-偏读"><span class="nav-number">2.1.</span> <span class="nav-text">表锁(偏读)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">2.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例分析"><span class="nav-number">2.1.2.</span> <span class="nav-text">案例分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读锁案例-session1给mylock表加read锁"><span class="nav-number">2.1.3.</span> <span class="nav-text">(读锁案例)session1给mylock表加read锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写锁案例"><span class="nav-number">2.1.4.</span> <span class="nav-text">(写锁案例)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">2.1.5.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何分析表锁定"><span class="nav-number">2.1.6.</span> <span class="nav-text">如何分析表锁定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行锁-偏写"><span class="nav-number">2.2.</span> <span class="nav-text">行锁(偏写)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例分析-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">案例分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引失效行锁变表锁"><span class="nav-number">2.2.3.</span> <span class="nav-text">索引失效行锁变表锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#间隙锁"><span class="nav-number">2.2.4.</span> <span class="nav-text">间隙锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何锁定一行"><span class="nav-number">2.2.5.</span> <span class="nav-text">如何锁定一行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行锁总结"><span class="nav-number">2.2.6.</span> <span class="nav-text">行锁总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页锁-介于表锁和行锁之间"><span class="nav-number">2.3.</span> <span class="nav-text">页锁(介于表锁和行锁之间)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

@@ -1,0 +1,753 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="javascript,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="javaScript的变量类型1.基本类型：5种基本数据类型Undefined、Null、Boolean、Number 和 String，变量是直接按值存放的，存放在栈内存中的简单数据段，可以直接访问。">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript中的深拷贝和浅拷贝">
+<meta property="og:url" content="http://netsite.win/2017/12/28/javascript/javascript中的深拷贝和浅拷贝/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="javaScript的变量类型1.基本类型：5种基本数据类型Undefined、Null、Boolean、Number 和 String，变量是直接按值存放的，存放在栈内存中的简单数据段，可以直接访问。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.104Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript中的深拷贝和浅拷贝">
+<meta name="twitter:description" content="javaScript的变量类型1.基本类型：5种基本数据类型Undefined、Null、Boolean、Number 和 String，变量是直接按值存放的，存放在栈内存中的简单数据段，可以直接访问。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2017/12/28/javascript/javascript中的深拷贝和浅拷贝/">
+
+
+
+
+
+  <title> javascript中的深拷贝和浅拷贝 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/12/28/javascript/javascript中的深拷贝和浅拷贝/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javascript中的深拷贝和浅拷贝
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T13:25:10+08:00">
+                2017-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="javaScript的变量类型"><a href="#javaScript的变量类型" class="headerlink" title="javaScript的变量类型"></a>javaScript的变量类型</h2><p>1.基本类型：<br>5种基本数据类型Undefined、Null、Boolean、Number 和 String，变量是直接按值存放的，存放在栈内存中的简单数据段，可以直接访问。<br><a id="more"></a></p>
+<p>2.引用类型：<br>存放在堆内存中的对象，变量保存的是一个指针，这个指针指向另一个位置。当需要访问引用类型（如对象，数组等）的值时，首先从栈中获得该对象的地址指针，然后再从堆内存中取得所需的数据。</p>
+<h2 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h2><p>JavaScript存储对象都是存地址的，所以浅拷贝会导致 obj1 和obj2 指向同一块内存地址。改变了其中一方的内容，都是在原来的内存上做修改会导致拷贝对象和源对象都发生改变，而深拷贝是开辟一块新的内存地址，将原对象的各个属性逐个复制进去。对拷贝对象和源对象各自的操作互不影响。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = arr1;</span><br><span class="line">arr1[<span class="number">0</span>] = <span class="string">'change'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'shallow copy: '</span> + arr1 );  <span class="comment">// shallow copy: change,2,3</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'shallow copy: '</span> + arr2 );  <span class="comment">// shallow copy: change,2,3</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="浅拷贝和深拷贝的区分"><a href="#浅拷贝和深拷贝的区分" class="headerlink" title="浅拷贝和深拷贝的区分"></a>浅拷贝和深拷贝的区分</h2><p>首先深复制和浅复制只针对像 Object, Array 这样的复杂对象的。简单来说，浅复制只复制一层对象的属性，而深复制则递归复制了所有层级.<br>下面是一个简单的浅复制实现:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">a</span>:<span class="number">1</span>, <span class="attr">arr</span>: [<span class="number">2</span>,<span class="number">3</span>] &#125;;</span><br><span class="line"><span class="keyword">var</span> shallowObj = shallowCopy(obj);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shallowCopy</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> dst = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> src) &#123;</span><br><span class="line">    <span class="keyword">if</span> (src.hasOwnProperty(prop)) &#123;</span><br><span class="line">      dst[prop] = src[prop];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dst;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为浅复制只会将对象的各个属性进行依次复制，并不会进行递归复制，而 JavaScript 存储对象都是存地址的，所以浅复制会导致 obj.arr 和 shallowObj.arr 指向同一块内存地址.<br>导致的结果:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">shallowObj.arr[<span class="number">1</span>] <span class="comment">// = 3;</span></span><br><span class="line">obj.arr[<span class="number">1</span>]        <span class="comment">// = 3</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="浅拷贝的实现"><a href="#浅拷贝的实现" class="headerlink" title="浅拷贝的实现"></a>浅拷贝的实现</h2><p>1.简单的引用复制<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shallowClone</span>(<span class="params">copyObj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> ( <span class="keyword">var</span> i <span class="keyword">in</span> copyObj) &#123;</span><br><span class="line">    obj[i] = copyObj[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> x = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: &#123; <span class="attr">f</span>: &#123; <span class="attr">g</span>: <span class="number">1</span> &#125; &#125;,</span><br><span class="line">  c: [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> y = shallowClone(x);</span><br><span class="line"><span class="built_in">console</span>.log(y.b.f === x.b.f);     <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>Object.assign()<br>Object.assign() 方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: &#123; <span class="attr">f</span>: &#123; <span class="attr">g</span>: <span class="number">1</span> &#125; &#125;,</span><br><span class="line">  c: [ <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> ]</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> y = <span class="built_in">Object</span>.assign(&#123;&#125;, x);</span><br><span class="line"><span class="built_in">console</span>.log(y.b.f === x.b.f);     <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="深拷贝的实现"><a href="#深拷贝的实现" class="headerlink" title="深拷贝的实现"></a>深拷贝的实现</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 深拷贝...</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> cloneObj = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> str, newobj = obj.constructor === <span class="built_in">Array</span> ? [] : &#123;&#125;;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span>(<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">window</span>.JSON)&#123;</span></span><br><span class="line"><span class="javascript">            str = <span class="built_in">JSON</span>.stringify(obj), <span class="comment">//系列化对象</span></span></span><br><span class="line"><span class="javascript">            newobj = <span class="built_in">JSON</span>.parse(str);  <span class="comment">//还原</span></span></span><br><span class="line"><span class="javascript">        &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> obj)&#123;</span></span><br><span class="line"><span class="javascript">                newobj[i] = <span class="keyword">typeof</span> obj[i] === <span class="string">'object'</span> ? </span></span><br><span class="line"><span class="undefined">                cloneObj(obj[i]) : obj[i]; </span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> newobj;</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> resultData = [&#123;</span></span><br><span class="line"><span class="javascript">                  <span class="string">"id"</span>: <span class="string">"320800"</span>,</span></span><br><span class="line"><span class="javascript">                  <span class="string">"parentId"</span>: <span class="string">"100000"</span>,</span></span><br><span class="line"><span class="javascript">                  <span class="string">"name"</span>: <span class="string">"江苏省"</span>,</span></span><br><span class="line"><span class="javascript">                  <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                      <span class="string">"id"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                      <span class="string">"parentId"</span>: <span class="string">"320800"</span>,</span></span><br><span class="line"><span class="javascript">                      <span class="string">"name"</span>: <span class="string">"江苏省-项目1"</span>,</span></span><br><span class="line"><span class="javascript">                      <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                          <span class="string">"id"</span>: <span class="string">"QWQWQWWQ"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"name"</span>: <span class="string">"项目1-泵房1"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目1-泵房1-设备1"</span></span></span><br><span class="line"><span class="undefined">                          &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951374939439529986"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目1-泵房1-设备2"</span></span></span><br><span class="line"><span class="undefined">                          &#125;]</span></span><br><span class="line"><span class="undefined">                      &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                          <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"name"</span>: <span class="string">"项目1-泵房2"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目1-泵房2-设备1"</span></span></span><br><span class="line"><span class="undefined">                          &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951374939439529986"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目1-泵房2-设备2"</span></span></span><br><span class="line"><span class="undefined">                          &#125;]</span></span><br><span class="line"><span class="undefined">                      &#125;]</span></span><br><span class="line"><span class="undefined">                  &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                      <span class="string">"id"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                      <span class="string">"parentId"</span>: <span class="string">"320800"</span>,</span></span><br><span class="line"><span class="javascript">                      <span class="string">"name"</span>: <span class="string">"江苏省-项目2"</span>,</span></span><br><span class="line"><span class="javascript">                      <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                          <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"name"</span>: <span class="string">"项目2-泵房1"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目2-泵房1-设备1"</span></span></span><br><span class="line"><span class="undefined">                          &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951374939439529986"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目2-泵房1-设备2"</span></span></span><br><span class="line"><span class="undefined">                          &#125;]</span></span><br><span class="line"><span class="undefined">                      &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                          <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"name"</span>: <span class="string">"项目2-泵房2"</span>,</span></span><br><span class="line"><span class="javascript">                          <span class="string">"children"</span>: [&#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951372609180696577"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目2-泵房2-设备1"</span></span></span><br><span class="line"><span class="undefined">                          &#125;, &#123;</span></span><br><span class="line"><span class="javascript">                              <span class="string">"id"</span>: <span class="string">"951374939439529986"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"parentId"</span>: <span class="string">"320801"</span>,</span></span><br><span class="line"><span class="javascript">                              <span class="string">"name"</span>: <span class="string">"项目2-泵房2-设备2"</span></span></span><br><span class="line"><span class="undefined">                          &#125;]</span></span><br><span class="line"><span class="undefined">                      &#125;]</span></span><br><span class="line"><span class="undefined">                  &#125;]</span></span><br><span class="line"><span class="undefined">              &#125;]</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> newDataCloneObj = cloneObj(resultData);</span></span><br><span class="line"><span class="javascript">    newDataCloneObj[<span class="number">0</span>].id = <span class="string">'12121212'</span>;</span></span><br><span class="line"><span class="javascript">    newDataCloneObj[<span class="number">0</span>].children[<span class="number">0</span>].id=<span class="string">'asd123456'</span></span></span><br><span class="line"><span class="javascript">    newDataCloneObj[<span class="number">0</span>].children[<span class="number">0</span>].children[<span class="number">1</span>].name =<span class="string">'asd123456设备IIIDDD'</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(resultData[<span class="number">0</span>].id);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(newDataCloneObj[<span class="number">0</span>].id);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(resultData[<span class="number">0</span>].children[<span class="number">0</span>].id);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(newDataCloneObj[<span class="number">0</span>].children[<span class="number">0</span>].id);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(resultData[<span class="number">0</span>].children[<span class="number">0</span>].children[<span class="number">1</span>].name);</span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(newDataCloneObj[<span class="number">0</span>].children[<span class="number">0</span>].children[<span class="number">1</span>].name);</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="json对象的深拷贝"><a href="#json对象的深拷贝" class="headerlink" title="json对象的深拷贝"></a>json对象的深拷贝</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">json对象的深拷贝可以用下面的两条语句实现</span><br><span class="line">JSON.parse(jsonstr);     //可以将json字符串转换成json对象 </span><br><span class="line">JSON.stringify(jsonobj); //可以将json对象转换成json对符串</span><br></pre></td></tr></table></figure>
+<pre><code class="js"><span class="keyword">var</span> str = <span class="built_in">JSON</span>.stringify(resultData);
+<span class="built_in">console</span>.log(str);
+<span class="keyword">var</span> jsonObj = <span class="built_in">JSON</span>.parse(str)
+<span class="built_in">console</span>.log(jsonObj[<span class="number">0</span>].children[<span class="number">0</span>].children[<span class="number">1</span>].name);
+</code></pre>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/21/java/如何在上产环境禁用swagger/" rel="next" title="如何在上产环境禁用swagger">
+                <i class="fa fa-chevron-left"></i> 如何在上产环境禁用swagger
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/linux/nginx代理wss协议/" rel="prev" title="nginx代理wss协议">
+                nginx代理wss协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#javaScript的变量类型"><span class="nav-number">1.</span> <span class="nav-text">javaScript的变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝和浅拷贝"><span class="nav-number">2.</span> <span class="nav-text">深拷贝和浅拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浅拷贝和深拷贝的区分"><span class="nav-number">3.</span> <span class="nav-text">浅拷贝和深拷贝的区分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浅拷贝的实现"><span class="nav-number">4.</span> <span class="nav-text">浅拷贝的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝的实现"><span class="nav-number">5.</span> <span class="nav-text">深拷贝的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#json对象的深拷贝"><span class="nav-number">6.</span> <span class="nav-text">json对象的深拷贝</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

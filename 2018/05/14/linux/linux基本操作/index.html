@@ -1,0 +1,883 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="linux的一些基本操作">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基本操作">
+<meta property="og:url" content="http://netsite.win/2018/05/14/linux/linux基本操作/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="linux的一些基本操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux基本操作">
+<meta name="twitter:description" content="linux的一些基本操作">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/05/14/linux/linux基本操作/">
+
+
+
+
+
+  <title> linux基本操作 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/05/14/linux/linux基本操作/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux基本操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T06:05:08+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>linux的一些基本操作<br><a id="more"></a></p>
+<h2 id="linux基础操作"><a href="#linux基础操作" class="headerlink" title="linux基础操作"></a>linux基础操作</h2><h3 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h3><h4 id="查看当前系统的时间：date"><a href="#查看当前系统的时间：date" class="headerlink" title="查看当前系统的时间：date"></a>查看当前系统的时间：date</h4><p>[root@localhost ~]# date +%Y-%m-%d –date=”-1day”  # 加减也可以 month|year</p>
+<p>设置时间:date -s “2018-05-14 06:50:51”  ## 修改时间</p>
+<p>修改时间后，需要写入硬件bios才能在重启后依然生效。 hwclock -w</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># date</span></span><br><span class="line">2018年 05月 14日 星期一 06:35:35 CST</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d</span></span><br><span class="line">2018-05-14</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="-1day"</span></span><br><span class="line">2018-05-13</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="+1day"</span></span><br><span class="line">2018-05-15</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="+1month"</span></span><br><span class="line">2018-06-14</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="+1year"</span></span><br><span class="line">2019-05-14</span><br><span class="line">[root@localhost ~]<span class="comment"># date -s "2018-05-14 06:50:51"</span></span><br><span class="line">2018年 05月 14日 星期一 06:50:51 CST</span><br><span class="line">[root@localhost ~]<span class="comment"># hwclock -w</span></span><br><span class="line">[root@localhost ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h4 id="who查看有谁在线-哪些人登录到了服务器"><a href="#who查看有谁在线-哪些人登录到了服务器" class="headerlink" title="who查看有谁在线(哪些人登录到了服务器)"></a>who查看有谁在线(哪些人登录到了服务器)</h4><p>1.who 查看当前在线</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># who</span></span><br><span class="line">root     pts/0        2018-05-14 06:29 (192.168.17.1)</span><br><span class="line">root     pts/1        2018-05-14 07:07 (192.168.17.130)</span><br><span class="line">[root@localhost ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>2.在linux /var/log/wtmp 日志中以二进制的形式记录了用户登陆的时间和登陆IP，用who 命令可以查看<br>who /var/log/wtmp</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop /]<span class="comment"># who /var/log/wtmp</span></span><br><span class="line">root     tty1         2017-05-01 15:33</span><br><span class="line">root     pts/0        2017-05-01 15:36 (192.168.17.1)</span><br><span class="line">root     pts/0        2017-05-01 15:39 (192.168.17.1)</span><br><span class="line">root     tty1         2017-07-05 19:53</span><br><span class="line">root     pts/0        2017-07-05 19:54 (192.168.17.1)</span><br><span class="line">root     pts/0        2017-07-08 16:47 (192.168.17.1)</span><br><span class="line">root     pts/1        2017-07-08 16:48 (192.168.17.1)</span><br><span class="line">[root@hadoop /]<span class="comment"># who /var/log/wtmp | grep 192.168.17.1 |wc -l</span></span><br><span class="line">140</span><br></pre></td></tr></table></figure>
+<h4 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h4><p>1.vi 文本编辑器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">基本用法</span><br><span class="line">    vi somefile.txt</span><br><span class="line">    首先会进入&quot;一般模式&quot;，此模式只接受各种命令快捷键，不能编辑文本内容。</span><br><span class="line">    按 i 键，就会从一般模式进入&quot;编辑模式&quot;，此模式下，敲入的都是文件内容。</span><br><span class="line">    编辑完成之后，按Esc键退出编辑模式，回到一般模式。</span><br><span class="line">    在按 : ,进入&quot;底行命令模式&quot;，输入wq命令，回车即可保存退出。</span><br><span class="line">常用快捷键(一些有用的快捷键，在一般模式下使用)</span><br><span class="line">	a 在光标后一位开发插入</span><br><span class="line">	A 在该行的最后插入</span><br><span class="line">	I 在该行的最前面插入</span><br><span class="line">	gg 直接跳到文件的首行</span><br><span class="line">	GG 直接跳到文件的末行</span><br><span class="line">	dd 删除一行</span><br><span class="line">	3dd 删除3行</span><br><span class="line">	yy 复制一行</span><br><span class="line">	3yy 复制3行</span><br><span class="line">	p 粘贴</span><br><span class="line">	u undo</span><br></pre></td></tr></table></figure>
+<h2 id="linux增强操作"><a href="#linux增强操作" class="headerlink" title="linux增强操作"></a>linux增强操作</h2><h3 id="系统管理操作"><a href="#系统管理操作" class="headerlink" title="系统管理操作"></a>系统管理操作</h3><h4 id="统计文件或文件夹"><a href="#统计文件或文件夹" class="headerlink" title="统计文件或文件夹"></a>统计文件或文件夹</h4><p>du -sh software/    ## 统计指定路径下所有的子目录和文件的大小</p>
+<p>df -h 查看磁盘的剩余空间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ll</span></span><br><span class="line">总用量 9164</span><br><span class="line">-rw-------. 1 root root    1247 5月   1 2017 anaconda-ks.cfg</span><br><span class="line">-rw-r--r--. 1 root root 9347946 7月  27 2017 apache-tomcat-9.0.0.M22.tar.gz</span><br><span class="line">drwxr-xr-x. 2 root root       6 10月 16 2017 my_registry</span><br><span class="line">-rw-r--r--. 1 root root   25680 7月  29 2017 mysql57-community-release-el7-11.noarch.rpm</span><br><span class="line">drwxr-xr-x. 3 root root      51 12月 24 07:54 software</span><br><span class="line">[root@localhost ~]<span class="comment"># du -sh *</span></span><br><span class="line">4.0K	anaconda-ks.cfg</span><br><span class="line">9.0M	apache-tomcat-9.0.0.M22.tar.gz</span><br><span class="line">0	my_registry</span><br><span class="line">28K	mysql57-community-release-el7-11.noarch.rpm</span><br><span class="line">69M	software</span><br><span class="line">[root@localhost ~]<span class="comment"># du -sh software/</span></span><br><span class="line">69M	software/</span><br><span class="line">[root@localhost ~]<span class="comment"># df -h</span></span><br><span class="line">文件系统              容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/cl_-root   17G  3.9G   14G   23% /</span><br><span class="line">devtmpfs              478M     0  478M    0% /dev</span><br><span class="line">tmpfs                 489M     0  489M    0% /dev/shm</span><br><span class="line">tmpfs                 489M  6.8M  482M    2% /run</span><br><span class="line">tmpfs                 489M     0  489M    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1            1014M  231M  784M   23% /boot</span><br><span class="line">tmpfs                  98M     0   98M    0% /run/user/0</span><br><span class="line">[root@localhost ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h4 id="wc命令"><a href="#wc命令" class="headerlink" title="wc命令"></a>wc命令</h4><p>Linux wc命令用于计算字数。</p>
+<p>利用wc指令我们可以计算文件的Byte数、字数、或是列数，若不指定文件名称、或是所给予的文件名为”-“，则wc指令会从标准输入设备读取数据。</p>
+<ul>
+<li>-c或–bytes或–chars 只显示Bytes数。</li>
+<li>-l或–lines 只显示行数。</li>
+<li>-w或–words 只显示字数。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt </span></span><br><span class="line">123.0.0.1</span><br><span class="line">1234.0.1</span><br><span class="line">12356</span><br><span class="line">12345</span><br><span class="line">12</span><br><span class="line">123.0.0.1</span><br><span class="line">1234</span><br><span class="line">567</span><br><span class="line">5678</span><br><span class="line">56</span><br><span class="line">586</span><br><span class="line">123.0.0.1</span><br><span class="line"></span><br><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt | grep 123.0.0.1 | wc </span></span><br><span class="line">      3       3      30</span><br><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt | grep 123.0.0.1 | wc -l</span></span><br><span class="line">3</span><br><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt | grep 123.0.0.1 | wc -c</span></span><br><span class="line">30</span><br><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt | grep 123.0.0.1 | wc -w</span></span><br><span class="line">3</span><br><span class="line">[root@hadoop ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p>查看linux系统登录的ip信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]# who /var/log/wtmp</span><br><span class="line">root     tty1         2017-05-01 15:33</span><br><span class="line">root     pts/0        2017-05-01 15:36 (192.168.17.1)</span><br><span class="line">root     pts/0        2017-05-01 15:39 (192.168.17.1)</span><br><span class="line">root     tty1         2017-07-05 19:53</span><br><span class="line">root     pts/0        2017-07-05 19:54 (192.168.17.1)</span><br><span class="line">root     pts/0        2017-07-08 16:47 (192.168.17.1)</span><br><span class="line">root     pts/1        2017-07-08 16:48 (192.168.17.1)</span><br><span class="line">root     pts/2        2017-07-08 17:26 (192.168.17.1)</span><br><span class="line">[root@hadoop ~]# who /var/log/wtmp | grep 192.168.17.1 |wc -l</span><br><span class="line">6</span><br><span class="line">[root@hadoop ~]#</span><br></pre></td></tr></table></figure>
+<h4 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h4><p>Centos7中systemctl命令详解:</p>
+<p>LinuxSystemctl是一个系统管理守护进程、工具和库的集合，用于取代System V、service和chkconfig命令，初始进程主要负责控制systemd系统和服务管理器。通过Systemctl –help可以看到该命令主要分为：查询或发送控制命令给systemd服务，管理单元服务的命令，服务文件的相关命令，任务、环境、快照相关命令，systemd服务的配置重载，系统开机关机相关的命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">系统中是否安装有systemd并确定当前安装的版本</span><br><span class="line"># systemctl --version</span><br><span class="line">检查systemctl的二进制文件和库文件的安装位置</span><br><span class="line"># whereis systemctl</span><br><span class="line">列出所有可用单元 </span><br><span class="line"># systemctl list-unit-files</span><br><span class="line"> 列出所有运行中单元 </span><br><span class="line"># systemctl list-units</span><br><span class="line"> 列出所有失败单元 </span><br><span class="line"># systemctl –failed</span><br><span class="line">检查某个单元（如 crond.service）是否启用 </span><br><span class="line"># systemctl is-enabled crond.service</span><br><span class="line">获取当前某个服务的CPU分配额（如nginx）</span><br><span class="line"># systemctl show -p CPUShares nginx</span><br><span class="line">检查某个服务的所有配置细节</span><br><span class="line"># systemctl show nginx</span><br></pre></td></tr></table></figure>
+<h3 id="SSH免密码登录配置"><a href="#SSH免密码登录配置" class="headerlink" title="SSH免密码登录配置"></a>SSH免密码登录配置</h3><h4 id="工作机制"><a href="#工作机制" class="headerlink" title="工作机制"></a>工作机制</h4><p>传统的网络服务程序，如FTP、POP和Telnet其本质上都是不安全的；因为它们在网络上用明文传送数据、用户帐号和用户口令，很容易受到中间人（man-in-the-middle）攻击方式的攻击。</p>
+<p>而SSH是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。利用SSH协议可以有效防止远程管理过程中的信息泄露问题。通过SSH可以对所有传输的数据进行加密，也能够防止DNS欺骗和IP欺骗。 SSH传输的数据是经过压缩的，所以可以加快传输的速度。SSH有很多功能，它既可以代替Telnet，又可以为FTP、POP、甚至为PPP提供一个安全的「通道」。 了解这么多就好了，其实ssh连接也就是可以理解成经过加密的远程访问啦。</p>
+<p>ssh的具体实现是有客户端和服务端的软件组成的。</p>
+<p>服务端是一个守护进程sshd，它在后台运行并响应来着客户端的连接请求。</p>
+<p>客户端包含ssh程序以及向scp（远程拷贝）、slogin（远程登录）、sftp（安全文件传输）等其他的应用程序。</p>
+<h4 id="认证机制"><a href="#认证机制" class="headerlink" title="认证机制"></a>认证机制</h4><p>从客户端来看，SSH提供两种级别的安全验证。</p>
+<h5 id="账号口令验证"><a href="#账号口令验证" class="headerlink" title="账号口令验证"></a>账号口令验证</h5><p>直接输入所要登陆的用户的口令是默认的方式。不需要修改配置文件。</p>
+<p>如果直接从客户端将用户密码传输到服务器，那么密码信息很容易被中间人截获，从而实现重放攻击。ssh的实现方式是：</p>
+<p>1.客户端向ssh服务器发出请求，服务器将自己的公钥返回给客户端；</p>
+<p>2.客户端用服务器的公钥加密自己的登录密码，再将信息发送给服务器；</p>
+<p>3.服务器接收到客户端传送的密码，用自己的私钥解码，如果结果正确，则同意登录，建立起连接。</p>
+<p>这种方式还是有漏洞的，中间人可以假扮成服务器，骗取客户端的密码。</p>
+<h5 id="RSA加密验证"><a href="#RSA加密验证" class="headerlink" title="RSA加密验证"></a>RSA加密验证</h5><p>rsa加密验证方式，充分利用了非对称加密体系的优势，不需要在网络传输密码，完全杜绝了中间人攻击的可能。步骤如下：</p>
+<p>准备工作</p>
+<p>-1.客户端先使用 ssh-keygen 命令，生成私钥和公钥。按照默认配置，私钥会被保存在~/.ssh/id_rsa中，公钥则在~/.ssh/id_rsa.pub中。(一般别修改这里的文件)</p>
+<p>0.客户端通过安全的方式将公钥发送给服务器。在服务器端，将客户端发的公钥写入到~/.ssh/authorized_keys文件末尾。</p>
+<p>建立连接</p>
+<p>1.客户端发出申请。服务器产生session密钥对，返回通过对应客户端的公钥加密后的session公钥。</p>
+<p>2.客户端用自己的密钥解密信息，得到session公钥。</p>
+<p>3.之后的数据交互，都通过对方方公钥加密，对方收到信息后，用其私钥解密，实现安全加密过程。</p>
+<h5 id="ssh免密码登录配置"><a href="#ssh免密码登录配置" class="headerlink" title="ssh免密码登录配置"></a>ssh免密码登录配置</h5><p>1.实现效果：</p>
+<p>有两台服务器：”192.168.17.130” 和 “192.168.17.128”</p>
+<p>需要实现：在服务器”192.168.17.130”上实现ssh无密码连接服务器”192.168.17.128”</p>
+<p>2.实现步骤：</p>
+<p>1）. 在”192.168.17.130”服务器上使用”ssh-keygen -t rsa”命令来创建公钥。<br>(会问你存放的目录，如果不需要修改，直接回车两次即可，默认保存路径为”~/.ssh/“)</p>
+<p>ssh-keygen -t rsa -C app<a href="mailto:zzyybs@126.com" target="_blank" rel="noopener">@163.com</a>, 然后回车</p>
+<p>代码参数含义： -t 指定密钥类型，默认是 rsa ，可以省略。 -C 设置注释文字，比如邮箱。</p>
+<p>2）. 再将 192.168.17.130 服务器自己的公钥拷贝并追加到 192.168.17.128 服务器的授权列表文件 authorized_keys中。</p>
+<p>也可以直接一条命令: ssh-copy-id 192.168.17.128  (推荐用这条命令)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]<span class="comment"># ssh-keygen</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:WcDY9eG1sFXugexglTri+fCbigDgjwLGIPe9/kAW+gc root@hadoop</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 2048]----+</span></span><br><span class="line"><span class="string">|       +... o.+..|</span></span><br><span class="line"><span class="string">|      . o. ooB.o |</span></span><br><span class="line"><span class="string">|o..   .   .o=o...|</span></span><br><span class="line"><span class="string">|=... o . +.oo  ..|</span></span><br><span class="line"><span class="string">|.+ .o E S o ..  .|</span></span><br><span class="line"><span class="string">|o o .+ o +       |</span></span><br><span class="line"><span class="string">|.. . .+ . +      |</span></span><br><span class="line"><span class="string">|.    ..o.  o.    |</span></span><br><span class="line"><span class="string">|      .o...o.    |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br><span class="line"><span class="string">[root@hadoop ~]# cd .ssh/</span></span><br><span class="line"><span class="string">[root@hadoop .ssh]# pwd</span></span><br><span class="line"><span class="string">/root/.ssh</span></span><br><span class="line"><span class="string">[root@hadoop .ssh]# ll</span></span><br><span class="line"><span class="string">总用量 12</span></span><br><span class="line"><span class="string">-rw------- 1 root root 1679 5月  18 06:14 id_rsa</span></span><br><span class="line"><span class="string">-rw-r--r-- 1 root root  393 5月  18 06:14 id_rsa.pub</span></span><br><span class="line"><span class="string">-rw-r--r-- 1 root root  176 5月  14 07:00 known_hosts</span></span><br><span class="line"><span class="string">[root@hadoop .ssh]# cat id_rsa.pub </span></span><br><span class="line"><span class="string">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDORn9j++aARyD0pAK4SVOHQNqcUG8+DpUVHrmMurBAhcd7FGdihVnFK5pI+/SJjpGhtUfV1IRqc9xTOOvtMhoL1NPP7x6qzYjwJVKF+0FBsXpu1IipwFKi4HFhyaic1m8/llBHKNRXUTUYP3ayK9lctRXHW/QMwe4el9VhnzkO9SJjYFl24Eg1R14dABaKKYPilBaUDsCTojin1cruHktUIv3QuTqFdnQiqnIL6sH9spSWTOgOJr63+hE1wYFc/lRZKsLoyq8QXQRwqvBSKkoRijLb4aeo1Qvj+gWCus8zFYteo+iqlyad1KfHdZTYxX0nvz7Mr/yZF1V/BT5ZqXg5 root@hadoop</span></span><br><span class="line"><span class="string">[root@hadoop .ssh]# ssh 192.168.17.128</span></span><br><span class="line"><span class="string">root@192.168.17.128'</span>s password: </span><br><span class="line">Last login: Fri May 18 06:21:07 2018 from 192.168.17.1</span><br><span class="line">[root@localhost ~]<span class="comment"># ll -a</span></span><br><span class="line">dr-xr-x---.  6 root root    4096 12月 24 07:48 .</span><br><span class="line">dr-xr-xr-x. 17 root root     224 5月   1 2017 ..</span><br><span class="line">-rw-------.  1 root root    1247 5月   1 2017 anaconda-ks.cfg</span><br><span class="line">-rw-------.  1 root root    9572 5月  14 07:41 .bash_history</span><br><span class="line">-rw-r--r--.  1 root root      18 12月 29 2013 .bash_logout</span><br><span class="line">-rw-r--r--.  1 root root     176 12月 29 2013 .bash_profile</span><br><span class="line">-rw-r--r--.  1 root root     176 12月 29 2013 .bashrc</span><br><span class="line">-rw-r--r--.  1 root root     100 12月 29 2013 .cshrc</span><br><span class="line">drwxr-xr-x.  2 root root       6 10月 16 2017 my_registry</span><br><span class="line">-rw-------.  1 root root       0 8月  11 2017 .mysql_history</span><br><span class="line">drwxr-xr-x.  2 root root      40 7月  21 2017 .oracle_jre_usage</span><br><span class="line">drwxr-----.  3 root root      19 9月  28 2017 .pki</span><br><span class="line">drwxr-xr-x.  3 root root      51 12月 24 07:54 software</span><br><span class="line">-rw-r--r--.  1 root root     129 12月 29 2013 .tcshrc</span><br><span class="line">[root@localhost ~]<span class="comment"># exit</span></span><br><span class="line">登出</span><br><span class="line">Connection to 192.168.17.128 closed.</span><br><span class="line">[root@hadoop .ssh]<span class="comment"># ssh-copy-id 192.168.17.128</span></span><br><span class="line">/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: <span class="string">"/root/.ssh/id_rsa.pub"</span></span><br><span class="line">/usr/bin/ssh-copy-id: INFO: attempting to <span class="built_in">log</span> <span class="keyword">in</span> with the new key(s), to filter out any that are already installed</span><br><span class="line">/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- <span class="keyword">if</span> you are prompted now it is to install the new keys</span><br><span class="line">root@192.168.17.128<span class="string">'s password: </span></span><br><span class="line"><span class="string">Permission denied, please try again.</span></span><br><span class="line"><span class="string">root@192.168.17.128'</span>s password: </span><br><span class="line"></span><br><span class="line">Number of key(s) added: 1</span><br><span class="line"></span><br><span class="line">Now try logging into the machine, with:   <span class="string">"ssh '192.168.17.128'"</span></span><br><span class="line">and check to make sure that only the key(s) you wanted were added.</span><br><span class="line"></span><br><span class="line">[root@hadoop .ssh]<span class="comment"># ssh 192.168.17.128</span></span><br><span class="line">Last failed login: Fri May 18 06:33:32 CST 2018 from 192.168.17.130 on ssh:notty</span><br><span class="line">There was 1 failed login attempt since the last successful login.</span><br><span class="line">Last login: Fri May 18 06:32:50 2018 from 192.168.17.130</span><br><span class="line">[root@localhost ~]<span class="comment"># ll -a</span></span><br><span class="line">dr-xr-x---.  7 root root    4096 5月  18 06:33 .</span><br><span class="line">dr-xr-xr-x. 17 root root     224 5月   1 2017 ..</span><br><span class="line">-rw-------.  1 root root    1247 5月   1 2017 anaconda-ks.cfg</span><br><span class="line">-rw-r--r--.  1 root root 9347946 7月  27 2017 apache-tomcat-9.0.0.M22.tar.gz</span><br><span class="line">-rw-------.  1 root root    9572 5月  14 07:41 .bash_history</span><br><span class="line">-rw-r--r--.  1 root root      18 12月 29 2013 .bash_logout</span><br><span class="line">-rw-r--r--.  1 root root     176 12月 29 2013 .bash_profile</span><br><span class="line">-rw-r--r--.  1 root root     176 12月 29 2013 .bashrc</span><br><span class="line">-rw-r--r--.  1 root root     100 12月 29 2013 .cshrc</span><br><span class="line">drwxr-xr-x.  2 root root       6 10月 16 2017 my_registry</span><br><span class="line">-rw-r--r--.  1 root root   25680 7月  29 2017 mysql57-community-release-el7-11.noarch.rpm</span><br><span class="line">-rw-------.  1 root root       0 8月  11 2017 .mysql_history</span><br><span class="line">drwxr-xr-x.  2 root root      40 7月  21 2017 .oracle_jre_usage</span><br><span class="line">drwxr-----.  3 root root      19 9月  28 2017 .pki</span><br><span class="line">drwxr-xr-x.  3 root root      51 12月 24 07:54 software</span><br><span class="line">drwx------.  2 root root      29 5月  18 06:33 .ssh</span><br><span class="line">-rw-r--r--.  1 root root     129 12月 29 2013 .tcshrc</span><br><span class="line">[root@localhost ~]<span class="comment"># cd .ssh/</span></span><br><span class="line">[root@localhost .ssh]<span class="comment"># ll</span></span><br><span class="line">总用量 4</span><br><span class="line">-rw-------. 1 root root 393 5月  18 06:33 authorized_keys</span><br><span class="line">[root@localhost .ssh]<span class="comment"># cat authorized_keys </span></span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDORn9j++aARyD0pAK4SVOHQNqcUG8+DpUVHrmMurBAhcd7FGdihVnFK5pI+/SJjpGhtUfV1IRqc9xTOOvtMhoL1NPP7x6qzYjwJVKF+0FBsXpu1IipwFKi4HFhyaic1m8/llBHKNRXUTUYP3ayK9lctRXHW/QMwe4el9VhnzkO9SJjYFl24Eg1R14dABaKKYPilBaUDsCTojin1cruHktUIv3QuTqFdnQiqnIL6sH9spSWTOgOJr63+hE1wYFc/lRZKsLoyq8QXQRwqvBSKkoRijLb4aeo1Qvj+gWCus8zFYteo+iqlyad1KfHdZTYxX0nvz7Mr/yZF1V/BT5ZqXg5 root@hadoop</span><br><span class="line">[root@localhost .ssh]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h3><h4 id="uname命令"><a href="#uname命令" class="headerlink" title="uname命令"></a>uname命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用于打印当前系统相关信息（内核版本号、硬件架构、主机名称和操作系统类型等）</span><br><span class="line">uname(选项)</span><br><span class="line">-a或--all：显示全部的信息；</span><br><span class="line">-m或--machine：显示电脑类型；</span><br><span class="line">-n或-nodename：显示在网络上的主机名称；</span><br><span class="line">-r或--release：显示操作系统的发行编号；</span><br><span class="line">-s或--sysname：显示操作系统名称；</span><br><span class="line">-v：显示操作系统的版本；</span><br><span class="line">-p或--processor：输出处理器类型或&quot;unknown&quot;；</span><br><span class="line">-i或--hardware-platform：输出硬件平台或&quot;unknown&quot;；</span><br><span class="line">-o或--operating-system：输出操作系统名称；</span><br><span class="line">--help：显示帮助；</span><br><span class="line">--version：显示版本信息。</span><br></pre></td></tr></table></figure>
+<h4 id="主机名配置"><a href="#主机名配置" class="headerlink" title="主机名配置"></a>主机名配置</h4><p>查看主机名:hostname</p>
+<p>在CentOS/RHEL 7中，有个叫hostnamectl的命令行工具，它允许你查看或修改与主机名相关的配置</p>
+<p>centos修改主机名(立即生效，重启后也永久生效): hostnamectl set-hostname hadoop，然后在/etc/hosts中添加hadoop。</p>
+<p>注意*：修改的主机名，带有任何的特殊字符或空白字符都将会被移除，并且提供的参数中任何大写字母都会自动转化成小写</p>
+<p>一旦修改了静态主机名，/etc/hostname 将被自动更新。然而，/etc/hosts 不会更新以保存所做的修改，所以你需要手动更新/etc/hosts。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# hostname</span><br><span class="line">localhost.localdomain</span><br><span class="line">[root@localhost etc]# hostnamectl set-hostname hadoop</span><br><span class="line">[root@localhost etc]# hostname</span><br><span class="line">hadoop</span><br><span class="line">[root@localhost etc]# vi /etc/hosts</span><br><span class="line">[root@localhost etc]# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 hadoop</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">[root@localhost etc]# reboot</span><br><span class="line">Connection closing...Socket close.</span><br><span class="line"></span><br><span class="line">Connection closed by foreign host.</span><br><span class="line"></span><br><span class="line">Disconnected from remote host(vm-192.168.17.130) at 05:47:36.</span><br><span class="line"></span><br><span class="line">Type `help&apos; to learn how to use Xshell prompt.</span><br><span class="line">[c:\~]$ </span><br><span class="line"></span><br><span class="line">Connecting to 192.168.17.130:22...</span><br><span class="line">Connection established.</span><br><span class="line">To escape to local shell, press &apos;Ctrl+Alt+]&apos;.</span><br><span class="line"></span><br><span class="line">Last login: Tue May 15 05:45:18 2018 from 192.168.17.1</span><br><span class="line">[root@hadoop ~]# hostname</span><br><span class="line">hadoop</span><br><span class="line">[root@hadoop ~]# hostnamectl status</span><br><span class="line">   Static hostname: hadoop</span><br><span class="line">         Icon name: computer-vm</span><br><span class="line">           Chassis: vm</span><br><span class="line">        Machine ID: 950736a7a54044e9ad682443626422be</span><br><span class="line">           Boot ID: bf5e3ffeae9843f6862cd3e5122020c6</span><br><span class="line">    Virtualization: vmware</span><br><span class="line">  Operating System: CentOS Linux 7 (Core)</span><br><span class="line">       CPE OS Name: cpe:/o:centos:centos:7</span><br><span class="line">            Kernel: Linux 3.10.0-693.2.2.el7.x86_64</span><br><span class="line">      Architecture: x86-64</span><br><span class="line">[root@hadoop ~]# cat /etc/hostname </span><br><span class="line">hadoop</span><br><span class="line">[root@hadoop ~]#</span><br></pre></td></tr></table></figure>
+<h4 id="IP地址配置"><a href="#IP地址配置" class="headerlink" title="IP地址配置"></a>IP地址配置</h4><h5 id="临时修改IP"><a href="#临时修改IP" class="headerlink" title="临时修改IP"></a>临时修改IP</h5><p>ifconfig eno16777736 192.168.1.101 </p>
+<p>注意（eno16777736）是默认第一个网络接口名称，网卡名字</p>
+<h5 id="永久修改IP"><a href="#永久修改IP" class="headerlink" title="永久修改IP"></a>永久修改IP</h5><p>第一步：查看网络接口</p>
+<p>ifconfig</p>
+<p>第二步：去对应的网络接口配置文件修改配置，注意文件名称是（ifcfg-默认第一个网络接口名称），文件路径是/etc/sysconfig/network-scripts/</p>
+<p>vim /etc/sysconfig/network-scripts/ifcfg-网络接口名称</p>
+<p>修改以下配置</p>
+<p>TYPE=Ethernet</p>
+<p>BOOTPROTO=static</p>
+<p>DEFROUTE=yes</p>
+<p>IPV4_FAILURE_FATAL=no</p>
+<p>IPV6INIT=yes</p>
+<p>IPV6_AUTOCONF=yes</p>
+<p>IPV6_DEFROUTE=yes</p>
+<p>IPV6_FAILURE_FATAL=no</p>
+<p>NAME=eno16777736</p>
+<p>UUID=9e8d604f-d991-4aa2-88a3-4c679e6f139c</p>
+<p>DEVICE=eno16777736</p>
+<p>ONBOOT=yes</p>
+<p>PEERDNS=yes</p>
+<p>PEERROUTES=yes</p>
+<p>IPV6_PEERDNS=yes</p>
+<p>IPV6_PEERROUTES=yes</p>
+<p>HWADDR=00:0c:29:ce:3f:3c  #MAC地址</p>
+<p>IPADDR=192.168.1.104     #静态IP</p>
+<p>GATEWAY=192.168.1.2     #默认网关</p>
+<p>NETMASK=255.255.255.0    #子网掩码</p>
+<p>DNS1=192.168.1.2         #DNS配置</p>
+<p>第三步：重启网络服务</p>
+<p>servicenetwork restart</p>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DEVICE=物理设备名</span><br><span class="line">IPADDR=IP地址</span><br><span class="line">NETMASK=掩码值</span><br><span class="line">NETWORK=网络地址</span><br><span class="line">BROADCAST=广播地址</span><br><span class="line">GATEWAY=网关地址</span><br><span class="line">ONBOOT=[yes|no]（引导时是否激活设备）</span><br><span class="line">USERCTL=[yes|no]（非root用户是否可以控制该设备）</span><br><span class="line">BOOTPROTO=[none|static|bootp|dhcp]（引导时不使用协议|静态分配|BOOTP协议|DHCP协议）</span><br><span class="line">HWADDR= 你的MAC地址</span><br></pre></td></tr></table></figure>
+<h4 id="网络服务管理"><a href="#网络服务管理" class="headerlink" title="网络服务管理"></a>网络服务管理</h4><h4 id="linux的网卡坏了怎么办"><a href="#linux的网卡坏了怎么办" class="headerlink" title="linux的网卡坏了怎么办"></a>linux的网卡坏了怎么办</h4><h3 id="高级文本处理命令"><a href="#高级文本处理命令" class="headerlink" title="高级文本处理命令"></a>高级文本处理命令</h3><h4 id="cut命令"><a href="#cut命令" class="headerlink" title="cut命令"></a>cut命令</h4><p>cut命令可以从一个文本文件或者文本流中提取文本列</p>
+<p>cut -d’分割字符’ -f fields   ## 用于有特定分割字符</p>
+<p>cut -c 字符区间                  ## 用于有特定分割字符</p>
+<p>选项与参数：</p>
+<p>​    -d： 后面接分割字符，与 -f 一起使用；</p>
+<p>​    -f ：依据 -d 的分割字符将一段信息分割成为数段，用 -f 取出第几段的意思；</p>
+<p>​    -c ：以字符(characters) 的单位取出固定字符区间。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo $PATH | cut -d&apos;:&apos; -f 6         #将PATH变量取出，找出第6个路径</span><br><span class="line">echo $PATH | cut -d&apos;:&apos; -f 3,6       #将PATH变量取出，找出第3个和第6个路径</span><br><span class="line">echo $PATH | cut -d&apos;:&apos; -f 1-3,6     #将PATH变量取出，找出第1-3个和第6个路径</span><br><span class="line">echo $PATH | cut -d&apos;:&apos; -f 3-        #将PATH变量取出，找出第3个到最后</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop /]<span class="comment"># echo $PATH</span></span><br><span class="line">/usr/<span class="built_in">local</span>/src/java/jdk1.8.0_141/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/root/bin</span><br><span class="line">[root@hadoop /]<span class="comment"># echo $PATH | cut -d':' -f 5</span></span><br><span class="line">/usr/bin</span><br><span class="line">[root@hadoop /]<span class="comment"># echo $PATH | cut -d':' -f 6</span></span><br><span class="line">/root/bin</span><br><span class="line">[root@hadoop /]<span class="comment"># echo $PATH | cut -d':' -f 3,6</span></span><br><span class="line">/usr/<span class="built_in">local</span>/bin:/root/bin</span><br><span class="line">[root@hadoop /]<span class="comment"># echo $PATH | cut -d':' -f 1-3,6</span></span><br><span class="line">/usr/<span class="built_in">local</span>/src/java/jdk1.8.0_141/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/root/bin</span><br><span class="line">[root@hadoop /]<span class="comment"># echo $PATH | cut -d':' -f 3-</span></span><br><span class="line">/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/root/bin</span><br></pre></td></tr></table></figure>
+<h4 id="sed命令"><a href="#sed命令" class="headerlink" title="sed命令"></a>sed命令</h4><h5 id="删除行-d-命令"><a href="#删除行-d-命令" class="headerlink" title="删除行: d 命令"></a>删除行: d 命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">1.删除行: d 命令</span><br><span class="line">  sed &apos;2d&apos; example          # 删除example文件的第2行</span><br><span class="line">  sed &apos;2,$d&apos; example        # 删除example文件的第2行到末尾所有行</span><br><span class="line">  sed &apos;$d&apos; example          # 删除example文件的最后1行</span><br><span class="line">  sed &apos;/test/&apos;d example     # 删除example文件中,所有包含test的行</span><br><span class="line"></span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">aaaaaaaaaaa1</span><br><span class="line">bbbbbbbbbbb2</span><br><span class="line">ccccc333333</span><br><span class="line">dddd444444</span><br><span class="line">eeeeee555555</span><br><span class="line">fffff666666</span><br><span class="line">gggggg777777</span><br><span class="line">8888888888</span><br><span class="line">9999999999999</span><br><span class="line">[root@hadoop ~]# sed 2d test.txt </span><br><span class="line">aaaaaaaaaaa1</span><br><span class="line">ccccc333333</span><br><span class="line">dddd444444</span><br><span class="line">eeeeee555555</span><br><span class="line">fffff666666</span><br><span class="line">gggggg777777</span><br><span class="line">8888888888</span><br><span class="line">9999999999999</span><br></pre></td></tr></table></figure>
+<h5 id="新增行：a-命令"><a href="#新增行：a-命令" class="headerlink" title="新增行：a 命令"></a>新增行：a 命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">2.新增行：a 命令</span><br><span class="line">其中a命令表示在指定行的后面附加一行，1a则是在第一行的后面添加一行，添加的内容就是a后面的内容，如果a的前面没有地址限定则在所有行的后面都会添加指定的字符串.</span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@hadoop ~]# sed &apos;1a hello sed&apos; test.txt </span><br><span class="line">a</span><br><span class="line">hello sed</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@hadoop ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="替换行：c-命令"><a href="#替换行：c-命令" class="headerlink" title="替换行：c 命令"></a>替换行：c 命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">3.替换行：c 命令</span><br><span class="line">命令c会替换指定的行的所有内容，替换成其后面的字符串，所有的新增，删除，替换行，这些命令前面的地址修饰都可以指定地址空间，也都可以使用正则表达式，命令会应用在选出的符合地址条件的所有行上面.例如：</span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@hadoop ~]# sed &apos;1c hello world&apos; test.txt</span><br><span class="line">hello world</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@hadoop ~]# sed &apos;/^b/c hello world&apos; test.txt</span><br><span class="line">a</span><br><span class="line">hello world</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">[root@hadoop ~]#</span><br><span class="line">替换以b开头的行，其内容是c命令后面的字符串</span><br></pre></td></tr></table></figure>
+<h5 id="替换部分字符串而不是整行：s-命令"><a href="#替换部分字符串而不是整行：s-命令" class="headerlink" title="替换部分字符串而不是整行：s 命令"></a>替换部分字符串而不是整行：s 命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">4.替换部分字符串而不是整行：s 命令</span><br><span class="line"></span><br><span class="line">## 我们这里说的就是s命令，执行的结果是我们文件中的 bc 被替换成 BC</span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">a</span><br><span class="line">bcdefg</span><br><span class="line">cgdsag</span><br><span class="line">d</span><br><span class="line">[root@hadoop ~]# sed &apos;s/bc/BC/&apos; test.txt</span><br><span class="line">a</span><br><span class="line">BCdefg</span><br><span class="line">cgdsag</span><br><span class="line">d</span><br><span class="line"></span><br><span class="line">## 可以看到第6行的ccaa中的aa是没有被替换的，也就是说此时仅仅替换了每一行搜索到的第一个aa字符串进行操作，那么如果要对一行里面的所有的符合条件的字符串都做替换操作呢，我们可以使用参数g。在最后一个斜杠后面加上g选项之后，表示进行全局替换，也就是说一行中所有符合条件的旧字符串都会被替换成新字符串，而不仅仅是第一个。</span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">11 aa</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">55 2e</span><br><span class="line">66 aaff ccaa</span><br><span class="line">zz ggaa</span><br><span class="line">[root@hadoop ~]# sed &apos;s/aa/AA/&apos; test.txt</span><br><span class="line">11 AA</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">55 2e</span><br><span class="line">66 AAff ccaa</span><br><span class="line">zz ggAA</span><br><span class="line">[root@hadoop ~]# sed &apos;s/aa/AA/g&apos; test.txt</span><br><span class="line">11 AA</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">55 2e</span><br><span class="line">66 AAff ccAA</span><br><span class="line">zz ggAA</span><br><span class="line"></span><br><span class="line">## 可以看到仅仅对第一行进行了替换操作，1s 。</span><br><span class="line">[root@hadoop ~]# sed &apos;1s/aa/AA/g&apos; test.txt</span><br><span class="line">11 AA</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">55 2e</span><br><span class="line">66 aaff ccaa</span><br><span class="line">zz ggaa</span><br><span class="line"></span><br><span class="line">## 我们在s命令前面添加了 /^[0-9]/ 这个修饰，该正则表达式表示对所有以数字开头的行，执行s操作。</span><br><span class="line">[root@hadoop ~]# sed &apos;/^[0-9]/s/aa/AA/g&apos; test.txt</span><br><span class="line">11 AA</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">55 2e</span><br><span class="line">66 AAff ccAA</span><br><span class="line">zz ggaa</span><br><span class="line"></span><br><span class="line">## 另外一个要说明的是  s/待替换的字符串/新字符串/ 这种格式中 / 作为分隔符并不是一定的，当使用s命令时候，我们可以使用别的分隔符，实际上s后面紧接着的字符就是分隔符，所以不一定是 / 符号。例如：</span><br><span class="line">echo &apos;aabbccaadd&apos; | sed s#aa#AA#g</span><br><span class="line">输出：</span><br><span class="line">AAbbccAAdd</span><br><span class="line">这里s命令后面跟着的#符号被当作分隔符了</span><br></pre></td></tr></table></figure>
+<h5 id="搜索并输出行内容"><a href="#搜索并输出行内容" class="headerlink" title="搜索并输出行内容"></a>搜索并输出行内容</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">sed还提供一个p命令用于搜索符合条件的行，并输出该行的内容，而不做其他的任何修改，例如：</span><br><span class="line">//test.txt</span><br><span class="line">11 aa</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line"></span><br><span class="line">sed &apos;2p&apos; test.txt</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">11 aa</span><br><span class="line">22 bb</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line"></span><br><span class="line">可以看到第二行被输出来了，但是sed好像将文件的所有内容输出了一遍，而第2行则多输出了一次，实际上sed默认情况下是会将所有标准输入的数据又重新输出到标准输出的，我们可以加上 -n 选项让sed仅仅是输出经过处理之后的那些行，而不是输出之前从标准输入中获取到的所有行内容，例如：</span><br><span class="line"></span><br><span class="line">sed -n &apos;2p&apos; test.txt</span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">22 bb</span><br><span class="line"></span><br><span class="line">这样仅仅会输出p命令的处理结果了，-n 选项一般是与p命令联合使用的，其他的增加，删除，替换行的命令是不需要 -n 选项的</span><br></pre></td></tr></table></figure>
+<h5 id="将修改应用到文件中"><a href="#将修改应用到文件中" class="headerlink" title="将修改应用到文件中"></a>将修改应用到文件中</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">我们之前做的所有实验，实际上都没有修改test.txt文件的内容，也就是说我们看到的修改结果仅仅输出到控制台上，而文件test.txt的内容是没有修改的，我们可以使用 -i 选项告诉sed直接修改文件的内容，而不是将修改结果输出到终端上，例如：</span><br><span class="line">sed -i &apos;2d&apos; test.txt </span><br><span class="line">命令运行之后，我们发现test.txt的第2行没有了</span><br><span class="line"></span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">11 aa</span><br><span class="line">22 bb</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">[root@hadoop ~]# sed -i &apos;2d&apos; test.txt</span><br><span class="line">[root@hadoop ~]# cat test.txt </span><br><span class="line">11 aa</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">[root@hadoop ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="sed正则中的元字符"><a href="#sed正则中的元字符" class="headerlink" title="sed正则中的元字符"></a>sed正则中的元字符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">我们知道sed中的命令前面可以使用地址范围进行限制，表示对文件的某些符合条件的行执行相应的操作，其中我们可以使用正则表达式选出要操作的行，而sed中正则的语法可能与我们其他命令的正则语法有一些不同，这里我们有必要列出sed中常用的正则元字符：</span><br><span class="line"></span><br><span class="line">$ 表示行尾 </span><br><span class="line">^ 表示行首</span><br><span class="line">[a-z0-9]表示字符范围</span><br><span class="line">[^]表示除了字符集中的字符以外的字符 </span><br><span class="line"></span><br><span class="line">sed的正则中  \(\)  和 \&#123;m,n\&#125; 需要转义 </span><br><span class="line">. 表示任意字符  </span><br><span class="line">* 表示零个或者多个  </span><br><span class="line">\+ 一次或多次　　</span><br><span class="line">\? 零次或一次    </span><br><span class="line">\| 表示或语法</span><br></pre></td></tr></table></figure>
+<h4 id="awk命令"><a href="#awk命令" class="headerlink" title="awk命令"></a>awk命令</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>awk是一个强大的文本分析工具，相对于grep的查找，sed的编辑，awk在其对数据分析并生成报告时，显得尤为强大。简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。</p>
+<p>awk有3个不同版本: awk、nawk和gawk，未作特别说明，一般指gawk，gawk 是 AWK 的 GNU 版本。</p>
+<p>awk其名称得自于它的创始人 Alfred Aho 、Peter Weinberger 和 Brian Kernighan 姓氏的首个字母。实际上 AWK 的确拥有自己的语言： AWK 程序设计语言 ， 三位创建者已将它正式定义为“样式扫描和处理语言”。它允许您创建简短的程序，这些程序读取输入文件、为数据排序、处理数据、对输入执行计算以及生成报表，还有无数其他的功能。</p>
+<p>通常，awk是以文件的一行为处理单位的。awk每接收文件的一行，然后执行相应的命令，来处理文本。</p>
+<h5 id="入门实例"><a href="#入门实例" class="headerlink" title="入门实例"></a>入门实例</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">## 假设last -n 5的输出如下:</span><br><span class="line">[root@hadoop ~]# last -n 5</span><br><span class="line">root     pts/0        192.168.17.1     Tue May 15 05:49   still logged in   </span><br><span class="line">reboot   system boot  3.10.0-693.2.2.e Tue May 15 05:47 - 06:46 (2+00:58)   </span><br><span class="line">root     pts/0        192.168.17.1     Tue May 15 05:45 - crash  (00:02)    </span><br><span class="line">reboot   system boot  3.10.0-693.2.2.e Tue May 15 05:44 - 06:46 (2+01:02)   </span><br><span class="line">root     pts/0        192.168.17.1     Mon May 14 21:50 - crash  (07:53)    </span><br><span class="line"></span><br><span class="line">wtmp begins Mon May  1 15:32:50 2017</span><br><span class="line">[root@hadoop ~]# </span><br><span class="line"></span><br><span class="line">## 如果只是显示最近登录的5个帐号</span><br><span class="line">[root@hadoop ~]# last -n 5 | awk  &apos;&#123;print $1&#125;&apos;last -n 5 | awk  &apos;&#123;print $1&#125;&apos;</span><br><span class="line">root</span><br><span class="line">reboot</span><br><span class="line">root</span><br><span class="line">reboot</span><br><span class="line">root</span><br><span class="line"></span><br><span class="line">wtmp</span><br><span class="line">[root@hadoop ~]#</span><br><span class="line">awk工作流程是这样的：读入有’\n’换行符分割的一条记录，然后将记录按指定的域分隔符划分域，填充域，0则表示所有域,1表示第一个域,n表示第n个域。默认域分隔符是&quot;空白键&quot;或&quot;[tab]键&quot;,所以1表示登录用户，$3表示登录用户ip,以此类推。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 如果只是显示/etc/passwd的账户</span><br><span class="line">#cat /etc/passwd |awk  -F &apos;:&apos;  &apos;&#123;print $1&#125;&apos;  </span><br><span class="line">root</span><br><span class="line">daemon</span><br><span class="line">bin</span><br><span class="line">sys</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">这种是awk+action的示例，每行都会执行action&#123;print $1&#125;。</span><br><span class="line">-F指定域分隔符为&quot;:&quot; 。</span><br><span class="line">如果只是显示/etc/passwd的账户和账户对应的shell,而账户与shell之间以tab键分割</span><br><span class="line">#cat /etc/passwd |awk  -F &apos;:&apos;  &apos;&#123;print \$1&quot;\t&quot;\$7&#125;&apos;</span><br><span class="line">root    /bin/bash</span><br><span class="line">daemon  /bin/sh</span><br><span class="line">bin     /bin/sh</span><br><span class="line">sys     /bin/sh</span><br></pre></td></tr></table></figure>
+<p>#####　print和printf</p>
+<p>awk中同时提供了print和printf两种打印输出的函数。</p>
+<p>其中print函数的参数可以是变量、数值或者字符串。字符串必须用双引号引用，参数用逗号分隔。如果没有逗号，参数就串联在一起而无法区分。这里，逗号的作用与输出文件的分隔符的作用是一样的，只是后者是空格而已。</p>
+<p>printf函数，其用法和c语言中printf基本相似,可以格式化字符串,输出复杂时，printf更加好用，代码更易懂。</p>
+<h5 id="实例-获取java应用的进程id"><a href="#实例-获取java应用的进程id" class="headerlink" title="实例:获取java应用的进程id"></a>实例:获取java应用的进程id</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@izuf6ajbxrke67fngx1q5nz ~]# ps aux|grep service-data</span><br><span class="line">root      9443  4.7  4.2 7852068 693936 ?      Sl   May16  51:32 java -jar service-data-0.0.1-SNAPSHOT.jar --server.port=8080 --spring.profiles.active=data-pro</span><br><span class="line">root     12998  0.0  0.0 112660   980 pts/1    S+   06:40   0:00 grep --color=auto service-data</span><br><span class="line">[root@izuf6ajbxrke67fngx1q5nz ~]# echo `ps aux|grep service-data|grep -v grep|awk &apos;&#123;print $2&#125;&apos;`</span><br><span class="line">9443</span><br><span class="line">[root@izuf6ajbxrke67fngx1q5nz ~]#</span><br></pre></td></tr></table></figure>
+<p>说明: grep -v grep 的含义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grep -v grep | grep -v tail </span><br><span class="line">1、第一部分 “grep -v grep&quot; 在文档中过滤掉包含有grep字符的行</span><br><span class="line">2、第二部分“grep -v tail” 在第一部分过滤掉之后再过滤掉剩余文档中包含有tail字符的行</span><br><span class="line">3、总结一下就是：这条命令的意思就是过滤掉文档中包含字符“grep”和“tail”的行</span><br></pre></td></tr></table></figure>
+<h5 id="awk编程变量和赋值"><a href="#awk编程变量和赋值" class="headerlink" title="awk编程变量和赋值"></a>awk编程变量和赋值</h5><p>除了awk的内置变量，awk还可以自定义变量。</p>
+<p>下面统计/etc/passwd的账户人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#awk &apos;&#123;count++;print $0;&#125; END&#123;print &quot;user count is &quot;, count&#125;&apos; /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">......</span><br><span class="line">user count is  401234</span><br></pre></td></tr></table></figure>
+<p>count是自定义变量。之前的action{}里都是只有一个print,其实print只是一个语句，而action{}可以有多个语句，以;号隔开。</p>
+<p>这里没有初始化count，虽然默认是0，但是妥当的做法还是初始化为0:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#awk &apos;BEGIN &#123;count=0;print &quot;[start]user count is &quot;, count&#125; &#123;count=count+1;print $0;&#125; END&#123;print &quot;[end]user count is &quot;, count&#125;&apos; /etc/passwd</span><br><span class="line"></span><br><span class="line">[start]user count is  0</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">...</span><br><span class="line">[end]user count is  40</span><br></pre></td></tr></table></figure>
+<h2 id="linux上软件安装"><a href="#linux上软件安装" class="headerlink" title="linux上软件安装"></a>linux上软件安装</h2><h3 id="linux系统软件安装方式"><a href="#linux系统软件安装方式" class="headerlink" title="linux系统软件安装方式"></a>linux系统软件安装方式</h3><h4 id="二进制发布包"><a href="#二进制发布包" class="headerlink" title="二进制发布包"></a>二进制发布包</h4><p>软件已经针对具体平台编译打包发布，重要解压，修改配置即可。</p>
+<h4 id="PRM发布包"><a href="#PRM发布包" class="headerlink" title="PRM发布包"></a>PRM发布包</h4><p>软件已经安装redhat的包管理工具规范RPM进行打包发布，需要获取到相应的软件RPM发布包，然后用RPM命令进行安装。</p>
+<h4 id="Yum在线安装"><a href="#Yum在线安装" class="headerlink" title="Yum在线安装"></a>Yum在线安装</h4><p>软件已经以RPM规范打包，但发布在了网络上的一些服务器上，可以用yum在线安装服务器上存在的rpm软件，并且会自动解决软件安装过程中的库依赖问题。（注：类似maven）</p>
+<h4 id="源码编译安装"><a href="#源码编译安装" class="headerlink" title="源码编译安装"></a>源码编译安装</h4><p>软件以源码工程的形式发布，需要获取到源码工程后用相应及开发工具进行编译打包部署。</p>
+<h3 id="YUM方式软件安装"><a href="#YUM方式软件安装" class="headerlink" title="YUM方式软件安装"></a>YUM方式软件安装</h3><h4 id="从网络源使用yum安装软件"><a href="#从网络源使用yum安装软件" class="headerlink" title="从网络源使用yum安装软件"></a>从网络源使用yum安装软件</h4><p>yum install XXXX</p>
+<h4 id="使用本地yum源安装软件"><a href="#使用本地yum源安装软件" class="headerlink" title="使用本地yum源安装软件"></a>使用本地yum源安装软件</h4><p>yum仓库服务器本质上就是一台http服务器，服务器的目录中放置了rpm包，及rpm包的索引信息文件，即可为yum客户端提供rpm文件下载。</p>
+<h4 id="制作基于内网web服务器的yum源（虚拟机）"><a href="#制作基于内网web服务器的yum源（虚拟机）" class="headerlink" title="制作基于内网web服务器的yum源（虚拟机）"></a>制作基于内网web服务器的yum源（虚拟机）</h4><p>1.在一台机器上部署一个web服务器，确保web服务器运行成功。</p>
+<p>2.将包含yum源的光盘镜像文件插入到虚拟机的光驱</p>
+<p>3.将光驱挂载到web服务器的一个目录中</p>
+<p>4修改yum的repo库配置文件，/etc/yum.repos.d/ 目录下，添加一个自己的配置文件。</p>
+<p>5.接下来就可以用yum安装库中拥有的任何软件了。</p>
+<p>yum install -y telnet</p>
+<h3 id="C语言软件源码编译安装-redis服务安装"><a href="#C语言软件源码编译安装-redis服务安装" class="headerlink" title="C语言软件源码编译安装-redis服务安装"></a>C语言软件源码编译安装-redis服务安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用源码工程来编译安装</span><br><span class="line">1.到管网下载最新stable版</span><br><span class="line">2.解压源码并进入目录 tar -zxvf redis-4.0.9.tar.gz -C ./redis-src/</span><br><span class="line">3.make</span><br><span class="line">    如果报错提示缺少gcc,则安装gcc, yum install -y gcc</span><br><span class="line">4.安装redis,指定安装目录,如 /usr/local/redis</span><br><span class="line">    make PREFIX=/usr/local/redis install</span><br><span class="line">5.拷贝一份配置文件到安装目录下</span><br><span class="line">    切换到源码目录。里面有一份配置文件redis.conf,然后将其拷贝到安装路径下</span><br><span class="line">    cp redis.conf /usr/local/redis</span><br><span class="line">6.启动redis</span><br><span class="line">	cd /usr/local/redis</span><br><span class="line">	bin/redis-server redis.conf</span><br></pre></td></tr></table></figure>
+<h2 id="shell脚本部署java应用"><a href="#shell脚本部署java应用" class="headerlink" title="shell脚本部署java应用"></a>shell脚本部署java应用</h2><h3 id="在本机部署java应用"><a href="#在本机部署java应用" class="headerlink" title="在本机部署java应用"></a>在本机部署java应用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]<span class="comment"># cat metaconf.sh</span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># Remote SSH Execute</span></span><br><span class="line"><span class="built_in">cd</span> /newSpringbootJars</span><br><span class="line">oldFile=$(sha256sum /watermis/metaconf-0.0.1-SNAPSHOT.jar|cut -d <span class="string">' '</span> -f1)</span><br><span class="line">newFile=$(sha256sum /newSpringbootJars/metaconf-0.0.1-SNAPSHOT.jar|cut -d <span class="string">' '</span> -f1)</span><br><span class="line"><span class="built_in">echo</span> oldfile: <span class="variable">$&#123;oldFile&#125;</span></span><br><span class="line"><span class="built_in">echo</span> newfile: <span class="variable">$&#123;newFile&#125;</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$oldFile</span>"</span> == <span class="string">"<span class="variable">$newFile</span>"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"file hasn't been changed,current operation finished"</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"file has been changed,start update"</span></span><br><span class="line">    cp -f /newSpringbootJars/metaconf-0.0.1-SNAPSHOT.jar /watermis</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"file has been transfered to the remote server successfully !"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /watermis</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> `ps aux|grep metaconf|grep -v grep|awk <span class="string">'&#123;print $2&#125;'</span>`</span><br><span class="line">ps aux|grep metaconf|grep -v grep|awk <span class="string">'&#123;print $2&#125;'</span>|xargs <span class="built_in">kill</span> -9</span><br><span class="line"></span><br><span class="line">nohup java -jar metaconf-0.0.1-SNAPSHOT.jar --server.port=9093  --spring.profiles.active=pro &gt; metaconf.log &amp;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="keyword">done</span>!</span><br></pre></td></tr></table></figure>
+<h3 id="在局域网内部署java应用"><a href="#在局域网内部署java应用" class="headerlink" title="在局域网内部署java应用"></a>在局域网内部署java应用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]<span class="comment"># cat historicalData.sh</span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># Remote SSH Execute</span></span><br><span class="line"><span class="built_in">cd</span> /newSpringbootJars</span><br><span class="line">oldFile=$(sha256sum /watermis/historical-data-0.0.1-SNAPSHOT.jar|cut -d <span class="string">' '</span> -f1)</span><br><span class="line">newFile=$(sha256sum /newSpringbootJars/historical-data-0.0.1-SNAPSHOT.jar|cut -d <span class="string">' '</span> -f1)</span><br><span class="line"><span class="built_in">echo</span> oldfile: <span class="variable">$&#123;oldFile&#125;</span></span><br><span class="line"><span class="built_in">echo</span> newfile: <span class="variable">$&#123;newFile&#125;</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$oldFile</span>"</span> == <span class="string">"<span class="variable">$newFile</span>"</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"file hasn't been changed,current operation finished"</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"file has been changed,start update"</span></span><br><span class="line">    cp -f /newSpringbootJars/historical-data-0.0.1-SNAPSHOT.jar /watermis</span><br><span class="line">    scp historical-data-0.0.1-SNAPSHOT.jar 10.0.0.26:~</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"file has been transfered to the remote server successfully !"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">ssh root@10.0.0.26 -tt &lt;&lt; remotessh</span><br><span class="line">    appPID=\$(ps aux|grep historical-data|grep -v grep|awk <span class="string">'&#123;print \$2&#125;'</span>)</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Current historical-data PID: "</span> \<span class="variable">$&#123;appPID&#125;</span></span><br><span class="line">    mv -f /root/historical-data-0.0.1-SNAPSHOT.jar /watermis</span><br><span class="line">    <span class="built_in">kill</span> -9 \<span class="variable">$appPID</span></span><br><span class="line">    <span class="built_in">cd</span> /watermis</span><br><span class="line">    nohup java -jar historical-data-0.0.1-SNAPSHOT.jar --server.port=9097 --spring.profiles.active=historical-data-pro &gt; historical-data.log &amp;</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">remotessh</span><br><span class="line"><span class="built_in">echo</span> <span class="keyword">done</span>!</span><br></pre></td></tr></table></figure>
+<h3 id="在shell-sh脚本中修改其他文件的内容"><a href="#在shell-sh脚本中修改其他文件的内容" class="headerlink" title="在shell.sh脚本中修改其他文件的内容"></a>在shell.sh脚本中修改其他文件的内容</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt;/root/test.txt&lt;&lt;EOF</span><br><span class="line">hello shell</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt </span></span><br><span class="line">11 aa</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">[root@hadoop ~]<span class="comment"># cat shell.sh </span></span><br><span class="line">cat &gt;&gt;/root/test.txt&lt;&lt;EOF</span><br><span class="line">hello shell</span><br><span class="line">EOF</span><br><span class="line">[root@hadoop ~]<span class="comment"># ./shell.sh </span></span><br><span class="line">[root@hadoop ~]<span class="comment"># cat test.txt </span></span><br><span class="line">11 aa</span><br><span class="line">33 cc</span><br><span class="line">23 dd</span><br><span class="line">hello shell</span><br><span class="line">[root@hadoop ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/15/linux/shell编程01/" rel="next" title="shell编程01">
+                <i class="fa fa-chevron-left"></i> shell编程01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/22/linux/zookeeper集群搭建/" rel="prev" title="zookeeper集群搭建">
+                zookeeper集群搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux基础操作"><span class="nav-number">1.</span> <span class="nav-text">linux基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux常用命令"><span class="nav-number">1.1.</span> <span class="nav-text">linux常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看当前系统的时间：date"><span class="nav-number">1.1.1.</span> <span class="nav-text">查看当前系统的时间：date</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#who查看有谁在线-哪些人登录到了服务器"><span class="nav-number">1.1.2.</span> <span class="nav-text">who查看有谁在线(哪些人登录到了服务器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件操作"><span class="nav-number">1.1.3.</span> <span class="nav-text">文件操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux增强操作"><span class="nav-number">2.</span> <span class="nav-text">linux增强操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统管理操作"><span class="nav-number">2.1.</span> <span class="nav-text">系统管理操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#统计文件或文件夹"><span class="nav-number">2.1.1.</span> <span class="nav-text">统计文件或文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wc命令"><span class="nav-number">2.1.2.</span> <span class="nav-text">wc命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程管理"><span class="nav-number">2.1.3.</span> <span class="nav-text">进程管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH免密码登录配置"><span class="nav-number">2.2.</span> <span class="nav-text">SSH免密码登录配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作机制"><span class="nav-number">2.2.1.</span> <span class="nav-text">工作机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#认证机制"><span class="nav-number">2.2.2.</span> <span class="nav-text">认证机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#账号口令验证"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">账号口令验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RSA加密验证"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">RSA加密验证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ssh免密码登录配置"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">ssh免密码登录配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络管理"><span class="nav-number">2.3.</span> <span class="nav-text">网络管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#uname命令"><span class="nav-number">2.3.1.</span> <span class="nav-text">uname命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主机名配置"><span class="nav-number">2.3.2.</span> <span class="nav-text">主机名配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IP地址配置"><span class="nav-number">2.3.3.</span> <span class="nav-text">IP地址配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#临时修改IP"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">临时修改IP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#永久修改IP"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">永久修改IP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他"><span class="nav-number">2.3.3.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络服务管理"><span class="nav-number">2.3.4.</span> <span class="nav-text">网络服务管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux的网卡坏了怎么办"><span class="nav-number">2.3.5.</span> <span class="nav-text">linux的网卡坏了怎么办</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级文本处理命令"><span class="nav-number">2.4.</span> <span class="nav-text">高级文本处理命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cut命令"><span class="nav-number">2.4.1.</span> <span class="nav-text">cut命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sed命令"><span class="nav-number">2.4.2.</span> <span class="nav-text">sed命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#删除行-d-命令"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">删除行: d 命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#新增行：a-命令"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">新增行：a 命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#替换行：c-命令"><span class="nav-number">2.4.2.3.</span> <span class="nav-text">替换行：c 命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#替换部分字符串而不是整行：s-命令"><span class="nav-number">2.4.2.4.</span> <span class="nav-text">替换部分字符串而不是整行：s 命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搜索并输出行内容"><span class="nav-number">2.4.2.5.</span> <span class="nav-text">搜索并输出行内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将修改应用到文件中"><span class="nav-number">2.4.2.6.</span> <span class="nav-text">将修改应用到文件中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sed正则中的元字符"><span class="nav-number">2.4.2.7.</span> <span class="nav-text">sed正则中的元字符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#awk命令"><span class="nav-number">2.4.3.</span> <span class="nav-text">awk命令</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#简介"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#入门实例"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">入门实例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实例-获取java应用的进程id"><span class="nav-number">2.4.3.3.</span> <span class="nav-text">实例:获取java应用的进程id</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#awk编程变量和赋值"><span class="nav-number">2.4.3.4.</span> <span class="nav-text">awk编程变量和赋值</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux上软件安装"><span class="nav-number">3.</span> <span class="nav-text">linux上软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux系统软件安装方式"><span class="nav-number">3.1.</span> <span class="nav-text">linux系统软件安装方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#二进制发布包"><span class="nav-number">3.1.1.</span> <span class="nav-text">二进制发布包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PRM发布包"><span class="nav-number">3.1.2.</span> <span class="nav-text">PRM发布包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Yum在线安装"><span class="nav-number">3.1.3.</span> <span class="nav-text">Yum在线安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#源码编译安装"><span class="nav-number">3.1.4.</span> <span class="nav-text">源码编译安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YUM方式软件安装"><span class="nav-number">3.2.</span> <span class="nav-text">YUM方式软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#从网络源使用yum安装软件"><span class="nav-number">3.2.1.</span> <span class="nav-text">从网络源使用yum安装软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用本地yum源安装软件"><span class="nav-number">3.2.2.</span> <span class="nav-text">使用本地yum源安装软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#制作基于内网web服务器的yum源（虚拟机）"><span class="nav-number">3.2.3.</span> <span class="nav-text">制作基于内网web服务器的yum源（虚拟机）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C语言软件源码编译安装-redis服务安装"><span class="nav-number">3.3.</span> <span class="nav-text">C语言软件源码编译安装-redis服务安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell脚本部署java应用"><span class="nav-number">4.</span> <span class="nav-text">shell脚本部署java应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在本机部署java应用"><span class="nav-number">4.1.</span> <span class="nav-text">在本机部署java应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在局域网内部署java应用"><span class="nav-number">4.2.</span> <span class="nav-text">在局域网内部署java应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在shell-sh脚本中修改其他文件的内容"><span class="nav-number">4.3.</span> <span class="nav-text">在shell.sh脚本中修改其他文件的内容</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

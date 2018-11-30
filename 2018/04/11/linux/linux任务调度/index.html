@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="linux任务调度概念任务调度：是指系统在某个时间执行的特定的命令或程序。 任务调度分类： 1.系统工作：有些重要的工作必须周而复始的执行，如病毒扫描等。 2.个别用户工作：个别用户可能希望执行某些程序，比如mysql数据库的备份。">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux任务调度">
+<meta property="og:url" content="http://netsite.win/2018/04/11/linux/linux任务调度/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="linux任务调度概念任务调度：是指系统在某个时间执行的特定的命令或程序。 任务调度分类： 1.系统工作：有些重要的工作必须周而复始的执行，如病毒扫描等。 2.个别用户工作：个别用户可能希望执行某些程序，比如mysql数据库的备份。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux任务调度">
+<meta name="twitter:description" content="linux任务调度概念任务调度：是指系统在某个时间执行的特定的命令或程序。 任务调度分类： 1.系统工作：有些重要的工作必须周而复始的执行，如病毒扫描等。 2.个别用户工作：个别用户可能希望执行某些程序，比如mysql数据库的备份。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/04/11/linux/linux任务调度/">
+
+
+
+
+
+  <title> linux任务调度 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/04/11/linux/linux任务调度/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux任务调度
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T21:59:48+08:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="linux任务调度概念"><a href="#linux任务调度概念" class="headerlink" title="linux任务调度概念"></a>linux任务调度概念</h2><p>任务调度：是指系统在某个时间执行的特定的命令或程序。</p>
+<p>任务调度分类：</p>
+<p>1.系统工作：有些重要的工作必须周而复始的执行，如病毒扫描等。</p>
+<p>2.个别用户工作：个别用户可能希望执行某些程序，比如mysql数据库的备份。<br><a id="more"></a></p>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><p>crontab [选项]</p>
+<h3 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-e  编辑crontab定时任务</span><br><span class="line">-l  查询crontab任务</span><br><span class="line">-r  删除当前用户所有的crontab任务</span><br></pre></td></tr></table></figure>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="任务的要求"><a href="#任务的要求" class="headerlink" title="任务的要求"></a>任务的要求</h3><p>设置任务调度文件: /etc/crontab</p>
+<p>设置个人任务调度，执行 crontab -e 命令</p>
+<p>接着输入任务到调度文件</p>
+<p>如： <em>/1 </em> <em> </em> * date &gt;&gt; /tmp/time.txt</p>
+<p>意思说，每分钟把date时间 追加到 /tmp/time.txt 文件中。</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><pre><code>1. crontab -e
+2. 输入：*/1 * * * * date &gt;&gt; /tmp/time.txt
+3.当保存退出后就执行程序
+4.在每分钟都会自动的调用 date &gt;&gt; /tmp/time.txt
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat /etc/crontab</span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">MAILTO=root</span><br><span class="line"></span><br><span class="line"># For details see man 4 crontabs</span><br><span class="line"></span><br><span class="line"># Example of job definition:</span><br><span class="line"># .---------------- minute (0 - 59)</span><br><span class="line"># |  .------------- hour (0 - 23)</span><br><span class="line"># |  |  .---------- day of month (1 - 31)</span><br><span class="line"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span><br><span class="line"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"># |  |  |  |  |</span><br><span class="line"># *  *  *  *  * user-name  command to be executed</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# crontab -e</span><br><span class="line">[root@localhost ~]# crontab -l</span><br><span class="line">*/1 * * * * date &gt;&gt; /tmp/time.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# cat /tmp/time.txt</span><br><span class="line">2018年 04月 12日 星期四 06:29:01 CST</span><br><span class="line">2018年 04月 12日 星期四 06:30:01 CST</span><br><span class="line">2018年 04月 12日 星期四 06:31:01 CST</span><br><span class="line">2018年 04月 12日 星期四 06:32:02 CST</span><br><span class="line">2018年 04月 12日 星期四 06:33:01 CST</span><br><span class="line">[root@localhost ~]#</span><br></pre></td></tr></table></figure>
+<h3 id="参数细节说明-5个占位符的说明"><a href="#参数细节说明-5个占位符的说明" class="headerlink" title="参数细节说明(5个占位符的说明)"></a>参数细节说明(5个占位符的说明)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">项目          含义                    范围</span><br><span class="line">第1个*       一小时当中的第几分钟     0-59</span><br><span class="line">第2个*       一天当中的第几小时       0-23</span><br><span class="line">第3个*       一个月当中的第几天       1-31</span><br><span class="line">第4个*       一年当中的第几个月       1-12</span><br><span class="line">第5个*       一周当中的星期几         0-7</span><br></pre></td></tr></table></figure>
+<h3 id="特殊符号说明"><a href="#特殊符号说明" class="headerlink" title="特殊符号说明"></a>特殊符号说明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">符号    含义</span><br><span class="line">*       代表任何时间，比如第一个*就代表一小时每分钟都执行一次的意思</span><br><span class="line">,       代表不连续的时间，比如&quot;0 8,12,16 * * *&quot;,表示每天的8:00,12:00,16:00 都执行一次命令</span><br><span class="line">-       代表连续的时间范围，比如&quot;0 5 * * 1-6&quot;命令，表示周一到周五的5:00执行命令</span><br><span class="line">*/n     代表每隔多久执行一次，比如 &quot;*/10 * * * * &quot;命令，表示每隔10分钟执行一次命令</span><br></pre></td></tr></table></figure>
+<h3 id="特定时间执行案例"><a href="#特定时间执行案例" class="headerlink" title="特定时间执行案例"></a>特定时间执行案例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">时间           含义</span><br><span class="line">45 22 * * *    在每天22点45分执行命令</span><br><span class="line">0 17 * * 1     每周1的17点0分执行命令</span><br><span class="line">0 5 1,15 * *   每月的1号和15号的5点0分执行命令</span><br><span class="line">40 4 * * 1-5   每周1和周5的4点40分执行命令</span><br><span class="line">*/10 4 * * *　 每天的4点，每隔10分钟执行一次命令</span><br><span class="line">0 0 1,15 * 1   每月1号和15号，每周1的0点0分都会执行命令。注意：星期几和几号最好不要同时出现，因为他们定义的都是天。非常容易让管理员混乱。</span><br></pre></td></tr></table></figure>
+<h2 id="任务调度的实例"><a href="#任务调度的实例" class="headerlink" title="任务调度的实例"></a>任务调度的实例</h2><h3 id="每隔一分钟，就将当前的时间追加到-tmp-mydate-txt文件中"><a href="#每隔一分钟，就将当前的时间追加到-tmp-mydate-txt文件中" class="headerlink" title="每隔一分钟，就将当前的时间追加到 /tmp/mydate.txt文件中"></a>每隔一分钟，就将当前的时间追加到 /tmp/mydate.txt文件中</h3><pre><code>1. 先编写一个文件 /home/mytask1.sh
+   date &gt;&gt; /tmp/mydate.txt
+2. 给mytask1.sh 一个可以执行的权限
+   chmod 744 /home/mytask1.sh
+3. crontab -e
+4. */1 * * * * /home/mytask1.sh
+5. 成功 
+</code></pre><p>命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /home/mytask1.sh</span><br><span class="line">[root@localhost ~]# cat /home/mytask1.sh </span><br><span class="line">date &gt;&gt; /tmp/mydate.txt</span><br><span class="line">[root@localhost ~]# cd /home/</span><br><span class="line">[root@localhost home]# ll</span><br><span class="line">总用量 4</span><br><span class="line">drwx------. 2 docker docker 62 7月   8 2017 docker</span><br><span class="line">-rw-r--r--  1 root   root   24 4月  12 06:59 mytask1.sh</span><br><span class="line">[root@localhost home]# chomd 744 /home/mytask1.sh </span><br><span class="line">-bash: chomd: 未找到命令</span><br><span class="line">[root@localhost home]# chmod 744 /home/mytask1.sh </span><br><span class="line">[root@localhost home]# ll</span><br><span class="line">总用量 4</span><br><span class="line">drwx------. 2 docker docker 62 7月   8 2017 docker</span><br><span class="line">-rwxr--r--  1 root   root   24 4月  12 06:59 mytask1.sh</span><br><span class="line">[root@localhost home]# crontab -e</span><br><span class="line">crontab: installing new crontab</span><br><span class="line">[root@localhost home]# crontab -l</span><br><span class="line">*/1 * * * * date &gt;&gt; /tmp/time.txt</span><br><span class="line">*/1 * * * * /home/mytask1.sh</span><br><span class="line">[root@localhost home]# date</span><br><span class="line">2018年 04月 12日 星期四 07:02:49 CST</span><br><span class="line">[root@localhost home]# cat /tmp/mydate.txt </span><br><span class="line">2018年 04月 12日 星期四 07:03:01 CST</span><br><span class="line">[root@localhost home]#</span><br></pre></td></tr></table></figure>
+<h3 id="每天凌晨2-00-将mysql数据库-testdb-备份到文件mydb-bak"><a href="#每天凌晨2-00-将mysql数据库-testdb-备份到文件mydb-bak" class="headerlink" title="每天凌晨2:00 将mysql数据库 testdb , 备份到文件mydb.bak"></a>每天凌晨2:00 将mysql数据库 testdb , 备份到文件mydb.bak</h3><pre><code>1. 先编写一个文件 /home/mytask2.sh 
+    /usr/local/mysql/bin/mysqldump -u root -proot testdb &gt; /tmp/mydb.bak
+2. 给mytask2.sh 一个可以执行的权限
+   chmod 744 /home/mytask2.sh
+3. crontab -e
+4. 0 2 * * *  /home/mytask2.sh
+5. 成功
+</code></pre><h2 id="crond-相关指令"><a href="#crond-相关指令" class="headerlink" title="crond 相关指令"></a>crond 相关指令</h2><ol>
+<li>crontab -r ：终止任务调度</li>
+<li>crontab -l ：列出当前有哪些任务调度</li>
+<li>systemctl restart crond [重启任务调度] </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost home]# systemctl restart crond</span><br><span class="line">[root@localhost home]# systemctl status crond</span><br><span class="line">● crond.service - Command Scheduler</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/crond.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since 四 2018-04-12 07:21:02 CST; 12s ago</span><br><span class="line"> Main PID: 8133 (crond)</span><br><span class="line">   CGroup: /system.slice/crond.service</span><br><span class="line">           └─8133 /usr/sbin/crond -n</span><br><span class="line"></span><br><span class="line">4月 12 07:21:02 localhost.localdomain systemd[1]: Started Command Scheduler.</span><br><span class="line">4月 12 07:21:02 localhost.localdomain systemd[1]: Starting Command Scheduler...</span><br><span class="line">4月 12 07:21:02 localhost.localdomain crond[8133]: (CRON) INFO (RANDOM_DELAY will be scaled with factor 64% if used.)</span><br><span class="line">4月 12 07:21:02 localhost.localdomain crond[8133]: (CRON) INFO (running with inotify support)</span><br><span class="line">4月 12 07:21:02 localhost.localdomain crond[8133]: (CRON) INFO (@reboot jobs will be run at computer&apos;s startup.)</span><br><span class="line">[root@localhost home]#</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/20/vue/vue-webpack-nginx-部署在服务器非根目录/" rel="next" title="vue+webpack+nginx 部署在服务器非根目录">
+                <i class="fa fa-chevron-left"></i> vue+webpack+nginx 部署在服务器非根目录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/11/linux/linux分区和磁盘挂载/" rel="prev" title="linux分区和磁盘挂载">
+                linux分区和磁盘挂载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux任务调度概念"><span class="nav-number">1.</span> <span class="nav-text">linux任务调度概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用选项"><span class="nav-number">2.1.</span> <span class="nav-text">常用选项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速入门"><span class="nav-number">3.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#任务的要求"><span class="nav-number">3.1.</span> <span class="nav-text">任务的要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤"><span class="nav-number">3.2.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数细节说明-5个占位符的说明"><span class="nav-number">3.3.</span> <span class="nav-text">参数细节说明(5个占位符的说明)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊符号说明"><span class="nav-number">3.4.</span> <span class="nav-text">特殊符号说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特定时间执行案例"><span class="nav-number">3.5.</span> <span class="nav-text">特定时间执行案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务调度的实例"><span class="nav-number">4.</span> <span class="nav-text">任务调度的实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#每隔一分钟，就将当前的时间追加到-tmp-mydate-txt文件中"><span class="nav-number">4.1.</span> <span class="nav-text">每隔一分钟，就将当前的时间追加到 /tmp/mydate.txt文件中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#每天凌晨2-00-将mysql数据库-testdb-备份到文件mydb-bak"><span class="nav-number">4.2.</span> <span class="nav-text">每天凌晨2:00 将mysql数据库 testdb , 备份到文件mydb.bak</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crond-相关指令"><span class="nav-number">5.</span> <span class="nav-text">crond 相关指令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

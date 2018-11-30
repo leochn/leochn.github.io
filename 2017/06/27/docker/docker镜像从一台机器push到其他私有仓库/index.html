@@ -1,0 +1,740 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="docker镜像从一台机器push到其他私有仓库">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker镜像从一台机器push到其他私有仓库">
+<meta property="og:url" content="http://netsite.win/2017/06/27/docker/docker镜像从一台机器push到其他私有仓库/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="docker镜像从一台机器push到其他私有仓库">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker镜像从一台机器push到其他私有仓库">
+<meta name="twitter:description" content="docker镜像从一台机器push到其他私有仓库">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2017/06/27/docker/docker镜像从一台机器push到其他私有仓库/">
+
+
+
+
+
+  <title> docker镜像从一台机器push到其他私有仓库 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/06/27/docker/docker镜像从一台机器push到其他私有仓库/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                docker镜像从一台机器push到其他私有仓库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-27T16:27:33+08:00">
+                2017-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>docker镜像从一台机器push到其他私有仓库<br><a id="more"></a></p>
+<h2 id="133虚拟机"><a href="#133虚拟机" class="headerlink" title="133虚拟机"></a>133虚拟机</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">[root@6a9654a02a75 webapps]<span class="comment"># cd ROOT</span></span><br><span class="line">[root@6a9654a02a75 ROOT]<span class="comment"># ls </span></span><br><span class="line">META-INF  WEB-INF  assets  commons  process-editor  scripts  styles  upload</span><br><span class="line">[root@6a9654a02a75 ROOT]<span class="comment"># ls -l</span></span><br><span class="line">total 32</span><br><span class="line">drwxr-x--- 3 root root 4096 Apr 12 08:14 META-INF</span><br><span class="line">drwxr-x--- 6 root root 4096 Apr 12 08:14 WEB-INF</span><br><span class="line">drwxr-x--- 4 root root 4096 Apr 12 08:14 assets</span><br><span class="line">drwxr-x--- 2 root root 4096 Apr 12 08:14 commons</span><br><span class="line">drwxr-x--- 5 root root 4096 Apr 12 08:14 process-editor</span><br><span class="line">  wxr-x--- 8 root root 4096 Apr 12 08:14 scripts</span><br><span class="line">▽rwxr-x--- 6 root root 4096 Apr 12 08:14 styles</span><br><span class="line">drwxr-x--- 4 root root 4096 Apr 12 08:14 upload</span><br><span class="line">[root@6a9654a02a75 ROOT]<span class="comment"># [root@localhost ~]#</span></span><br><span class="line">[root@6a9654a02a75 ROOT]<span class="comment"># [root@localhost ~]# </span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker ps</span></span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES</span><br><span class="line">6a9654a02a75        jkinfo-tomcat9:v1   <span class="string">"/bin/bash"</span>         About an hour ago   Up About an hour    0.0.0.0:8088-&gt;8080/tcp   stupefied_ptolemy</span><br><span class="line">[root@localhost ~]<span class="comment"># docker commit -m "centos-tomcat9" 6a9654a02a75 projecty-workflow:v1</span></span><br><span class="line">sha256:2e0c1d016927052fefbfaad1638b49f146c6bfaad699f9f466da9bbe7d410b59</span><br><span class="line">[root@localhost ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">projecty-workflow          v1                  2e0c1d016927        15 seconds ago      716 MB</span><br><span class="line">leousst/tomcat9            v2                  10d03584d8e3        4 hours ago         575 MB</span><br><span class="line">jkinfo-tomcat9             v1                  8a58707e98f9        6 hours ago         575 MB</span><br><span class="line">tomcat9fix                 v2                  80af2f8cd9b9        7 hours ago         575 MB</span><br><span class="line">tomcat9fix                 v1                  9eaf3c91c24a        7 hours ago         656 MB</span><br><span class="line">centos-tomcat-dockerfile   v2                  fafa5848ffd4        24 hours ago        656 MB</span><br><span class="line">openjdk                    latest              4c3d59cc5179        3 weeks ago         643 MB</span><br><span class="line">centos-nginx-file          v1                  a8d1298c38a9        4 weeks ago         391 MB</span><br><span class="line">centos-image-nginx         latest              141064f6c5a3        4 weeks ago         394 MB</span><br><span class="line">centos                     latest              67591570dd29        3 months ago        192 MB</span><br><span class="line">[root@localhost ~]<span class="comment"># docker tag projecty-workflow 192.168.126.202:5000/projecty-workflow:v1</span></span><br><span class="line">Error response from daemon: no such id: projecty-workflow</span><br><span class="line">[root@localhost ~]<span class="comment"># docker tag projecty-workflow:v1 192.168.126.202:5000/projecty-workflow:v1</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY                               TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">192.168.126.202:5000/projecty-workflow   v1                  2e0c1d016927        3 minutes ago       716 MB</span><br><span class="line">projecty-workflow                        v1                  2e0c1d016927        3 minutes ago       716 MB</span><br><span class="line">leousst/tomcat9                          v2                  10d03584d8e3        4 hours ago         575 MB</span><br><span class="line">jkinfo-tomcat9                           v1                  8a58707e98f9        6 hours ago         575 MB</span><br><span class="line">tomcat9fix                               v2                  80af2f8cd9b9        7 hours ago         575 MB</span><br><span class="line">tomcat9fix                               v1                  9eaf3c91c24a        7 hours ago         656 MB</span><br><span class="line">centos-tomcat-dockerfile                 v2                  fafa5848ffd4        24 hours ago        656 MB</span><br><span class="line">openjdk                                  latest              4c3d59cc5179        3 weeks ago         643 MB</span><br><span class="line">centos-nginx-file                        v1                  a8d1298c38a9        4 weeks ago         391 MB</span><br><span class="line">centos-image-nginx                       latest              141064f6c5a3        4 weeks ago         394 MB</span><br><span class="line">centos                                   latest              67591570dd29        3 months ago        192 MB</span><br><span class="line">[root@localhost ~]<span class="comment"># docker push 192.168.126.202:5000/projecty-workflow:v1</span></span><br><span class="line">The push refers to a repository [192.168.126.202:5000/projecty-workflow]</span><br><span class="line">Get https://192.168.126.202:5000/v1/_ping: http: server gave HTTP response to HTTPS client</span><br><span class="line"><span class="comment">###### // 出现上面的情况,需要通过添加daemon.json方式来解决</span></span><br><span class="line">[root@localhost ~]<span class="comment"># cd /etc/docker/</span></span><br><span class="line">[root@localhost docker]<span class="comment"># ll</span></span><br><span class="line">总用量 4</span><br><span class="line">-rw------- 1 root root 281 2月  19 14:56 key.json</span><br><span class="line">[root@localhost docker]<span class="comment"># vim daemon.json</span></span><br><span class="line">  1 &#123;</span><br><span class="line">  2         <span class="string">"insecure-registries"</span>:[</span><br><span class="line">  3                 <span class="string">"0.0.0.0/0"</span></span><br><span class="line">  4         ]</span><br><span class="line">  5 &#125;</span><br><span class="line">~               </span><br><span class="line"><span class="string">"daemon.json"</span> [新] 5L, 46C 已写入                                                                                        </span><br><span class="line">[root@localhost docker]<span class="comment"># service docker restart</span></span><br><span class="line">Redirecting to /bin/systemctl restart  docker.service</span><br><span class="line">[root@localhost docker]<span class="comment"># docker images</span></span><br><span class="line">REPOSITORY                               TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">192.168.126.202:5000/projecty-workflow   v1                  2e0c1d016927        8 minutes ago       716 MB</span><br><span class="line">projecty-workflow                        v1                  2e0c1d016927        8 minutes ago       716 MB</span><br><span class="line">leousst/tomcat9                          v2                  10d03584d8e3        4 hours ago         575 MB</span><br><span class="line">jkinfo-tomcat9                           v1                  8a58707e98f9        6 hours ago         575 MB</span><br><span class="line">tomcat9fix                               v2                  80af2f8cd9b9        7 hours ago         575 MB</span><br><span class="line">tomcat9fix                               v1                  9eaf3c91c24a        7 hours ago         656 MB</span><br><span class="line">centos-tomcat-dockerfile                 v2                  fafa5848ffd4        24 hours ago        656 MB</span><br><span class="line">openjdk                                  latest              4c3d59cc5179        3 weeks ago         643 MB</span><br><span class="line">centos-nginx-file                        v1                  a8d1298c38a9        4 weeks ago         391 MB</span><br><span class="line">centos-image-nginx                       latest              141064f6c5a3        4 weeks ago         394 MB</span><br><span class="line">centos                                   latest              67591570dd29        3 months ago        192 MB</span><br><span class="line">[root@localhost docker]<span class="comment"># docker push 192.168.126.202:5000/projecty-workflow:v1</span></span><br><span class="line">The push refers to a repository [192.168.126.202:5000/projecty-workflow]</span><br><span class="line">885a0dc89b9a: Pushed </span><br><span class="line">c2e682f3a3ab: Pushed </span><br><span class="line">448615d3d8c4: Pushed </span><br><span class="line">62d2c961c519: Pushed </span><br><span class="line">34e7b85d83e4: Pushed </span><br><span class="line">v1: digest: sha256:a51523ee14b9648eee67eba7f034bbf38e982c6ca86617594183c2bc36d57888 size: 1375</span><br><span class="line">[root@localhost docker]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h2 id="202-linux机器-在202上有decker的私有仓库"><a href="#202-linux机器-在202上有decker的私有仓库" class="headerlink" title="202 linux机器,在202上有decker的私有仓库"></a>202 linux机器,在202上有decker的私有仓库</h2><p><a href="http://192.168.126.202:9000/#/containers/" target="_blank" rel="noopener">http://192.168.126.202:9000/#/containers/</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[proy@yserver temp]$ docker images | grep projecty-workflow</span><br><span class="line">[proy@yserver temp]$ docker run -i -t -p 8088:8080 192.168.126.202:5000/projecty-workflow:v1</span><br><span class="line">Unable to find image <span class="string">'192.168.126.202:5000/projecty-workflow:v1'</span> locally</span><br><span class="line">v1: Pulling from projecty-workflow</span><br><span class="line">17385548ba54: Pull complete</span><br><span class="line">ab68c3f111b6: Pull complete</span><br><span class="line">d5c7e7c02811: Pull complete</span><br><span class="line">f18760391c47: Pull complete</span><br><span class="line">35fffd013f34: Pull complete</span><br><span class="line">Digest: sha256:a51523ee14b9648eee67eba7f034bbf38e982c6ca86617594183c2bc36d57888</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> 192.168.126.202:5000/projecty-workflow:v1</span><br><span class="line">[root@f897fc365ce0 /]<span class="comment"># ./usr/local/apache-tomcat-9.0.0.M18/bin/startup.sh</span></span><br><span class="line">Using CATALINA_BASE:   /usr/<span class="built_in">local</span>/apache-tomcat-9.0.0.M18</span><br><span class="line">Using CATALINA_HOME:   /usr/<span class="built_in">local</span>/apache-tomcat-9.0.0.M18</span><br><span class="line">Using CATALINA_TMPDIR: /usr/<span class="built_in">local</span>/apache-tomcat-9.0.0.M18/temp</span><br><span class="line">Using JRE_HOME:        /usr/<span class="built_in">local</span>/jdk1.8.0_121</span><br><span class="line">Using CLASSPATH:       /usr/<span class="built_in">local</span>/apache-tomcat-9.0.0.M18/bin/bootstrap.jar:/usr/<span class="built_in">local</span>/apache-tomcat-9.0.0.M18/bin/tomcat-juli.jar</span><br><span class="line">Tomcat started.</span><br><span class="line">[root@f897fc365ce0 /]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/27/docker/docker之间导入导出镜像/" rel="next" title="docker之间导入导出镜像">
+                <i class="fa fa-chevron-left"></i> docker之间导入导出镜像
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/27/docker/docker小技巧/" rel="prev" title="docker小技巧">
+                docker小技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#133虚拟机"><span class="nav-number">1.</span> <span class="nav-text">133虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#202-linux机器-在202上有decker的私有仓库"><span class="nav-number">2.</span> <span class="nav-text">202 linux机器,在202上有decker的私有仓库</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

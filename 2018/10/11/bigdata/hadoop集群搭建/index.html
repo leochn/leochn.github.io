@@ -1,0 +1,784 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="bigdata,hadoop,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="本次测试所用软件及环境Centos7 jdk-8u171-linux-x64.rpm VMware 12 Pro hadoop 3.1.1">
+<meta name="keywords" content="bigdata,hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop集群搭建">
+<meta property="og:url" content="http://netsite.win/2018/10/11/bigdata/hadoop集群搭建/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="本次测试所用软件及环境Centos7 jdk-8u171-linux-x64.rpm VMware 12 Pro hadoop 3.1.1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hadoop集群搭建">
+<meta name="twitter:description" content="本次测试所用软件及环境Centos7 jdk-8u171-linux-x64.rpm VMware 12 Pro hadoop 3.1.1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/10/11/bigdata/hadoop集群搭建/">
+
+
+
+
+
+  <title> hadoop集群搭建 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/10/11/bigdata/hadoop集群搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                hadoop集群搭建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T22:57:05+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="本次测试所用软件及环境"><a href="#本次测试所用软件及环境" class="headerlink" title="本次测试所用软件及环境"></a>本次测试所用软件及环境</h2><pre><code>Centos7
+jdk-8u171-linux-x64.rpm
+VMware 12 Pro
+hadoop 3.1.1
+</code></pre><a id="more"></a>
+<h2 id="环境配置-配置3台centos服务器"><a href="#环境配置-配置3台centos服务器" class="headerlink" title="环境配置(配置3台centos服务器)"></a>环境配置(配置3台centos服务器)</h2><h3 id="配置主机名和hosts文件"><a href="#配置主机名和hosts文件" class="headerlink" title="配置主机名和hosts文件"></a>配置主机名和hosts文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost etc]# hostnamectl set-hostname mini-1</span><br><span class="line">[root@localhost etc]# hostname</span><br><span class="line">mini-1</span><br><span class="line">[root@localhost etc]# vi /etc/hosts</span><br><span class="line">[root@localhost etc]# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 mini-1</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">[root@localhost etc]# reboot</span><br><span class="line">[root@mini-1 /]# hostnamectl status</span><br><span class="line">   Static hostname: mini-1</span><br><span class="line">         Icon name: computer-vm</span><br><span class="line">           Chassis: vm</span><br><span class="line">        Machine ID: 8772e349b79f4733a7e389a4ff332d82</span><br><span class="line">           Boot ID: bcb9f3facfac4d07be53a6848b4bb0a0</span><br><span class="line">    Virtualization: vmware</span><br><span class="line">  Operating System: CentOS Linux 7 (Core)</span><br><span class="line">       CPE OS Name: cpe:/o:centos:centos:7</span><br><span class="line">            Kernel: Linux 3.10.0-862.el7.x86_64</span><br><span class="line">      Architecture: x86-64</span><br><span class="line">[root@mini-1 /]#</span><br><span class="line">[root@mini-1 /]# cat /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.17.133 mini1</span><br><span class="line">192.168.17.134 mini2</span><br><span class="line">192.168.17.135 mini3</span><br><span class="line">192.168.17.136 mini4</span><br><span class="line">[root@mini-1 /]#</span><br></pre></td></tr></table></figure>
+<h3 id="yum安装jdk"><a href="#yum安装jdk" class="headerlink" title="yum安装jdk"></a>yum安装jdk</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 /]# java -version</span><br><span class="line">java version &quot;1.8.0_171&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_171-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.171-b11, mixed mode)</span><br><span class="line">[root@mini-1 /]# rpm -qa | grep jdk</span><br><span class="line">jdk1.8-1.8.0_171-fcs.x86_64</span><br><span class="line">[root@mini-1 /]# </span><br><span class="line">[root@mini-1 /]# rpm -e --nodeps jdk1.8-1.8.0_171-fcs.x86_64</span><br><span class="line">[root@mini-1 /]# java -version</span><br><span class="line">-bash: /usr/bin/java: No such file or directory</span><br><span class="line">[root@mini-1 /]# rpm -qa | grep jdk</span><br><span class="line">[root@mini-1 /]#</span><br><span class="line">[root@mini-1 /]# cd /data/</span><br><span class="line">[root@mini-1 data]# ll</span><br><span class="line">total 171156</span><br><span class="line">-rw-r--r--. 1 root root 175262413 Oct 12 20:01 jdk-8u171-linux-x64.rpm</span><br><span class="line">[root@mini-1 data]# </span><br><span class="line">[root@mini-1 data]# yum install jdk-8u171-linux-x64.rpm</span><br><span class="line">[root@mini-1 data]# </span><br><span class="line">[root@mini-1 data]# whereis java</span><br><span class="line">java: /usr/bin/java /usr/share/man/man1/java.1</span><br><span class="line">[root@mini-1 data]# ll /usr/bin/java</span><br><span class="line">lrwxrwxrwx. 1 root root 22 Oct 12 20:02 /usr/bin/java -&gt; /etc/alternatives/java</span><br><span class="line">[root@mini-1 data]# ll /etc/alternatives/java</span><br><span class="line">lrwxrwxrwx. 1 root root 41 Oct 12 20:02 /etc/alternatives/java -&gt; /usr/java/jdk1.8.0_171-amd64/jre/bin/java</span><br><span class="line">[root@mini-1 data]# cd /usr/java/</span><br><span class="line">[root@mini-1 java]# ll</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx. 1 root root  16 Oct 12 20:02 default -&gt; /usr/java/latest</span><br><span class="line">drwxr-xr-x. 9 root root 268 Oct 12 20:02 jdk1.8.0_171-amd64</span><br><span class="line">lrwxrwxrwx. 1 root root  28 Oct 12 20:02 latest -&gt; /usr/java/jdk1.8.0_171-amd64</span><br><span class="line">[root@mini-1 java]# cd jdk1.8.0_171-amd64/</span><br><span class="line">[root@mini-1 jdk1.8.0_171-amd64]# pwd</span><br><span class="line">/usr/java/jdk1.8.0_171-amd64</span><br><span class="line">[root@mini-1 jdk1.8.0_171-amd64]# ll</span><br><span class="line">total 25964</span><br><span class="line">drwxr-xr-x. 2 root root     4096 Oct 12 20:02 bin</span><br><span class="line">-rw-r--r--. 1 root root     3244 Mar 29  2018 COPYRIGHT</span><br><span class="line">drwxr-xr-x. 4 root root      122 Oct 12 20:02 db</span><br><span class="line">drwxr-xr-x. 3 root root      132 Oct 12 20:02 include</span><br><span class="line">-rw-r--r--. 1 root root  5203779 Mar 29  2018 javafx-src.zip</span><br><span class="line">drwxr-xr-x. 5 root root      185 Oct 12 20:02 jre</span><br><span class="line">drwxr-xr-x. 5 root root      245 Oct 12 20:02 lib</span><br><span class="line">-rw-r--r--. 1 root root       40 Mar 29  2018 LICENSE</span><br><span class="line">drwxr-xr-x. 4 root root       47 Oct 12 20:02 man</span><br><span class="line">-rw-r--r--. 1 root root      159 Mar 29  2018 README.html</span><br><span class="line">-rw-r--r--. 1 root root      424 Mar 29  2018 release</span><br><span class="line">-rw-r--r--. 1 root root 21098592 Mar 29  2018 src.zip</span><br><span class="line">-rw-r--r--. 1 root root   106782 Mar 29  2018 THIRDPARTYLICENSEREADME-JAVAFX.txt</span><br><span class="line">-rw-r--r--. 1 root root   145180 Mar 29  2018 THIRDPARTYLICENSEREADME.txt</span><br><span class="line">[root@mini-1 jdk1.8.0_171-amd64]#</span><br></pre></td></tr></table></figure>
+<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.在&quot;192.168.17.130&quot;服务器上使用&quot;ssh-keygen -t rsa&quot;命令来创建公钥</span><br><span class="line">ssh-keygen -t rsa -C app@163.com, 然后回车</span><br><span class="line">    代码参数含义： -t 指定密钥类型，默认是 rsa ，可以省略。 -C 设置注释文字，比如邮箱。</span><br><span class="line"></span><br><span class="line">2.再将 192.168.17.133 服务器自己的公钥拷贝并追加到 192.168.17.134 服务器的授权列表文件 authorized_keys中。</span><br><span class="line">    直接一条命令: ssh-copy-id 192.168.17.134 (推荐用这条命令)</span><br></pre></td></tr></table></figure>
+<h2 id="下载安装hadoop"><a href="#下载安装hadoop" class="headerlink" title="下载安装hadoop"></a>下载安装hadoop</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1.下载地址: </span><br><span class="line">https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz</span><br><span class="line"></span><br><span class="line">2.解压资源</span><br><span class="line">新建hadoop文件： mkdir -p  /data/hadoop</span><br><span class="line">并将hadoop-3.1.1.tar.gz放入 /data/hadoop 目录下</span><br><span class="line">进入该目录 cd /data/hadoop</span><br><span class="line">解压该文件 tar -zxvf hadoop-3.1.1.tar.gz</span><br><span class="line">[root@mini-1 hadoop]# pwd</span><br><span class="line">/data/hadoop</span><br><span class="line">[root@mini-1 hadoop]# ll</span><br><span class="line">total 326720</span><br><span class="line">-rw-r--r--. 1 root root 334559382 Oct 17 06:19 hadoop-3.1.1.tar.gz</span><br><span class="line">[root@mini-1 hadoop]# tar -zxvf hadoop-3.1.1.tar.gz</span><br></pre></td></tr></table></figure>
+<h2 id="将hadoop添加到环境变量"><a href="#将hadoop添加到环境变量" class="headerlink" title="将hadoop添加到环境变量"></a>将hadoop添加到环境变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">    export HADOOP_HOME=/data/hadoop/hadoop-3.1.1</span><br><span class="line">    export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br><span class="line"></span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+<h2 id="伪分布式运行Hadoop"><a href="#伪分布式运行Hadoop" class="headerlink" title="伪分布式运行Hadoop"></a>伪分布式运行Hadoop</h2><h3 id="启动HDFS并运行MapReduce程序"><a href="#启动HDFS并运行MapReduce程序" class="headerlink" title="启动HDFS并运行MapReduce程序"></a>启动HDFS并运行MapReduce程序</h3><h4 id="配置hadoop资源"><a href="#配置hadoop资源" class="headerlink" title="配置hadoop资源"></a>配置hadoop资源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 hadoop]# pwd</span><br><span class="line">/data/hadoop/hadoop-3.1.1/etc/hadoop</span><br></pre></td></tr></table></figure>
+<h5 id="修改hadoop-env-sh"><a href="#修改hadoop-env-sh" class="headerlink" title="修改hadoop-env.sh"></a>修改hadoop-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">大约54行,替换本机的JAVA_HOME目录：</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_171-amd64</span><br></pre></td></tr></table></figure>
+<h5 id="修改core-site-xml"><a href="#修改core-site-xml" class="headerlink" title="修改core-site.xml"></a>修改core-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1.文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为：</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;!-- mini-1为当前机器名或者ip号 --&gt;</span><br><span class="line">        &lt;value&gt;hdfs://mini-1:9000&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;!-- 指定hadoop运行时产生临时文件的存储目录 --&gt;</span><br><span class="line">  &lt;!-- 配置的目录会自动创建 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/data/hadoop/hadoop-3.1.1/tmp&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="修改hdfs-site-xml"><a href="#修改hdfs-site-xml" class="headerlink" title="修改hdfs-site.xml"></a>修改hdfs-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定 HDFS 副本的数量.不配置的话,默认值为3,根据情况设定 --&gt;</span><br><span class="line">  &lt;!-- HDFS副本是存在不同的节点上的 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">      &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="启动单机hadoop"><a href="#启动单机hadoop" class="headerlink" title="启动单机hadoop"></a>启动单机hadoop</h4><h5 id="格式化namenode"><a href="#格式化namenode" class="headerlink" title="格式化namenode"></a>格式化namenode</h5><p>第一次启动时格式化，以后就不要总格式化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 hadoop-3.1.1]# pwd</span><br><span class="line">/data/hadoop/hadoop-3.1.1</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# cd</span><br><span class="line">[root@mini-1 ~]# pwd</span><br><span class="line">/root</span><br><span class="line">[root@mini-1 ~]# hadoop namenode -format</span><br><span class="line">[root@mini-1 ~]# jps -l</span><br><span class="line">20027 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 ~]#</span><br></pre></td></tr></table></figure></p>
+<p>表示成功格式化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2018-10-17 12:21:23,333 INFO common.Storage: Storage directory /data/hadoop/hadoop-3.1.1/tmp/dfs/name has been successfully formatted.</span><br></pre></td></tr></table></figure></p>
+<h5 id="启动namenode"><a href="#启动namenode" class="headerlink" title="启动namenode"></a>启动namenode</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# pwd</span><br><span class="line">/root</span><br><span class="line">[root@mini-1 ~]# hadoop-daemon.sh start namenode</span><br><span class="line">WARNING: Use of this script to start HDFS daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;hdfs --daemon start&quot; instead.</span><br><span class="line">[root@mini-1 ~]# jps -l</span><br><span class="line">20273 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">20296 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="启动datanode"><a href="#启动datanode" class="headerlink" title="启动datanode"></a>启动datanode</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# hadoop-daemon.sh start datanode</span><br><span class="line">WARNING: Use of this script to start HDFS daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;hdfs --daemon start&quot; instead.</span><br><span class="line">[root@mini-1 ~]# jps -l</span><br><span class="line">20273 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">20625 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">20660 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="停止的命令"><a href="#停止的命令" class="headerlink" title="停止的命令"></a>停止的命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">停止datanode</span><br><span class="line">[root@mini-1 ~]#  hadoop-daemon.sh stop datanode</span><br><span class="line">停止namenode</span><br><span class="line">[root@mini-1 ~]# hadoop-daemon.sh stop namenode</span><br></pre></td></tr></table></figure>
+<h4 id="查看Hadoop"><a href="#查看Hadoop" class="headerlink" title="查看Hadoop"></a>查看Hadoop</h4><h5 id="查看是否启动成功"><a href="#查看是否启动成功" class="headerlink" title="查看是否启动成功"></a>查看是否启动成功</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# jps -l</span><br><span class="line">20273 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">20625 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">20660 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="查看产生的log日志"><a href="#查看产生的log日志" class="headerlink" title="查看产生的log日志"></a>查看产生的log日志</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/data/hadoop/hadoop-3.1.1/logs</span><br><span class="line">[root@mini-1 logs]# ll</span><br><span class="line">total 76</span><br><span class="line">-rw-r--r--. 1 root root 30278 Oct 17 12:31 hadoop-root-datanode-mini-1.log</span><br><span class="line">-rw-r--r--. 1 root root   690 Oct 17 12:30 hadoop-root-datanode-mini-1.out</span><br><span class="line">-rw-r--r--. 1 root root 34506 Oct 17 12:31 hadoop-root-namenode-mini-1.log</span><br><span class="line">-rw-r--r--. 1 root root   690 Oct 17 12:26 hadoop-root-namenode-mini-1.out</span><br><span class="line">-rw-r--r--. 1 root root     0 Oct 17 12:18 SecurityAuth-root.audit</span><br><span class="line">[root@mini-1 logs]#</span><br></pre></td></tr></table></figure>
+<h5 id="web端查看HDFS文件系统"><a href="#web端查看HDFS文件系统" class="headerlink" title="web端查看HDFS文件系统"></a>web端查看HDFS文件系统</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">( 50070端口 -&gt; 9870端口了)</span><br><span class="line">http://192.168.17.133:9870/dfshealth.html#tab-overview</span><br></pre></td></tr></table></figure>
+<h4 id="操作hadoop"><a href="#操作hadoop" class="headerlink" title="操作hadoop"></a>操作hadoop</h4><h5 id="在hdfs文件系统上创建一个-data-input文件夹-创建"><a href="#在hdfs文件系统上创建一个-data-input文件夹-创建" class="headerlink" title="在hdfs文件系统上创建一个/data/input文件夹 (创建)"></a>在hdfs文件系统上创建一个/data/input文件夹 (创建)</h5><p>hadoop fs -mkdir -p /data/input</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# hadoop fs -mkdir -p /data/input</span><br><span class="line">[root@mini-1 ~]# hadoop fs -ls /</span><br><span class="line">Found 1 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-17 17:34 /data</span><br><span class="line">[root@mini-1 ~]# hadoop fs -ls /data/</span><br><span class="line">Found 1 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-17 17:34 /data/input</span><br><span class="line">[root@mini-1 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="将测试文件内容上传到文件系统上-上传"><a href="#将测试文件内容上传到文件系统上-上传" class="headerlink" title="将测试文件内容上传到文件系统上 (上传)"></a>将测试文件内容上传到文件系统上 (上传)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# ll</span><br><span class="line">total 8</span><br><span class="line">-rw-------. 1 root root 1243 Jun 23 07:25 anaconda-ks.cfg</span><br><span class="line">-rw-r--r--. 1 root root   32 Jul 22 10:19 device.log</span><br><span class="line">[root@mini-1 ~]# hadoop fs -put device.log /data</span><br><span class="line">[root@mini-1 ~]# hadoop fs -ls /data</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   3 root supergroup         32 2018-10-17 17:55 /data/device.log</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-17 17:34 /data/input</span><br><span class="line">[root@mini-1 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="查看上传的文件是否正确"><a href="#查看上传的文件是否正确" class="headerlink" title="查看上传的文件是否正确"></a>查看上传的文件是否正确</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# ll</span><br><span class="line">total 8</span><br><span class="line">-rw-------. 1 root root 1243 Jun 23 07:25 anaconda-ks.cfg</span><br><span class="line">-rw-r--r--. 1 root root   32 Jul 22 10:19 device.log</span><br><span class="line">[root@mini-1 ~]# cat device.log </span><br><span class="line">deviceqweqweqweqwqqwqewqweqwqew</span><br><span class="line">[root@mini-1 ~]# hadoop fs -cat /data/device.log</span><br><span class="line">deviceqweqweqweqwqqwqewqweqwqew</span><br></pre></td></tr></table></figure>
+<h5 id="运行mapreduce程序"><a href="#运行mapreduce程序" class="headerlink" title="运行mapreduce程序"></a>运行mapreduce程序</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 ~]# hadoop fs -put tmp.log /data/input</span><br><span class="line">[root@mini-1 ~]# hadoop fs -ls /data/input</span><br><span class="line">Found 1 items</span><br><span class="line">-rw-r--r--   3 root supergroup         55 2018-10-17 18:28 /data/input/tmp.log</span><br><span class="line">[root@mini-1 ~]# hadoop fs -cat /data/input/tmp.log</span><br><span class="line">tone tone</span><br><span class="line">tingting</span><br><span class="line">hongfu</span><br><span class="line">jinjin liangliang liangliang</span><br><span class="line">[root@mini-1 ~]#</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# pwd</span><br><span class="line">/data/hadoop/hadoop-3.1.1</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.1.jar wordcount /data/input data/output</span><br></pre></td></tr></table></figure>
+<h5 id="查看运行mapreduce程序的输出结果"><a href="#查看运行mapreduce程序的输出结果" class="headerlink" title="查看运行mapreduce程序的输出结果"></a>查看运行mapreduce程序的输出结果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 hadoop-3.1.1]# hadoop fs -ls /</span><br><span class="line">Found 2 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-17 17:55 /data</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2018-10-17 18:34 /user</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# hadoop fs -ls /user/root/data/output</span><br><span class="line">Found 2 items</span><br><span class="line">-rw-r--r--   3 root supergroup          0 2018-10-17 18:34 /user/root/data/output/_SUCCESS</span><br><span class="line">-rw-r--r--   3 root supergroup         49 2018-10-17 18:34 /user/root/data/output/part-r-00000</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# hadoop fs -cat /user/root/data/output/part-r-00000</span><br><span class="line">hongfu  1</span><br><span class="line">jinjin  1</span><br><span class="line">liangliang  2</span><br><span class="line">tingting  1</span><br><span class="line">tone  2</span><br><span class="line">[root@mini-1 hadoop-3.1.1]#</span><br></pre></td></tr></table></figure>
+<h3 id="YARN上运行MapReduce程序"><a href="#YARN上运行MapReduce程序" class="headerlink" title="YARN上运行MapReduce程序"></a>YARN上运行MapReduce程序</h3><h4 id="配置hadoop资源-1"><a href="#配置hadoop资源-1" class="headerlink" title="配置hadoop资源"></a>配置hadoop资源</h4><p>hadoop-env.sh,core-site.xml,hdfs-site.xml 的配置同上.</p>
+<h5 id="配置yarn-env-sh"><a href="#配置yarn-env-sh" class="headerlink" title="配置yarn-env.sh"></a>配置yarn-env.sh</h5><p>未做配置…………</p>
+<h5 id="配置yarn-site-xml"><a href="#配置yarn-site-xml" class="headerlink" title="配置yarn-site.xml"></a>配置yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定YARN的老大（ResourceManager）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;192.168.17.133&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="配置mapred-env-sh"><a href="#配置mapred-env-sh" class="headerlink" title="配置mapred-env.sh"></a>配置mapred-env.sh</h5><p>未做配置…………</p>
+<h5 id="配置mapred-site-xml"><a href="#配置mapred-site-xml" class="headerlink" title="配置mapred-site.xml"></a>配置mapred-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h4><p>启动resourcemanager, 启动nodemanager<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 sbin]# jps -l</span><br><span class="line">4528 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">4624 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">4724 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 sbin]# yarn-daemon.sh start resourcemanager</span><br><span class="line">WARNING: Use of this script to start YARN daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;yarn --daemon start&quot; instead.</span><br><span class="line">[root@mini-1 sbin]# jps -l</span><br><span class="line">4528 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">4624 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">4816 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">4838 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 sbin]# yarn-daemon.sh start nodemanager</span><br><span class="line">WARNING: Use of this script to start YARN daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;yarn --daemon start&quot; instead.</span><br><span class="line">[root@mini-1 sbin]# jps -l</span><br><span class="line">4528 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">4624 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">4816 org.apache.hadoop.yarn.server.resourcemanager.ResourceManager</span><br><span class="line">5281 sun.tools.jps.Jps</span><br><span class="line">5260 org.apache.hadoop.yarn.server.nodemanager.NodeManager</span><br><span class="line">[root@mini-1 sbin]#</span><br></pre></td></tr></table></figure></p>
+<h4 id="操作集群"><a href="#操作集群" class="headerlink" title="操作集群"></a>操作集群</h4><h5 id="yarn的浏览器页面查看"><a href="#yarn的浏览器页面查看" class="headerlink" title="yarn的浏览器页面查看"></a>yarn的浏览器页面查看</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.17.133:8088/cluster</span><br></pre></td></tr></table></figure>
+<h4 id="停止集群"><a href="#停止集群" class="headerlink" title="停止集群"></a>停止集群</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 hadoop-3.1.1]# pwd</span><br><span class="line">/data/hadoop/hadoop-3.1.1</span><br><span class="line">[root@mini-1 hadoop-3.1.1]#</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# sbin/yarn-daemon.sh stop nodemanager</span><br><span class="line">WARNING: Use of this script to stop YARN daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;yarn --daemon stop&quot; instead.</span><br><span class="line">[root@mini-1 hadoop-3.1.1]#</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# sbin/yarn-daemon.sh stop resourcemanager</span><br><span class="line">WARNING: Use of this script to stop YARN daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;yarn --daemon stop&quot; instead.</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# hadoop-daemon.sh stop datanode</span><br><span class="line">WARNING: Use of this script to stop HDFS daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;hdfs --daemon stop&quot; instead.</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# hadoop-daemon.sh stop namenode</span><br><span class="line">WARNING: Use of this script to stop HDFS daemons is deprecated.</span><br><span class="line">WARNING: Attempting to execute replacement &quot;hdfs --daemon stop&quot; instead.</span><br><span class="line">[root@mini-1 hadoop-3.1.1]# jps -l</span><br><span class="line">27550 sun.tools.jps.Jps</span><br><span class="line">[root@mini-1 hadoop-3.1.1]#</span><br></pre></td></tr></table></figure>
+<h4 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a>配置文件说明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Hadoop 配置文件分两类:</span><br><span class="line">默认配置文件和自定义配置文件，只有用户想修改某一默认配置值时,才需要修改自定义配置文件, 更改相应属性值</span><br><span class="line"></span><br><span class="line">(1).默认配置文件：存放在 hadoop 相应的 jar 包中</span><br><span class="line">[core-default.xml]</span><br><span class="line">hadoop-common-3.1.1.jar/ core-default.xml</span><br><span class="line">[hdfs-default.xml]</span><br><span class="line">hadoop-hdfs-3.1.1.jar/ hdfs-default.xml</span><br><span class="line">[yarn-default.xml]</span><br><span class="line">hadoop-yarn-common-3.1.1.jar/ yarn-default.xml</span><br><span class="line">[core-default.xml]</span><br><span class="line">hadoop-mapreduce-client-core-3.1.1.jar/ core-default.xml</span><br><span class="line"></span><br><span class="line">(2).自定义配置文件： 存放在$HADOOP_HOME/etc/hadoop</span><br><span class="line">core-site.xml</span><br><span class="line">hdfs-site.xml</span><br><span class="line">yarn-site.xml</span><br><span class="line">mapred-site.xml</span><br></pre></td></tr></table></figure>
+<h2 id="完全分布式部署Hadoop"><a href="#完全分布式部署Hadoop" class="headerlink" title="完全分布式部署Hadoop"></a>完全分布式部署Hadoop</h2><h3 id="虚拟机准备"><a href="#虚拟机准备" class="headerlink" title="虚拟机准备"></a>虚拟机准备</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">准备3台虚拟机</span><br><span class="line">配置主机名和hosts文件(同2.1)</span><br><span class="line">安装jdk</span><br><span class="line">配置SSH免密码登录</span><br></pre></td></tr></table></figure>
+<h3 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">scp可以实现服务器与服务器之间的数据拷贝</span><br><span class="line"></span><br><span class="line">实例</span><br><span class="line">1.从本地复制到远程</span><br><span class="line">命令格式：</span><br><span class="line">  scp local_file remote_username@remote_ip:remote_folder </span><br><span class="line">或者 </span><br><span class="line">  scp local_file remote_username@remote_ip:remote_file </span><br><span class="line">或者 </span><br><span class="line">  scp local_file remote_ip:remote_folder </span><br><span class="line">或者 </span><br><span class="line">  scp local_file remote_ip:remote_file </span><br><span class="line"></span><br><span class="line">第1,2个指定了用户名，命令执行后需要再输入密码，第1个仅指定了远程的目录，文件名字不变，第2个指定了文件名.</span><br><span class="line"></span><br><span class="line">第3,4个没有指定用户名，命令执行后需要输入用户名和密码，第3个仅指定了远程的目录，文件名字不变，第4个指定了文件名.</span><br><span class="line"></span><br><span class="line">应用实例：</span><br><span class="line">scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music </span><br><span class="line">scp /home/space/music/1.mp3 root@www.runoob.com:/home/root/others/music/001.mp3 </span><br><span class="line">scp /home/space/music/1.mp3 www.runoob.com:/home/root/others/music </span><br><span class="line">scp /home/space/music/1.mp3 www.runoob.com:/home/root/others/music/001.mp3 </span><br><span class="line"></span><br><span class="line">复制目录命令格式：</span><br><span class="line">  scp -r local_folder remote_username@remote_ip:remote_folder </span><br><span class="line">或者 </span><br><span class="line">  scp -r local_folder remote_ip:remote_folder </span><br><span class="line">第1个指定了用户名，命令执行后需要再输入密码；</span><br><span class="line">第2个没有指定用户名，命令执行后需要输入用户名和密码；</span><br><span class="line"></span><br><span class="line">应用实例：</span><br><span class="line">scp -r /home/space/music/ root@www.runoob.com:/home/root/others/ </span><br><span class="line">scp -r /home/space/music/ www.runoob.com:/home/root/others/ </span><br><span class="line">上面命令将本地 music 目录复制到远程 others 目录下。</span><br><span class="line"></span><br><span class="line">2.从远程复制到本地</span><br><span class="line"></span><br><span class="line">从远程复制到本地，只要将从本地复制到远程的命令的后2个参数调换顺序即可，如下实例</span><br><span class="line"></span><br><span class="line">应用实例：</span><br><span class="line">scp root@www.runoob.com:/home/root/others/music /home/space/music/1.mp3 </span><br><span class="line">scp -r www.runoob.com:/home/root/others/ /home/space/music/</span><br><span class="line"></span><br><span class="line">3.说明</span><br><span class="line">(1).如果远程服务器防火墙有为scp命令设置了指定的端口，我们需要使用 -P 参数来设置命令的端口号，命令格式如下：</span><br><span class="line"></span><br><span class="line">scp 命令使用端口号 4588</span><br><span class="line">scp -P 4588 remote@www.runoob.com:/usr/local/sin.sh /home/administrator</span><br><span class="line">(2).使用scp命令要确保使用的用户具有可读取远程服务器相应文件的权限，否则scp命令是无法起作用的。</span><br></pre></td></tr></table></figure>
+<h3 id="rsync"><a href="#rsync" class="headerlink" title="rsync"></a>rsync</h3><h3 id="编写集群分发脚本-xsync"><a href="#编写集群分发脚本-xsync" class="headerlink" title="编写集群分发脚本 xsync"></a>编写集群分发脚本 xsync</h3><h3 id="编写集群操作脚本-xcall"><a href="#编写集群操作脚本-xcall" class="headerlink" title="编写集群操作脚本 xcall"></a>编写集群操作脚本 xcall</h3><h3 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h3><h3 id="配置hadoop资源-2"><a href="#配置hadoop资源-2" class="headerlink" title="配置hadoop资源"></a>配置hadoop资源</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mini-1 hadoop]# pwd</span><br><span class="line">/data/hadoop/hadoop-3.1.1/etc/hadoop</span><br></pre></td></tr></table></figure>
+<h4 id="修改hadoop-env-sh-1"><a href="#修改hadoop-env-sh-1" class="headerlink" title="修改hadoop-env.sh"></a>修改hadoop-env.sh</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">大约54行,替换本机的JAVA_HOME目录：</span><br><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_171-amd64</span><br></pre></td></tr></table></figure>
+<h4 id="修改core-site-xml-1"><a href="#修改core-site-xml-1" class="headerlink" title="修改core-site.xml"></a>修改core-site.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1.文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为：</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;!-- mini-1为当前机器名或者ip号 --&gt;</span><br><span class="line">        &lt;value&gt;hdfs://mini-1:9000&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;!-- 指定hadoop运行时产生临时文件的存储目录 --&gt;</span><br><span class="line">  &lt;!-- 配置的目录会自动创建 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/data/hadoop/hadoop-3.1.1/tmp&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="修改hdfs-site-xml-1"><a href="#修改hdfs-site-xml-1" class="headerlink" title="修改hdfs-site.xml"></a>修改hdfs-site.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为:</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定 HDFS 副本的数量.不配置的话,默认值为3,根据情况设定 --&gt;</span><br><span class="line">  &lt;!-- HDFS副本是存在不同的节点上的 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">      &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">      &lt;value&gt;3&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="修改mapred-site-xml"><a href="#修改mapred-site-xml" class="headerlink" title="修改mapred-site.xml"></a>修改mapred-site.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="修改yarn-site-xml文件"><a href="#修改yarn-site-xml文件" class="headerlink" title="修改yarn-site.xml文件"></a>修改yarn-site.xml文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">文件最后&lt;configuration&gt; &lt;/configuration&gt; 替换为：</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">        &lt;!-- 你的机器号或者ip --&gt;</span><br><span class="line">        &lt;value&gt;192.168.17.133&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">   &lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">   &lt;property&gt;</span><br><span class="line">        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="拷贝hadoop资源和环境变量到其他机器"><a href="#拷贝hadoop资源和环境变量到其他机器" class="headerlink" title="拷贝hadoop资源和环境变量到其他机器"></a>拷贝hadoop资源和环境变量到其他机器</h3><h3 id="启动hadoop集群"><a href="#启动hadoop集群" class="headerlink" title="启动hadoop集群"></a>启动hadoop集群</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bigdata/" rel="tag"># bigdata</a>
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/24/linux/linux之FTP服务/" rel="next" title="linux之FTP服务">
+                <i class="fa fa-chevron-left"></i> linux之FTP服务
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/30/tools/windows下强制杀死进程/" rel="prev" title="windows下强制杀死进程">
+                windows下强制杀死进程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本次测试所用软件及环境"><span class="nav-number">1.</span> <span class="nav-text">本次测试所用软件及环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置-配置3台centos服务器"><span class="nav-number">2.</span> <span class="nav-text">环境配置(配置3台centos服务器)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主机名和hosts文件"><span class="nav-number">2.1.</span> <span class="nav-text">配置主机名和hosts文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yum安装jdk"><span class="nav-number">2.2.</span> <span class="nav-text">yum安装jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置免密登录"><span class="nav-number">2.3.</span> <span class="nav-text">配置免密登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载安装hadoop"><span class="nav-number">3.</span> <span class="nav-text">下载安装hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将hadoop添加到环境变量"><span class="nav-number">4.</span> <span class="nav-text">将hadoop添加到环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">5.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪分布式运行Hadoop"><span class="nav-number">6.</span> <span class="nav-text">伪分布式运行Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动HDFS并运行MapReduce程序"><span class="nav-number">6.1.</span> <span class="nav-text">启动HDFS并运行MapReduce程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置hadoop资源"><span class="nav-number">6.1.1.</span> <span class="nav-text">配置hadoop资源</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#修改hadoop-env-sh"><span class="nav-number">6.1.1.1.</span> <span class="nav-text">修改hadoop-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改core-site-xml"><span class="nav-number">6.1.1.2.</span> <span class="nav-text">修改core-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改hdfs-site-xml"><span class="nav-number">6.1.1.3.</span> <span class="nav-text">修改hdfs-site.xml</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动单机hadoop"><span class="nav-number">6.1.2.</span> <span class="nav-text">启动单机hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#格式化namenode"><span class="nav-number">6.1.2.1.</span> <span class="nav-text">格式化namenode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#启动namenode"><span class="nav-number">6.1.2.2.</span> <span class="nav-text">启动namenode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#启动datanode"><span class="nav-number">6.1.2.3.</span> <span class="nav-text">启动datanode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#停止的命令"><span class="nav-number">6.1.2.4.</span> <span class="nav-text">停止的命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看Hadoop"><span class="nav-number">6.1.3.</span> <span class="nav-text">查看Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看是否启动成功"><span class="nav-number">6.1.3.1.</span> <span class="nav-text">查看是否启动成功</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看产生的log日志"><span class="nav-number">6.1.3.2.</span> <span class="nav-text">查看产生的log日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#web端查看HDFS文件系统"><span class="nav-number">6.1.3.3.</span> <span class="nav-text">web端查看HDFS文件系统</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作hadoop"><span class="nav-number">6.1.4.</span> <span class="nav-text">操作hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在hdfs文件系统上创建一个-data-input文件夹-创建"><span class="nav-number">6.1.4.1.</span> <span class="nav-text">在hdfs文件系统上创建一个/data/input文件夹 (创建)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将测试文件内容上传到文件系统上-上传"><span class="nav-number">6.1.4.2.</span> <span class="nav-text">将测试文件内容上传到文件系统上 (上传)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看上传的文件是否正确"><span class="nav-number">6.1.4.3.</span> <span class="nav-text">查看上传的文件是否正确</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#运行mapreduce程序"><span class="nav-number">6.1.4.4.</span> <span class="nav-text">运行mapreduce程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看运行mapreduce程序的输出结果"><span class="nav-number">6.1.4.5.</span> <span class="nav-text">查看运行mapreduce程序的输出结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YARN上运行MapReduce程序"><span class="nav-number">6.2.</span> <span class="nav-text">YARN上运行MapReduce程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置hadoop资源-1"><span class="nav-number">6.2.1.</span> <span class="nav-text">配置hadoop资源</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置yarn-env-sh"><span class="nav-number">6.2.1.1.</span> <span class="nav-text">配置yarn-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置yarn-site-xml"><span class="nav-number">6.2.1.2.</span> <span class="nav-text">配置yarn-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置mapred-env-sh"><span class="nav-number">6.2.1.3.</span> <span class="nav-text">配置mapred-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置mapred-site-xml"><span class="nav-number">6.2.1.4.</span> <span class="nav-text">配置mapred-site.xml</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动集群"><span class="nav-number">6.2.2.</span> <span class="nav-text">启动集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作集群"><span class="nav-number">6.2.3.</span> <span class="nav-text">操作集群</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#yarn的浏览器页面查看"><span class="nav-number">6.2.3.1.</span> <span class="nav-text">yarn的浏览器页面查看</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#停止集群"><span class="nav-number">6.2.4.</span> <span class="nav-text">停止集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件说明"><span class="nav-number">6.2.5.</span> <span class="nav-text">配置文件说明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全分布式部署Hadoop"><span class="nav-number">7.</span> <span class="nav-text">完全分布式部署Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机准备"><span class="nav-number">7.1.</span> <span class="nav-text">虚拟机准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scp"><span class="nav-number">7.2.</span> <span class="nav-text">scp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rsync"><span class="nav-number">7.3.</span> <span class="nav-text">rsync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写集群分发脚本-xsync"><span class="nav-number">7.4.</span> <span class="nav-text">编写集群分发脚本 xsync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写集群操作脚本-xcall"><span class="nav-number">7.5.</span> <span class="nav-text">编写集群操作脚本 xcall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置集群"><span class="nav-number">7.6.</span> <span class="nav-text">配置集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置hadoop资源-2"><span class="nav-number">7.7.</span> <span class="nav-text">配置hadoop资源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改hadoop-env-sh-1"><span class="nav-number">7.7.1.</span> <span class="nav-text">修改hadoop-env.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改core-site-xml-1"><span class="nav-number">7.7.2.</span> <span class="nav-text">修改core-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改hdfs-site-xml-1"><span class="nav-number">7.7.3.</span> <span class="nav-text">修改hdfs-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改mapred-site-xml"><span class="nav-number">7.7.4.</span> <span class="nav-text">修改mapred-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改yarn-site-xml文件"><span class="nav-number">7.7.5.</span> <span class="nav-text">修改yarn-site.xml文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拷贝hadoop资源和环境变量到其他机器"><span class="nav-number">7.8.</span> <span class="nav-text">拷贝hadoop资源和环境变量到其他机器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动hadoop集群"><span class="nav-number">7.9.</span> <span class="nav-text">启动hadoop集群</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>

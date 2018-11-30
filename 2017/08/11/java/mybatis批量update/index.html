@@ -1,0 +1,745 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="java,mybatis,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="使用mysql 自带的语句构建批量更新">
+<meta name="keywords" content="java,mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis批量update">
+<meta property="og:url" content="http://netsite.win/2017/08/11/java/mybatis批量update/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="使用mysql 自带的语句构建批量更新">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T13:19:30.088Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mybatis批量update">
+<meta name="twitter:description" content="使用mysql 自带的语句构建批量更新">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2017/08/11/java/mybatis批量update/">
+
+
+
+
+
+  <title> mybatis批量update | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/08/11/java/mybatis批量update/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                mybatis批量update
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-11T13:26:32+08:00">
+                2017-08-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用mysql 自带的语句构建批量更新<br><a id="more"></a></p>
+<h2 id="sql语句"><a href="#sql语句" class="headerlink" title="sql语句"></a>sql语句</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> sys_admin</span><br><span class="line">    <span class="keyword">set</span> user_name = <span class="keyword">case</span> <span class="keyword">id</span></span><br><span class="line">        <span class="keyword">when</span> <span class="number">01</span> <span class="keyword">then</span> <span class="string">'value1'</span></span><br><span class="line">        <span class="keyword">when</span> <span class="number">02</span> <span class="keyword">then</span> <span class="string">'value2'</span></span><br><span class="line">        <span class="keyword">when</span> <span class="number">03</span> <span class="keyword">then</span> <span class="string">'value3'</span></span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">    email = <span class="keyword">case</span> <span class="keyword">id</span></span><br><span class="line">    <span class="keyword">when</span> <span class="number">01</span> <span class="keyword">then</span> <span class="string">'value1@163.com'</span></span><br><span class="line">        <span class="keyword">when</span> <span class="number">02</span> <span class="keyword">then</span> <span class="string">'value2@163.com'</span></span><br><span class="line">        <span class="keyword">when</span> <span class="number">03</span> <span class="keyword">then</span> <span class="string">'value3@163.com'</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">where</span> <span class="keyword">id</span> <span class="keyword">in</span> (<span class="number">01</span>,<span class="number">02</span>,<span class="number">03</span>)</span><br></pre></td></tr></table></figure>
+<p>这句sql 的意思是，更新 user_name 和 email 字段，<br>如果id=01 则 user_name 的值为 value1，email 的值为 <a href="mailto:value1@163.com" target="_blank" rel="noopener">value1@163.com</a>，<br>如果id=02 则 user_name 的值为 value2，email 的值为 <a href="mailto:value1@163.com" target="_blank" rel="noopener">value1@163.com</a> ……<br>where部分不影响代码的执行，但是会提高sql执行的效率。确保sql语句仅执行需要修改的行数，这里只有3条数据进行更新，而where子句确保只有3行数据执行。</p>
+<h2 id="xxxMapper-xml"><a href="#xxxMapper-xml" class="headerlink" title="xxxMapper.xml"></a>xxxMapper.xml</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateForBatch"</span> <span class="attr">parameterType</span>=<span class="string">"java.util.List"</span>&gt;</span>  </span><br><span class="line">    update sys_user set  </span><br><span class="line">    user_name=  </span><br><span class="line">    <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span> <span class="attr">item</span>=<span class="string">"item"</span> <span class="attr">index</span>=<span class="string">"index"</span> <span class="attr">separator</span>=<span class="string">" "</span> <span class="attr">open</span>=<span class="string">"case id"</span> <span class="attr">close</span>=<span class="string">"end"</span>&gt;</span>  </span><br><span class="line">      when #&#123;item.id,jdbcType=VARCHAR&#125; then #&#123;item.userName,jdbcType=VARCHAR&#125;  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span>  </span><br><span class="line">    ,email=  </span><br><span class="line">    <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span> <span class="attr">item</span>=<span class="string">"item"</span> <span class="attr">index</span>=<span class="string">"index"</span> <span class="attr">separator</span>=<span class="string">" "</span> <span class="attr">open</span>=<span class="string">"case id"</span> <span class="attr">close</span>=<span class="string">"end"</span>&gt;</span>  </span><br><span class="line">      when #&#123;item.id,jdbcType=VARCHAR&#125; then #&#123;item.email,jdbcType=VARCHAR&#125;  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span> </span><br><span class="line">    where ID in  </span><br><span class="line">    <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"list"</span> <span class="attr">index</span>=<span class="string">"index"</span> <span class="attr">item</span>=<span class="string">"item"</span> <span class="attr">separator</span>=<span class="string">","</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">close</span>=<span class="string">")"</span>&gt;</span>  </span><br><span class="line">      #&#123;item.id,jdbcType=VARCHAR&#125;  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="xxxMapper-java"><a href="#xxxMapper-java" class="headerlink" title="xxxMapper.java"></a>xxxMapper.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateForBatch</span><span class="params">(List&lt;SysUser&gt; list)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="xxxService-java"><a href="#xxxService-java" class="headerlink" title="xxxService.java"></a>xxxService.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateForBatch</span><span class="params">(List&lt;SysUser&gt; list)</span> </span>&#123;</span><br><span class="line">    sysUserMapper.updateForBatch(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="xxxTest-java"><a href="#xxxTest-java" class="headerlink" title="xxxTest.java"></a>xxxTest.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;SysUser&gt; list = <span class="keyword">new</span> ArrayList&lt;SysUser&gt;();</span><br><span class="line">SysUser sysUser0 = <span class="keyword">new</span> SysUser();</span><br><span class="line">sysUser0.setUserName(<span class="string">"hello0"</span>);</span><br><span class="line">sysUser0.setEmail(<span class="string">"hello0@163.com"</span>);</span><br><span class="line">SysUser sysUser1 = <span class="keyword">new</span> SysUser();</span><br><span class="line">sysUser1.setUserName(<span class="string">"hello1"</span>);</span><br><span class="line">sysUser1.setEmail(<span class="string">"hello1@163.com"</span>);</span><br><span class="line">SysUser sysUser2 = <span class="keyword">new</span> SysUser();</span><br><span class="line">sysUser2.setUserName(<span class="string">"hello2"</span>);</span><br><span class="line">sysUser2.setEmail(<span class="string">"hello2@163.com"</span>);</span><br><span class="line">SysUser sysUser3 = <span class="keyword">new</span> SysUser();</span><br><span class="line">sysUser3.setUserName(<span class="string">"hello3"</span>);</span><br><span class="line">sysUser3.setEmail(<span class="string">"hello3@163.com"</span>);</span><br><span class="line">sysUser0.setId(<span class="string">"01"</span>);</span><br><span class="line">sysUser1.setId(<span class="string">"02"</span>);</span><br><span class="line">sysUser2.setId(<span class="string">"03"</span>);</span><br><span class="line">sysUser3.setId(<span class="string">"04"</span>);</span><br><span class="line">list.add(sysUser0);</span><br><span class="line">list.add(sysUser1);</span><br><span class="line">list.add(sysUser2);</span><br><span class="line">list.add(sysUser3);</span><br><span class="line"><span class="keyword">this</span>.sysUserService.updateForBatch(list);</span><br></pre></td></tr></table></figure>
+<h2 id="打印的sql语句"><a href="#打印的sql语句" class="headerlink" title="打印的sql语句"></a>打印的sql语句</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> sys_user</span><br><span class="line">  <span class="keyword">set</span> user_name = <span class="keyword">case</span> <span class="keyword">id</span> </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">  <span class="keyword">end</span>,</span><br><span class="line">  email = <span class="keyword">case</span> <span class="keyword">id</span> </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">    <span class="keyword">when</span> ? <span class="keyword">then</span> ? </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">where</span> <span class="keyword">ID</span> <span class="keyword">in</span>(?, ?, ?, ?)</span><br><span class="line"><span class="comment">## Parameters: 01(String), hello0(String), 02(String), hello1(String), 03(String), hello2(String), 04(String), hello3(String), 01(String), hello0@163.com(String), 02(String), hello1@163.com(String), 03(String), hello2@163.com(String), 04(String), hello3@163.com(String), 01(String), 02(String), 03(String), 04(String)</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/mybatis/" rel="tag"># mybatis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/10/java/Mybatis传多个参数/" rel="next" title="Mybatis传多个参数">
+                <i class="fa fa-chevron-left"></i> Mybatis传多个参数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/15/mysql/mysql将一张表的数据插入到另外一张表/" rel="prev" title="mysql将一张表的数据插入到另外一张表">
+                mysql将一张表的数据插入到另外一张表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
+          <p class="site-author-name" itemprop="name">leo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">123</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sql语句"><span class="nav-number">1.</span> <span class="nav-text">sql语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xxxMapper-xml"><span class="nav-number">2.</span> <span class="nav-text">xxxMapper.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xxxMapper-java"><span class="nav-number">3.</span> <span class="nav-text">xxxMapper.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xxxService-java"><span class="nav-number">4.</span> <span class="nav-text">xxxService.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xxxTest-java"><span class="nav-number">5.</span> <span class="nav-text">xxxTest.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印的sql语句"><span class="nav-number">6.</span> <span class="nav-text">打印的sql语句</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leo</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
