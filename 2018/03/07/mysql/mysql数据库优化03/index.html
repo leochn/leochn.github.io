@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="sql语句执行顺序">
+<meta name="description" content="sql语句执行顺序sql的执行顺序">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql数据库优化03">
 <meta property="og:url" content="http://netsite.win/2018/03/07/mysql/mysql数据库优化03/index.html">
 <meta property="og:site_name" content="永无止境">
-<meta property="og:description" content="sql语句执行顺序">
+<meta property="og:description" content="sql语句执行顺序sql的执行顺序">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-30T13:19:30.143Z">
+<meta property="og:updated_time" content="2019-03-13T05:01:26.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql数据库优化03">
-<meta name="twitter:description" content="sql语句执行顺序">
+<meta name="twitter:description" content="sql语句执行顺序sql的执行顺序">
 
 
 
@@ -350,7 +350,7 @@
       
 
       
-        <h2 id="sql语句执行顺序"><a href="#sql语句执行顺序" class="headerlink" title="sql语句执行顺序"></a>sql语句执行顺序</h2><a id="more"></a>
+        <h2 id="sql语句执行顺序"><a href="#sql语句执行顺序" class="headerlink" title="sql语句执行顺序"></a>sql语句执行顺序</h2><p>sql的执行顺序<br><a id="more"></a></p>
 <h3 id="手写"><a href="#手写" class="headerlink" title="手写"></a>手写</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span></span><br><span class="line">    &lt;select_list&gt;</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">    &lt;left_table&gt; &lt;join_type&gt;</span><br><span class="line"><span class="keyword">JOIN</span> &lt;right_table&gt; <span class="keyword">ON</span> &lt;join_condition&gt;</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">    &lt;where_condition&gt;</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">    &lt;group_by_list&gt;</span><br><span class="line"><span class="keyword">HAVING</span></span><br><span class="line">    &lt;having_condition&gt;</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></span><br><span class="line">    &lt;order_by_condition&gt;</span><br><span class="line"><span class="keyword">LIMIT</span> &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="机器读"><a href="#机器读" class="headerlink" title="机器读"></a>机器读</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM &lt;left_table&gt;</span><br><span class="line">ON &lt;join_conditon&gt;</span><br><span class="line">&lt;join_type&gt; JOIN &lt;right_table&gt;</span><br><span class="line">WHERE &lt;where_condition&gt;</span><br><span class="line">GROUP BY &lt;group_by_list&gt;</span><br><span class="line">HAVING &lt;having_conditon&gt;</span><br><span class="line"><span class="keyword">SELECT</span></span><br><span class="line"><span class="keyword">DISTINCT</span> &lt;select_list&gt;</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> &lt;order_by_condition&gt;</span><br><span class="line"><span class="keyword">LIMIT</span> &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h2><p>在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。这种数据结构就是索引。</p>
@@ -506,7 +506,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">125</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -519,7 +519,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

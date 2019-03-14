@@ -278,6 +278,512 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/08/03/javascript/javascript的几个简写/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/03/javascript/javascript的几个简写/" itemprop="url">
+                  javascript的几个简写
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T13:30:40+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="三元操作符"><a href="#三元操作符" class="headerlink" title="三元操作符"></a>三元操作符</h2><p>当想写if…else语句时，使用三元操作符来代替<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> x = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">let</span> answer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">30</span>) &#123;</span><br><span class="line">    answer = <span class="string">'is greater'</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    answer = <span class="string">'is lesser'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(answer)</span><br><span class="line"></span><br><span class="line">answer = x &gt; <span class="number">10</span> ? <span class="string">'is greater'</span> : <span class="string">'is lesser'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(answer)</span><br></pre></td></tr></table></figure></p>
+<h2 id="短路求值简写方式"><a href="#短路求值简写方式" class="headerlink" title="短路求值简写方式"></a>短路求值简写方式</h2><p>当给一个变量分配另一个值时，想确定源始值不是null，undefined或空值。可以写撰写一个多重条件的if语句.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> variable1;</span><br><span class="line"><span class="keyword">let</span> variable2;</span><br><span class="line"><span class="keyword">if</span> (variable1 !== <span class="literal">null</span> || variable1 !== <span class="literal">undefined</span> || variable1 !== <span class="string">''</span>) &#123;</span><br><span class="line">    variable2 = variable1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(variable2);   <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> variable3 = variable1  || <span class="string">'new'</span>; <span class="comment">// 左边为真,就不执行右边了;左边为假,才会执行右边.</span></span><br><span class="line"><span class="built_in">console</span>.log(variable3);   <span class="comment">// new</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> variable4 = variable1  &amp;&amp; <span class="string">'new'</span>; <span class="comment">// 左边为真,才会执行右边;左边为假,就不执行右边了.</span></span><br><span class="line"><span class="built_in">console</span>.log(variable4);   <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<h2 id="if存在条件简写方法"><a href="#if存在条件简写方法" class="headerlink" title="if存在条件简写方法"></a>if存在条件简写方法</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (likeJavaScript === <span class="literal">true</span>)&#123;&#125;</span><br><span class="line"><span class="comment">// 简写如下:</span></span><br><span class="line"><span class="keyword">if</span> (likeJavaScript)&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="avaScript循环简写方法"><a href="#avaScript循环简写方法" class="headerlink" title="avaScript循环简写方法"></a>avaScript循环简写方法</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; allImgs.length; i++)</span><br><span class="line"><span class="comment">//简写：</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> allImgs)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> allImgs = [<span class="string">'hello'</span>,<span class="string">'baby'</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; allImgs.length; i++)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(allImgs[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">in</span> allImgs)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(allImgs[index]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/08/03/javascript/js正则表达式校验/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/03/javascript/js正则表达式校验/" itemprop="url">
+                  js正则表达式校验
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:31:23+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="限定1-2位整数同时至多含有3位小数"><a href="#限定1-2位整数同时至多含有3位小数" class="headerlink" title="限定1-2位整数同时至多含有3位小数"></a>限定1-2位整数同时至多含有3位小数</h2> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg1=<span class="regexp">/(^[0-9]&#123;1,2&#125;$)|(^[0-9]&#123;1,2&#125;[\.]&#123;1&#125;[0-9]&#123;1,3&#125;$)/</span>;  </span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">"99.999"</span>)); </span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">"100"</span>)); </span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">"1.0001"</span>)); </span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">"a"</span>) + <span class="string">" a false"</span>);  </span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">"*"</span>) + <span class="string">" * false"</span>);  </span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">".."</span>) + <span class="string">" .. false"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(reg1.test(<span class="string">""</span>) + <span class="string">" 空串 false"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="IP校验"><a href="#IP校验" class="headerlink" title="IP校验"></a>IP校验</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isIP</span>(<span class="params">strIP</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//模糊匹配IP地址的正则表达式     </span></span><br><span class="line">    <span class="keyword">var</span> re = <span class="regexp">/^(\d&#123;1,3&#125;|\*)\.(\d&#123;1,3&#125;|\*)\.(\d&#123;1,3&#125;|\*)\.(\d&#123;1,3&#125;|\*)$/g</span>;</span><br><span class="line">    <span class="keyword">if</span> (re.test(strIP)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">RegExp</span>.$<span class="number">1</span> == <span class="string">'*'</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">2</span> == <span class="string">'*'</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">3</span> == <span class="string">'*'</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">4</span> == <span class="string">'*'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">RegExp</span>.$<span class="number">1</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">2</span> == <span class="string">'*'</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">3</span> == <span class="string">'*'</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">4</span> == <span class="string">'*'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">RegExp</span>.$<span class="number">1</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">2</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">3</span> == <span class="string">'*'</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">4</span> == <span class="string">'*'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">RegExp</span>.$<span class="number">1</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">2</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">3</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">4</span> == <span class="string">'*'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">RegExp</span>.$<span class="number">1</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">2</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">3</span> &lt; <span class="number">256</span> &amp;&amp; <span class="built_in">RegExp</span>.$<span class="number">4</span> &lt; <span class="number">256</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"192.168.1.118"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"256.168.1.118"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"192.168.1.256"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"192.256.1.118"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"192.1.1.118"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"1.1.1.0"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(isIP(<span class="string">"192.-1.1.118"</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="手机号码验证"><a href="#手机号码验证" class="headerlink" title="手机号码验证"></a>手机号码验证</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regPhone = <span class="regexp">/^1(3|4|5|7|8)\d&#123;9&#125;$/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(regPhone.test(<span class="string">"15888888888"</span>));</span><br></pre></td></tr></table></figure>
+<p>简单的解释一下：<br>^1(3|4|5|7|8)\d{9}$<br>表示以1开头，第二位可能是3/4/5/7/8等的任意一个，在加上后面的\d表示数字[0-9]的9位，总共加起来11位结束。</p>
+<p>现在的手机号码段有联通、移动和电信。</p>
+<p>电信:<br>中国电信手机号码开头数字<br>2G/3G号段（CDMA2000网络）133、153、180、181、189<br>4G号段 177</p>
+<p>联通:<br>中国联通手机号码开头数字<br>2G号段（GSM网络）130、131、132、155、156<br>3G上网卡145<br>3G号段（WCDMA网络）185、186<br>4G号段 176、185[1]</p>
+<p>移动:<br>中国移动手机号码开头数字<br>2G号段（GSM网络）有134x（0-8）、135、136、137、138、139、150、151、152、158、159、182、183、184。<br>3G号段（TD-SCDMA网络）有157、187、188<br>3G上网卡 147<br>4G号段 178</p>
+<p>从以上我们可以看到第一位是【1】开头，第二位则则有【3,4,5,7,8】，第三位则是【0-9】，第三位之后则是数字【0-9】。从而我们可以得出一个符合当前的手机号码验证正则表达式。</p>
+<h2 id="用户名正则"><a href="#用户名正则" class="headerlink" title="用户名正则"></a>用户名正则</h2><p>4到16位（字母，数字，下划线，减号）<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> uPattern = <span class="regexp">/^[a-zA-Z0-9_-]&#123;4,16&#125;$/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(uPattern.test(<span class="string">"1qqqw"</span>));</span><br></pre></td></tr></table></figure></p>
+<h2 id="密码强度正则"><a href="#密码强度正则" class="headerlink" title="密码强度正则"></a>密码强度正则</h2><p>//密码强度正则，最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pPattern = <span class="regexp">/^.*(?=.&#123;6,&#125;)(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&amp;*? ]).*$/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(pPattern.test(<span class="string">"Qianbao123#"</span>)); <span class="comment">//输出 true</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="整数正则"><a href="#整数正则" class="headerlink" title="整数正则"></a>整数正则</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正整数正则</span></span><br><span class="line"><span class="keyword">var</span> posPattern = <span class="regexp">/^\d+$/</span>;</span><br><span class="line"><span class="comment">//负整数正则</span></span><br><span class="line"><span class="keyword">var</span> negPattern = <span class="regexp">/^-\d+$/</span>;</span><br><span class="line"><span class="comment">//整数正则</span></span><br><span class="line"><span class="keyword">var</span> intPattern = <span class="regexp">/^-?\d+$/</span>;</span><br><span class="line"><span class="comment">//输出 true</span></span><br><span class="line"><span class="built_in">console</span>.log(posPattern.test(<span class="string">"42"</span>));</span><br><span class="line"><span class="comment">//输出 true</span></span><br><span class="line"><span class="built_in">console</span>.log(negPattern.test(<span class="string">"-42"</span>));</span><br><span class="line"><span class="comment">//输出 true</span></span><br><span class="line"><span class="built_in">console</span>.log(intPattern.test(<span class="string">"-42"</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="数字正则"><a href="#数字正则" class="headerlink" title="数字正则"></a>数字正则</h2><p>可以是整数也可以是浮点数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正数正则</span></span><br><span class="line"><span class="keyword">var</span> posPattern = <span class="regexp">/^\d*\.?\d+$/</span>;</span><br><span class="line"><span class="comment">//负数正则</span></span><br><span class="line"><span class="keyword">var</span> negPattern = <span class="regexp">/^-\d*\.?\d+$/</span>;</span><br><span class="line"><span class="comment">//数字正则</span></span><br><span class="line"><span class="keyword">var</span> numPattern = <span class="regexp">/^-?\d*\.?\d+$/</span>;</span><br><span class="line"><span class="built_in">console</span>.log(posPattern.test(<span class="string">"42.2"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(negPattern.test(<span class="string">"-42.2"</span>));</span><br><span class="line"><span class="built_in">console</span>.log(numPattern.test(<span class="string">"-42.2"</span>));</span><br></pre></td></tr></table></figure></p>
+<h2 id="IPV4地址正则"><a href="#IPV4地址正则" class="headerlink" title="IPV4地址正则"></a>IPV4地址正则</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ipv4地址正则</span></span><br><span class="line"><span class="keyword">var</span> ipP = <span class="regexp">/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.)&#123;3&#125;(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/</span>;</span><br><span class="line"><span class="comment">//输出 true</span></span><br><span class="line"><span class="built_in">console</span>.log(ipP.test(<span class="string">"192.28.47.26"</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="包含中文正则"><a href="#包含中文正则" class="headerlink" title="包含中文正则"></a>包含中文正则</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cnPattern = <span class="regexp">/[\u4E00-\u9FA5]/</span>;</span><br><span class="line"><span class="comment">//输出 true</span></span><br><span class="line"><span class="built_in">console</span>.log(cnPattern.test(<span class="string">"123ADADss你"</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="车牌号正则"><a href="#车牌号正则" class="headerlink" title="车牌号正则"></a>车牌号正则</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cPattern = <span class="regexp">/^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]&#123;1&#125;[A-Z]&#123;1&#125;[A-Z0-9]&#123;4&#125;[A-Z0-9挂学警港澳]&#123;1&#125;$/</span>;</span><br><span class="line"><span class="comment">//输出 true</span></span><br><span class="line"><span class="built_in">console</span>.log(cPattern.test(<span class="string">"粤B39006"</span>));</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/30/mysql/centos7安装mysql/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/30/mysql/centos7安装mysql/" itemprop="url">
+                  centos7安装mysql
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T06:08:39+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文是 CentOS7下使用yum安装MySQL的一些步骤<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/30/mysql/centos7安装mysql/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/27/tools/git-的一些操作/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/27/tools/git-的一些操作/" itemprop="url">
+                  git 的一些操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T15:39:12+08:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="git远程拉分支-并进行版本回退"><a href="#git远程拉分支-并进行版本回退" class="headerlink" title="git远程拉分支,并进行版本回退"></a>git远程拉分支,并进行版本回退</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">git clone git@git.coding.net:leousst/jkflow.git</span><br><span class="line"></span><br><span class="line">cd jkflow/</span><br><span class="line"></span><br><span class="line"># 查看远程分支</span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line"># checkout远程的dev分支，在本地起名为dev分支，并切换到本地的dev分支</span><br><span class="line">git checkout -b dev origin/dev</span><br><span class="line"></span><br><span class="line"># 查看版本信息</span><br><span class="line">git log</span><br><span class="line"></span><br><span class="line"># 版本回退</span><br><span class="line">git reset --hard ab89a31ef4712c74b1141bb94bd5d4770dbce3de</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1.安装git</span><br><span class="line"></span><br><span class="line">2.配置用户名和邮箱</span><br><span class="line">git config --global user.name &quot;myname&quot;</span><br><span class="line">git config --global user.email &quot;test@gmail.com&quot;</span><br><span class="line"></span><br><span class="line">3.查看配置信息</span><br><span class="line">git config --global  --list</span><br><span class="line"></span><br><span class="line">4.git-ssh 永久保存密码</span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/27/vue/vue项目部署在nginx-https的非根目录下/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1017,493 +1523,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/16/javascript/ES6-01/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/16/javascript/ES6-01/" itemprop="url">
-                  ES6-01
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T15:56:33+08:00">
-                2017-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>ES6: ECMAScript6<br>什么是ECMA?<br>    ECMA是标准,js是实现<br>        类似 HTML5是标准, IE10, chrome, FF都是实现<br>        换句话说, 将来也有可能其他 xxxScript来实现ECMA<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/16/javascript/ES6-01/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/16/sass/02-sass-less-stylus/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/16/sass/02-sass-less-stylus/" itemprop="url">
-                  02-sass-less-stylus
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T15:50:37+08:00">
-                2017-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/16/sass/01-sass初步/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/16/sass/01-sass初步/" itemprop="url">
-                  01-sass初步
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T15:43:59+08:00">
-                2017-07-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是sass"><a href="#什么是sass" class="headerlink" title="什么是sass"></a>什么是sass</h2><h2 id="sass-与-css"><a href="#sass-与-css" class="headerlink" title="sass 与 css"></a>sass 与 css</h2><p>css并不能算是一门真正意义上的”编程语言”,无法完成嵌套、继承、设置变量等工作.解决css的不足,开发者想到了填写一种对css进行预处理的”中间语言”.</p>
-<h2 id="sass-与-scss"><a href="#sass-与-scss" class="headerlink" title="sass 与 .scss"></a>sass 与 .scss</h2><h2 id="什么是Compass"><a href="#什么是Compass" class="headerlink" title="什么是Compass"></a>什么是Compass</h2><h2 id="Sass-与-Compass"><a href="#Sass-与-Compass" class="headerlink" title="Sass 与 Compass"></a>Sass 与 Compass</h2><p>Sass 与 Compass 能做什么<br>Sass 与 Compass 的安装</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2017/07/14/less/13-less函数库-function/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/14/less/13-less函数库-function/" itemprop="url">
-                  13-less函数库(function)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T06:08:45+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h2><h3 id="escape-函数-将输入字符串中的url特殊字符进行编码处理"><a href="#escape-函数-将输入字符串中的url特殊字符进行编码处理" class="headerlink" title="escape()函数: 将输入字符串中的url特殊字符进行编码处理"></a>escape()函数: 将输入字符串中的url特殊字符进行编码处理</h3><h3 id="e-函数-css转义-用-符号代替"><a href="#e-函数-css转义-用-符号代替" class="headerlink" title="e()函数: css转义,用~符号代替."></a>e()函数: css转义,用~符号代替.</h3><h3 id="函数-函数-string-argument…-格式化一个字符串"><a href="#函数-函数-string-argument…-格式化一个字符串" class="headerlink" title="%()函数: 函数 %(string,argument…) 格式化一个字符串."></a>%()函数: 函数 %(string,argument…) 格式化一个字符串.</h3><h3 id="replace-函数-用另一个字符串替换文本"><a href="#replace-函数-用另一个字符串替换文本" class="headerlink" title="replace()函数: 用另一个字符串替换文本"></a>replace()函数: 用另一个字符串替换文本</h3><h2 id="长度函数"><a href="#长度函数" class="headerlink" title="长度函数"></a>长度函数</h2><h2 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h2><h3 id="ceil-向上取整"><a href="#ceil-向上取整" class="headerlink" title="ceil():向上取整"></a>ceil():向上取整</h3><h3 id="floor-向下取整"><a href="#floor-向下取整" class="headerlink" title="floor():向下取整"></a>floor():向下取整</h3><h3 id="percentage-将浮点数转换为百分比"><a href="#percentage-将浮点数转换为百分比" class="headerlink" title="percentage():将浮点数转换为百分比"></a>percentage():将浮点数转换为百分比</h3><h3 id="round-取整和四舍五入"><a href="#round-取整和四舍五入" class="headerlink" title="round():取整和四舍五入"></a>round():取整和四舍五入</h3><h3 id="abs"><a href="#abs" class="headerlink" title="abs()"></a>abs()</h3>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1551,7 +1570,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">125</span>
+                <span class="site-state-item-count">129</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1564,7 +1583,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">47</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
