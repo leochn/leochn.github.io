@@ -98,7 +98,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://netsite.win/assets/images/tools/windows-001.png">
 <meta property="og:image" content="http://netsite.win/assets/images/tools/windows-002.png">
-<meta property="og:updated_time" content="2018-12-17T06:33:03.799Z">
+<meta property="og:updated_time" content="2019-03-20T00:53:12.008Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows下强制杀死进程">
 <meta name="twitter:description" content="windows下强制杀死进程1window下当使用某个端口时，发现这个端口被占用，但是正规的关闭这个进程又关闭不了，可以使用强制杀死。">
@@ -284,7 +284,7 @@
     <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/11/30/tools/windows下强制杀死进程/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
+      <meta itemprop="name" content="LEO">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/earphone.jpg">
     </span>
@@ -364,6 +364,11 @@
 <p>杀死PID进程:</p>
 <p>taskkill /pid 13828 -t -f</p>
 <p><img src="/assets/images/tools/windows-002.png" alt="windows"></p>
+<h2 id="netstat"><a href="#netstat" class="headerlink" title="netstat"></a>netstat</h2><p>说明：显示协议统计和当前 TCP/IP 网络连接。其相关命令行参数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> -a            显示所有连接和侦听端口。</span><br><span class="line"> -b            显示在创建每个连接或侦听端口时涉及的可执行程序。</span><br><span class="line">               在某些情况下，已知可执行程序承载多个独立的</span><br><span class="line">               组件，这些情况下，显示创建连接或侦听端口时涉</span><br><span class="line">               及的组件序列。此情况下，可执行程序的名称</span><br><span class="line">               位于底部[]中，它调用的组件位于顶部，直至达</span><br><span class="line">               到 TCP/IP。注意，此选项可能很耗时，并且在您没有</span><br><span class="line">               足够权限时可能失败。</span><br><span class="line"> -e            显示以太网统计。此选项可以与 -s 选项结合使用。</span><br><span class="line"> -f            显示外部地址的完全限定域名(FQDN)。</span><br><span class="line"> -n            以数字形式显示地址和端口号。</span><br><span class="line"> -o            显示拥有的与每个连接关联的进程 ID。</span><br><span class="line"> -p proto      显示 proto 指定的协议的连接；proto 可以是下列任</span><br><span class="line">               何一个: TCP、UDP、TCPv6 或 UDPv6。如果与 -s 选</span><br><span class="line">               项一起用来显示每个协议的统计，proto 可以是下列任</span><br><span class="line">               何一个: IP、IPv6、ICMP、ICMPv6、TCP、TCPv6、UDP</span><br><span class="line">               或 UDPv6。</span><br><span class="line"> -r            显示路由表。</span><br><span class="line"> -s            显示每个协议的统计。默认情况下，显示</span><br><span class="line">               IP、IPv6、ICMP、ICMPv6、TCP、TCPv6、UDP 和 UDPv6</span><br><span class="line">               的统计；-p 选项可用于指定默认的子网。</span><br><span class="line"> -t            显示当前连接卸载状态。</span><br><span class="line"> interval      重新显示选定的统计，各个显示间暂停的间隔秒数。</span><br><span class="line">               按 CTRL+C 停止重新显示统计。如果省略，则 netstat</span><br><span class="line">               将打印当前的配置信息一次。</span><br><span class="line">如：</span><br><span class="line"></span><br><span class="line">netstat –ano</span><br><span class="line">说明：以数字形式显示所有链接和侦听端口（地址和端口号），-o表示显示进程id（PID）</span><br></pre></td></tr></table></figure></p>
+<h2 id="tasklist"><a href="#tasklist" class="headerlink" title="tasklist"></a>tasklist</h2><p>在netstat的基础上，我们可以利用tasklist显示在本地或远程机器上当前运行的进程列表.</p>
+<p>说明：用findstr是为了进行字符串过滤，类似于Linux中的grep.</p>
+<h2 id="taskkill"><a href="#taskkill" class="headerlink" title="taskkill"></a>taskkill</h2><p>使用该工具按照进程 ID (PID) 或映像名称终止任务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">如：</span><br><span class="line"></span><br><span class="line">C:\Users\Administrator.WIN7-1609051925&gt;taskkill /F /pid 944</span><br><span class="line"></span><br><span class="line">成功: 已终止 PID 为 944 的进程。</span><br><span class="line"></span><br><span class="line">说明:  /F    指定强制终止进程。</span><br><span class="line">       /PID  processid   指定要终止的进程的 PID。</span><br></pre></td></tr></table></figure></p>
+<p>注意：终止任务可能需要管理员权限，若是用dos操作，需要“以管理员身份启动”cmd窗口。</p>
 
       
     </div>
@@ -386,13 +391,13 @@
     <div id="QR" style="display: none;">
       
         <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="leo WeChat Pay">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="LEO WeChat Pay">
           <p>微信打赏</p>
         </div>
       
       
         <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="leo Alipay">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="LEO Alipay">
           <p>支付宝打赏</p>
         </div>
       
@@ -429,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/11/bigdata/hadoop集群搭建/" rel="next" title="hadoop集群搭建">
-                <i class="fa fa-chevron-left"></i> hadoop集群搭建
+              <a href="/2018/10/12/bigdata/搭建hadoop集群/" rel="next" title="搭建hadoop集群">
+                <i class="fa fa-chevron-left"></i> 搭建hadoop集群
               </a>
             
           </div>
@@ -500,8 +505,8 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
-          <p class="site-author-name" itemprop="name">leo</p>
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="LEO">
+          <p class="site-author-name" itemprop="name">LEO</p>
            
               <p class="site-description motion-element" itemprop="description">学习-分享</p>
           
@@ -511,7 +516,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">129</span>
+                <span class="site-state-item-count">137</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -524,7 +529,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -559,7 +564,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#windows下强制杀死进程"><span class="nav-number">1.</span> <span class="nav-text">windows下强制杀死进程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#windows下强制杀死进程"><span class="nav-number">1.</span> <span class="nav-text">windows下强制杀死进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netstat"><span class="nav-number">2.</span> <span class="nav-text">netstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasklist"><span class="nav-number">3.</span> <span class="nav-text">tasklist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#taskkill"><span class="nav-number">4.</span> <span class="nav-text">taskkill</span></a></li></ol></div>
             
 
           </div>
@@ -586,7 +591,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">leo</span>
+  <span class="author" itemprop="copyrightHolder">LEO</span>
 </div>
 
 

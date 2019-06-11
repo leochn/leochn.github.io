@@ -278,10 +278,10 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/03/13/mysql/mysql引擎区别/">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/06/09/bigdata/Hive安装/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
+      <meta itemprop="name" content="LEO">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/earphone.jpg">
     </span>
@@ -300,8 +300,8 @@
             
               
                 
-                <a class="post-title-link" href="/2019/03/13/mysql/mysql引擎区别/" itemprop="url">
-                  mysql引擎区别
+                <a class="post-title-link" href="/2019/06/09/bigdata/Hive安装/" itemprop="url">
+                  Hive安装
                 </a>
               
             
@@ -317,8 +317,153 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T13:06:42+08:00">
-                2019-03-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-09T14:53:02+08:00">
+                2019-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Hive安装地址"><a href="#Hive安装地址" class="headerlink" title="Hive安装地址"></a>Hive安装地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1）Hive 官网地址：</span><br><span class="line">http://hive.apache.org/</span><br><span class="line">2）文档查看地址：</span><br><span class="line">https://cwiki.apache.org/confluence/display/Hive/GettingStarted</span><br><span class="line">3）下载地址：</span><br><span class="line">http://hive.apache.org/downloads.html</span><br><span class="line">https://mirrors.tuna.tsinghua.edu.cn/apache/hive/</span><br><span class="line">4）github 地址：</span><br><span class="line">https://github.com/apache/hive</span><br></pre></td></tr></table></figure>
+<h2 id="Hive安装部署"><a href="#Hive安装部署" class="headerlink" title="Hive安装部署"></a>Hive安装部署</h2><h3 id="Hive安装及配置"><a href="#Hive安装及配置" class="headerlink" title="Hive安装及配置"></a>Hive安装及配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">（1）把 apache-hive-1.2.1-bin.tar.gz 上传到 linux 的 /software 目录下</span><br><span class="line">（2）解压 apache-hive-1.2.1-bin.tar.gz 到/opt/目录下面</span><br><span class="line">[root@vm1 software]# pwd</span><br><span class="line">/software</span><br><span class="line">[root@vm1 software]# ll</span><br><span class="line">total 413916</span><br><span class="line">-rw-r--r--. 1 root root 232027212 Jun  9 12:35 apache-hive-2.3.5-bin.tar.gz</span><br><span class="line">-rw-r--r--. 1 root root 191817140 Mar 29 20:35 jdk-8u201-linux-x64.tar.gz</span><br><span class="line">[root@vm1 software]# tar -zxvf apache-hive-2.3.5-bin.tar.gz -C /opt/</span><br><span class="line"></span><br><span class="line">（3）修改 apache-hive-2.3.5-bin 的名称为 hive</span><br><span class="line">[root@vm1 opt]# pwd</span><br><span class="line">/opt</span><br><span class="line">[root@vm1 opt]# ll</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x. 10 root root 184 Jun  9 15:00 apache-hive-2.3.5-bin</span><br><span class="line">drwxr-xr-x. 11 1000 1001 172 Apr  2 19:08 hadoop-3.1.1</span><br><span class="line">drwxr-xr-x.  7   10  143 245 Dec 16 03:48 jdk1.8.0_201</span><br><span class="line">[root@vm1 opt]# mv apache-hive-2.3.5-bin/ hive</span><br><span class="line"></span><br><span class="line">（4）修改/opt/hive/conf 目录下的 hive-env.sh.template 名称为 hive-env.sh</span><br><span class="line">[root@vm1 conf]# pwd</span><br><span class="line">/opt/hive/conf</span><br><span class="line">[root@vm1 conf]# mv hive-env.sh.template hive-env.sh</span><br><span class="line"></span><br><span class="line">（5）配置 hive-env.sh 文件, HADOOP_HOME 路径,配置 HIVE_CONF_DIR 路径</span><br><span class="line">HADOOP_HOME=/opt/hadoop-3.1.1</span><br><span class="line">HIVE_CONF_DIR=/opt/hive/conf</span><br></pre></td></tr></table></figure>
+<h3 id="Hadoop集群配置"><a href="#Hadoop集群配置" class="headerlink" title="Hadoop集群配置"></a>Hadoop集群配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">（1）必须启动 hdfs 和 yarn</span><br><span class="line">[root@vm1 hadoop-3.1.1]# sbin/start-dfs.sh</span><br><span class="line">[root@vm2 hadoop-3.1.1]# sbin/start-yarn.sh</span><br><span class="line"></span><br><span class="line">（2）在 HDFS 上创建/tmp 和/user/hive/warehouse 两个目录并修改他们的同组权限可写</span><br><span class="line">[root@vm1 hadoop-3.1.1]# bin/hadoop fs -mkdir /tmp</span><br><span class="line">[root@vm1 hadoop-3.1.1]# bin/hadoop fs -mkdir -p /user/hive/warehouse</span><br><span class="line">[root@vm1 hadoop-3.1.1]# hadoop fs -ls /</span><br><span class="line">Found 7 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2019-06-04 19:40 /0906</span><br><span class="line">-rw-r--r--   3 root supergroup         20 2019-06-04 07:12 /hello1.txt</span><br><span class="line">-rw-r--r--   3 root supergroup         20 2019-06-04 07:13 /hello2.txt</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2019-06-09 15:16 /tmp</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2019-06-09 15:17 /user</span><br><span class="line">[root@vm1 hadoop-3.1.1]#</span><br><span class="line"></span><br><span class="line">[root@vm1 hadoop-3.1.1]# bin/hadoop fs -chmod 777 /tmp</span><br><span class="line">[root@vm1 hadoop-3.1.1]# bin/hadoop fs -chmod 777 /user/hive/warehouse</span><br><span class="line">[root@vm1 hadoop-3.1.1]# hadoop fs -ls /</span><br><span class="line">Found 7 items</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2019-06-04 19:40 /0906</span><br><span class="line">-rw-r--r--   3 root supergroup         20 2019-06-04 07:12 /hello1.txt</span><br><span class="line">-rw-r--r--   3 root supergroup         20 2019-06-04 07:13 /hello2.txt</span><br><span class="line">-rw-r--r--   3 root supergroup         20 2019-06-04 19:44 /hello4.txt</span><br><span class="line">-rw-r--r--   3 root supergroup         20 2019-06-04 07:04 /hello6.txt</span><br><span class="line">drwxrwxrwx   - root supergroup          0 2019-06-09 15:16 /tmp</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2019-06-09 15:17 /user</span><br><span class="line">[root@vm1 hadoop-3.1.1]# hadoop fs -ls /user/hive/</span><br><span class="line">Found 1 items</span><br><span class="line">drwxrwxrwx   - root supergroup          0 2019-06-09 15:17 /user/hive/warehouse</span><br><span class="line">[root@vm1 hadoop-3.1.1]#</span><br></pre></td></tr></table></figure>
+<h3 id="Hive基本操作"><a href="#Hive基本操作" class="headerlink" title="Hive基本操作"></a>Hive基本操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">（1）启动 hive</span><br><span class="line">[root@vm1 hive]# pwd</span><br><span class="line">/opt/hive</span><br><span class="line">[root@vm1 hive]# bin/hive</span><br><span class="line">（2）查看数据库</span><br><span class="line">hive&gt;show databases;</span><br><span class="line">（3）打开默认数据库</span><br><span class="line">hive&gt;use default;</span><br><span class="line">（4）显示 default 数据库中的表</span><br><span class="line">hive&gt;show tables;</span><br><span class="line">（5）创建一张表</span><br><span class="line">hive&gt; create table student(id int, name string);</span><br><span class="line">（6）显示数据库中有几张表</span><br><span class="line">hive&gt;show tables;</span><br><span class="line">（7）查看表的结构</span><br><span class="line">hive&gt;desc student;</span><br><span class="line">（8）向表中插入数据</span><br><span class="line">hive&gt; insert into student values(1000,&quot;ss&quot;);</span><br><span class="line">（9）查询表中数据</span><br><span class="line">hive&gt; select * from student;</span><br><span class="line">（10）退出 hive</span><br><span class="line">hive&gt; quit;</span><br></pre></td></tr></table></figure>
+<h2 id="Hive操作"><a href="#Hive操作" class="headerlink" title="Hive操作"></a>Hive操作</h2><h3 id="配置Metastore到MySql"><a href="#配置Metastore到MySql" class="headerlink" title="配置Metastore到MySql"></a>配置Metastore到MySql</h3><p>根据官方文档配置参数，拷贝数据到 hive-site.xml 文件中<br>配置在 /opt/hive/conf 目录下。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.metastore.local<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>controls whether to connect to remove metastore server or open a new metastore server in Hive Client JVM<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--连接数据库地址，名称 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionURL<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>jdbc:mysql://192.168.192.8:3306/metastore?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;iuseSSL=false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>JDBC connect string for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--连接数据库驱动 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionDriverName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>com.mysql.jdbc.Driver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>Driver class name for a JDBC metastore<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--连接数据库用户名称 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionUserName<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>root<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>username to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--连接数据库用户密码 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>javax.jdo.option.ConnectionPassword<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>123456<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>password to use against metastore database<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--客户端显示当前数据库名称信息 --&gt;</span> </span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.current.db<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>Whether to include the current database in the Hive prompt.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--客户端显示当前查询表的头信息 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hive.cli.print.header<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>Whether to print the names of the columns in query output.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="上传mysql驱动"><a href="#上传mysql驱动" class="headerlink" title="上传mysql驱动"></a>上传mysql驱动</h3><p>上传mysql驱动(mysql-connector-java-5.1.45.jar), 在 /opt/hive/lib 目录下。</p>
+<h3 id="启动Hive出现错误"><a href="#启动Hive出现错误" class="headerlink" title="启动Hive出现错误"></a>启动Hive出现错误</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hive]<span class="comment"># bin/hive</span></span><br><span class="line"><span class="built_in">which</span>: no hbase <span class="keyword">in</span> (/opt/jdk1.8.0_201/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/opt/jdk1.8.0_201/bin:/opt/hadoop-3.1.1/bin:/opt/hadoop-3.1.1/sbin:/root/bin)</span><br><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/opt/hadoop-3.1.1/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: See http://www.slf4j.org/codes.html<span class="comment">#multiple_bindings for an explanation.</span></span><br><span class="line">SLF4J: Actual binding is of <span class="built_in">type</span> [org.apache.logging.slf4j.Log4jLoggerFactory]</span><br><span class="line"></span><br><span class="line">Logging initialized using configuration <span class="keyword">in</span> jar:file:/opt/hive/lib/hive-common-2.3.5.jar!/hive-log4j2.properties Async: <span class="literal">true</span></span><br><span class="line">Hive-on-MR is deprecated <span class="keyword">in</span> Hive 2 and may not be available <span class="keyword">in</span> the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">hive&gt; show databases;</span><br><span class="line">FAILED: SemanticException org.apache.hadoop.hive.ql.metadata.HiveException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient</span><br><span class="line">hive&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="初始化数据库"><a href="#初始化数据库" class="headerlink" title="初始化数据库"></a>初始化数据库</h3><p>出现上面的错误，是因为没有初始化数据库。<br>从Hive 2.1开始，我们需要运行下面的schematool命令作为初始化步骤。例如，这里使用“mysql”作为db类型</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hive]<span class="comment"># cd bin</span></span><br><span class="line">[root@vm1 bin]<span class="comment"># schematool -dbType mysql -initSchema</span></span><br><span class="line">-bash: schematool: <span class="built_in">command</span> not found</span><br><span class="line">[root@vm1 bin]<span class="comment"># yum -y install schematool</span></span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.nju.edu.cn</span><br><span class="line"> * extras: ftp.sjtu.edu.cn</span><br><span class="line"> * updates: mirrors.163.com</span><br><span class="line">base                                                                                                                               | 3.6 kB  00:00:00     </span><br><span class="line">extras                                                                                                                             | 3.4 kB  00:00:00     </span><br><span class="line">updates                                                                                                                            | 3.4 kB  00:00:00     </span><br><span class="line">No package schematool available.</span><br><span class="line">Error: Nothing to <span class="keyword">do</span></span><br><span class="line">[root@vm1 bin]<span class="comment">#</span></span><br><span class="line">[root@vm1 bin]<span class="comment"># ./schematool -dbType mysql -initSchema</span></span><br><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/opt/hadoop-3.1.1/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: See http://www.slf4j.org/codes.html<span class="comment">#multiple_bindings for an explanation.</span></span><br><span class="line">SLF4J: Actual binding is of <span class="built_in">type</span> [org.apache.logging.slf4j.Log4jLoggerFactory]</span><br><span class="line">Metastore connection URL:	 jdbc:mysql://122.112.227.174:3306/metastore?createDatabaseIfNotExist=<span class="literal">true</span>&amp;useUnicode=<span class="literal">true</span>&amp;characterEncoding=utf8&amp;iuseSSL=<span class="literal">false</span></span><br><span class="line">Metastore Connection Driver :	 com.mysql.jdbc.Driver</span><br><span class="line">Metastore connection User:	 root</span><br><span class="line">Mon Jun 10 16:24:03 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Starting metastore schema initialization to 2.3.0</span><br><span class="line">Initialization script hive-schema-2.3.0.mysql.sql</span><br><span class="line">Mon Jun 10 16:24:04 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Initialization script completed</span><br><span class="line">Mon Jun 10 16:24:11 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">schemaTool completed</span><br><span class="line">[root@vm1 bin]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="测试Hive"><a href="#测试Hive" class="headerlink" title="测试Hive"></a>测试Hive</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hive]<span class="comment"># bin/hive</span></span><br><span class="line"><span class="built_in">which</span>: no hbase <span class="keyword">in</span> (/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/opt/jdk1.8.0_201/bin:/opt/hadoop-3.1.1/bin:/opt/hadoop-3.1.1/sbin:/root/bin)</span><br><span class="line">SLF4J: Class path contains multiple SLF4J bindings.</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/opt/hive/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: Found binding <span class="keyword">in</span> [jar:file:/opt/hadoop-3.1.1/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]</span><br><span class="line">SLF4J: See http://www.slf4j.org/codes.html<span class="comment">#multiple_bindings for an explanation.</span></span><br><span class="line">SLF4J: Actual binding is of <span class="built_in">type</span> [org.apache.logging.slf4j.Log4jLoggerFactory]</span><br><span class="line"></span><br><span class="line">Logging initialized using configuration <span class="keyword">in</span> jar:file:/opt/hive/lib/hive-common-2.3.5.jar!/hive-log4j2.properties Async: <span class="literal">true</span></span><br><span class="line">Hive-on-MR is deprecated <span class="keyword">in</span> Hive 2 and may not be available <span class="keyword">in</span> the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">hive (default)&gt; show databases;</span><br><span class="line">Mon Jun 10 16:27:01 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:02 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:03 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:03 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:05 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:06 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:06 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">Mon Jun 10 16:27:06 CST 2019 WARN: Establishing SSL connection without server<span class="string">'s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn'</span>t <span class="built_in">set</span>. For compliance with existing applications not using SSL the verifyServerCertificate property is <span class="built_in">set</span> to <span class="string">'false'</span>. You need either to explicitly <span class="built_in">disable</span> SSL by setting useSSL=<span class="literal">false</span>, or <span class="built_in">set</span> useSSL=<span class="literal">true</span> and provide truststore <span class="keyword">for</span> server certificate verification.</span><br><span class="line">OK</span><br><span class="line">default</span><br><span class="line">Time taken: 12.227 seconds, Fetched: 1 row(s)</span><br><span class="line">hive (default)&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Hive创建表"><a href="#Hive创建表" class="headerlink" title="Hive创建表"></a>Hive创建表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; use default;</span><br><span class="line">OK</span><br><span class="line">Time taken: 0.368 seconds</span><br><span class="line">hive (default)&gt; show tables;</span><br><span class="line">OK</span><br><span class="line">Time taken: 0.295 seconds</span><br><span class="line">hive (default)&gt; create table student(id int, name string);</span><br><span class="line">OK</span><br><span class="line">Time taken: 2.043 seconds</span><br><span class="line">hive (default)&gt; show tables;</span><br><span class="line">OK</span><br><span class="line">student</span><br><span class="line">Time taken: 0.376 seconds, Fetched: 1 row(s)</span><br><span class="line">hive (default)&gt; desc student;</span><br><span class="line">OK</span><br><span class="line">id                  	int                 	                    </span><br><span class="line">name                	string              	                    </span><br><span class="line">Time taken: 0.627 seconds, Fetched: 2 row(s)</span><br><span class="line">hive (default)&gt; insert into student values(1000,<span class="string">"ss"</span>);</span><br><span class="line">WARNING: Hive-on-MR is deprecated <span class="keyword">in</span> Hive 2 and may not be available <span class="keyword">in</span> the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">Query ID = root_20190610163226_7e5140d5-705e-424b-b7e6-4678b6038e43</span><br><span class="line">Total <span class="built_in">jobs</span> = 3</span><br><span class="line">Launching Job 1 out of 3</span><br><span class="line">Number of reduce tasks is <span class="built_in">set</span> to 0 since there<span class="string">'s no reduce operator</span></span><br><span class="line"><span class="string">Starting Job = job_1560152352405_0001, Tracking URL = http://vm2:8088/proxy/application_1560152352405_0001/</span></span><br><span class="line"><span class="string">Kill Command = /opt/hadoop-3.1.1/bin/hadoop job  -kill job_1560152352405_0001</span></span><br><span class="line"><span class="string">Hadoop job information for Stage-1: number of mappers: 0; number of reducers: 0</span></span><br><span class="line"><span class="string">2019-06-10 16:32:46,463 Stage-1 map = 0%,  reduce = 0%</span></span><br><span class="line"><span class="string">Ended Job = job_1560152352405_0001 with errors</span></span><br><span class="line"><span class="string">Error during job, obtaining debugging information...</span></span><br><span class="line"><span class="string">FAILED: Execution Error, return code 2 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask</span></span><br><span class="line"><span class="string">MapReduce Jobs Launched: </span></span><br><span class="line"><span class="string">Stage-Stage-1:  HDFS Read: 0 HDFS Write: 0 FAIL</span></span><br><span class="line"><span class="string">Total MapReduce CPU Time Spent: 0 msec</span></span><br><span class="line"><span class="string">hive (default)&gt;</span></span><br></pre></td></tr></table></figure>
+<p>新建表：</p>
+<p><img src="/assets/images/bigdata/hive安装_新建表001.png" alt="Hive安装"></p>
+<h3 id="Hive中运行任务报错"><a href="#Hive中运行任务报错" class="headerlink" title="Hive中运行任务报错"></a>Hive中运行任务报错</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Ended Job = job_1560152352405_0001 with errors</span><br><span class="line">Error during job, obtaining debugging information...</span><br><span class="line">FAILED: Execution Error, return code 2 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask</span><br><span class="line">MapReduce Jobs Launched: </span><br><span class="line">Stage-Stage-1:  HDFS Read: 0 HDFS Write: 0 FAIL</span><br><span class="line">Total MapReduce CPU Time Spent: 0 msec</span><br></pre></td></tr></table></figure>
+<h4 id="失败原因"><a href="#失败原因" class="headerlink" title="失败原因"></a>失败原因</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">经查发现发现/tmp/hadoop/.log提示java.lang.OutOfMemoryError: Java heap space，原因是namenode内存空间不够，jvm不够新job启动导致。</span><br></pre></td></tr></table></figure>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">将你的hive可以设置成本地模式来执行任务试试：</span><br><span class="line">hive (default)&gt; set hive.exec.mode.local.auto=true;</span><br></pre></td></tr></table></figure>
+<h4 id="再次插入数据"><a href="#再次插入数据" class="headerlink" title="再次插入数据"></a>再次插入数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; insert into student values(1000,<span class="string">"ss"</span>);</span><br><span class="line">Automatically selecting <span class="built_in">local</span> only mode <span class="keyword">for</span> query</span><br><span class="line">WARNING: Hive-on-MR is deprecated <span class="keyword">in</span> Hive 2 and may not be available <span class="keyword">in</span> the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.</span><br><span class="line">Query ID = root_20190611142952_63ed50fe-bdde-43d2-b4cb-f4827ab25e75</span><br><span class="line">Total <span class="built_in">jobs</span> = 3</span><br><span class="line">Launching Job 1 out of 3</span><br><span class="line">Number of reduce tasks is <span class="built_in">set</span> to 0 since there<span class="string">'s no reduce operator</span></span><br><span class="line"><span class="string">Job running in-process (local Hadoop)</span></span><br><span class="line"><span class="string">2019-06-11 14:29:55,623 Stage-1 map = 100%,  reduce = 0%</span></span><br><span class="line"><span class="string">Ended Job = job_local997893747_0001</span></span><br><span class="line"><span class="string">Stage-4 is selected by condition resolver.</span></span><br><span class="line"><span class="string">Stage-3 is filtered out by condition resolver.</span></span><br><span class="line"><span class="string">Stage-5 is filtered out by condition resolver.</span></span><br><span class="line"><span class="string">Moving data to directory hdfs://vm1:9000/user/hive/warehouse/student/.hive-staging_hive_2019-06-11_14-29-52_444_84437470798176415-1/-ext-10000</span></span><br><span class="line"><span class="string">Loading data to table default.student</span></span><br><span class="line"><span class="string">MapReduce Jobs Launched: </span></span><br><span class="line"><span class="string">Stage-Stage-1:  HDFS Read: 8 HDFS Write: 34636713 SUCCESS</span></span><br><span class="line"><span class="string">Total MapReduce CPU Time Spent: 0 msec</span></span><br><span class="line"><span class="string">OK</span></span><br><span class="line"><span class="string">Time taken: 7.701 seconds</span></span><br><span class="line"><span class="string">hive (default)&gt; select * from student;</span></span><br><span class="line"><span class="string">OK</span></span><br><span class="line"><span class="string">1000	ss</span></span><br><span class="line"><span class="string">Time taken: 0.744 seconds, Fetched: 1 row(s)</span></span><br><span class="line"><span class="string">hive (default)&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在表中插入数据：</p>
+<p><img src="/assets/images/bigdata/hive安装_新建表002.png" alt="Hive安装"></p>
+<h3 id="将本地文件导入Hive"><a href="#将本地文件导入Hive" class="headerlink" title="将本地文件导入Hive"></a>将本地文件导入Hive</h3><p>需求：将本地/opt/datas/student.txt 这个目录下的数据导入到 hive 的 student(id int, name string)表中。</p>
+<h4 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h4><p>在/opt/datas/student.txt 这个目录下准备数据，<br>[root@vm1 datas]# vim student.txt<br>1001    zhangshan<br>1002    lishi<br>1003    zhaoliu<br>注意以 tab 键间隔(否则查询出来会出现NULL)</p>
+<h4 id="删除已创建的student表-并重新建表"><a href="#删除已创建的student表-并重新建表" class="headerlink" title="删除已创建的student表,并重新建表"></a>删除已创建的student表,并重新建表</h4><p>删除已创建的student表<br>drop table student;</p>
+<p>创建student表, 并声明文件分隔符’\t’<br>create table student(id int, name string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ‘\t’;</p>
+<p>加载/opt/datas/student.txt 文件到 student 数据库表中<br>load data local inpath ‘/opt/datas/student.txt’ into table student;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">hive (default)&gt; drop table student;</span><br><span class="line">hive (default)&gt; create table student(id int, name string) ROW FORMAT DELIMITED FIELDS TERMINATED BY <span class="string">'\t'</span>;</span><br><span class="line">OK</span><br><span class="line">Time taken: 1.394 seconds</span><br><span class="line">hive (default)&gt; show tables;</span><br><span class="line">OK</span><br><span class="line">student</span><br><span class="line">values__tmp__table__1</span><br><span class="line">values__tmp__table__2</span><br><span class="line">values__tmp__table__3</span><br><span class="line">Time taken: 0.361 seconds, Fetched: 4 row(s)</span><br><span class="line">hive (default)&gt; load data <span class="built_in">local</span> inpath <span class="string">'/opt/datas/student.txt'</span> into table student;</span><br><span class="line">Loading data to table default.student</span><br><span class="line">OK</span><br><span class="line">Time taken: 5.247 seconds</span><br><span class="line">hive (default)&gt;</span><br><span class="line">hive (default)&gt; truncate table student;</span><br><span class="line">OK</span><br><span class="line">Time taken: 1.727 seconds</span><br><span class="line">hive (default)&gt; select * from student;</span><br><span class="line">OK</span><br><span class="line">Time taken: 0.891 seconds</span><br><span class="line">hive (default)&gt; load data <span class="built_in">local</span> inpath <span class="string">'/opt/datas/student.txt'</span> into table student;</span><br><span class="line">Loading data to table default.student</span><br><span class="line">OK</span><br><span class="line">Time taken: 6.231 seconds</span><br><span class="line">hive (default)&gt; select * from student;</span><br><span class="line">OK</span><br><span class="line">1011	zhangshan</span><br><span class="line">1012	lishi</span><br><span class="line">1013	zhaoliu</span><br><span class="line">Time taken: 0.905 seconds, Fetched: 3 row(s)</span><br><span class="line">hive (default)&gt;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/06/08/bigdata/大数据概论/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/06/08/bigdata/大数据概论/" itemprop="url">
+                  大数据概论
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-08T07:08:31+08:00">
+                2019-06-08
               </time>
             
 
@@ -398,10 +543,771 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/06/08/bigdata/hadoop-hdfs/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/06/08/bigdata/hadoop-hdfs/" itemprop="url">
+                  hadoop-hdfs
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-08T07:07:28+08:00">
+                2019-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="HDFS产生背景"><a href="#HDFS产生背景" class="headerlink" title="HDFS产生背景"></a>HDFS产生背景</h2><p>​    随着数据量越来越大，在一个操作系统管辖的范围内存不下了，那么就分配到更多的操<br>作系统管理的磁盘中，但是不方便管理和维护，迫切需要一种系统来管理多台机器上的文件，<br>这就是分布式文件管理系统。HDFS 只是分布式文件管理系统中的一种。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/08/bigdata/hadoop-hdfs/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/04/12/linux/踩坑nginx代理服务器报500错误/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/04/12/linux/踩坑nginx代理服务器报500错误/" itemprop="url">
+                  踩坑nginx代理服务器报500错误
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:42:53+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="踩坑nginx代理服务器报500错误"><a href="#踩坑nginx代理服务器报500错误" class="headerlink" title="踩坑nginx代理服务器报500错误"></a>踩坑nginx代理服务器报500错误</h2><p>在阿里云服务器上面部署nginx作为静态服务器,一切配置好后,按照nginx的配置静态资源地址进行部署,发现最后服务器一直报500错误<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/12/linux/踩坑nginx代理服务器报500错误/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/04/12/linux/linux下执行shell脚本出现No-such-file-or-directory错误/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/04/12/linux/linux下执行shell脚本出现No-such-file-or-directory错误/" itemprop="url">
+                  linux下执行shell脚本出现No such file or directory错误
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:42:16+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="linux下执行shell脚本出现No-such-file-or-directory错误"><a href="#linux下执行shell脚本出现No-such-file-or-directory错误" class="headerlink" title="linux下执行shell脚本出现No such file or directory错误"></a>linux下执行shell脚本出现No such file or directory错误</h2><p>一些人喜欢用vim来写shell脚本, 有的人喜欢在Windows下用一些方便的编辑器(比如鼎鼎大名的Notepad++)写好， 然后拷贝文件到linux下，结果呢，在执行脚本a.sh的时候，会出现问题<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/12/linux/linux下执行shell脚本出现No-such-file-or-directory错误/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/04/02/bigdata/hadoop集群搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/04/02/bigdata/hadoop集群搭建/" itemprop="url">
+                  hadoop集群搭建
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-02T22:57:05+08:00">
+                2019-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="本次测试所用软件及环境"><a href="#本次测试所用软件及环境" class="headerlink" title="本次测试所用软件及环境"></a>本次测试所用软件及环境</h2><pre><code>Centos7
+jdk-8u171-linux-x64.rpm
+VMware 12 Pro
+hadoop 3.1.1
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/02/bigdata/hadoop集群搭建/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/03/26/node/npm安装netcat/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/03/26/node/npm安装netcat/" itemprop="url">
+                  npm安装netcat
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-26T06:13:29+08:00">
+                2019-03-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="什么是nc"><a href="#什么是nc" class="headerlink" title="什么是nc"></a>什么是nc</h2><p>nc是netcat的简写，有着网络界的瑞士军刀美誉。因为它短小精悍、功能实用，被设计为一个简单、可靠的网络工具.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/03/26/node/npm安装netcat/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/03/13/mysql/mysql引擎区别/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/03/13/mysql/mysql引擎区别/" itemprop="url">
+                  mysql引擎区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T13:06:42+08:00">
+                2019-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数据库引擎介绍"><a href="#数据库引擎介绍" class="headerlink" title="数据库引擎介绍"></a>数据库引擎介绍</h2><p>MySQL数据库引擎取决于MySQL在安装的时候是如何被编译的。要添加一个新的引擎，就必须重新编译MYSQL。在缺省情况下，MYSQL支持三个引擎：ISAM、MYISAM和HEAP。另外两种类型INNODB和BERKLEY（BDB），也常常可以使用。如果技术高超，还可以使用MySQL+API自己做一个引擎。下面介绍几种数据库引擎：</p>
+<p>ISAM：ISAM是一个定义明确且历经时间考验的数据表格管理方法，它在设计之时就考虑到 数据库被查询的次数要远大于更新的次数。因此，ISAM执行读取操作的速度很快，而且不占用大量的内存和存储资源。ISAM的两个主要不足之处在于，它不 支持事务处理，也不能够容错：如果你的硬盘崩溃了，那么数据文件就无法恢复了。如果你正在把ISAM用在关键任务应用程序里，那就必须经常备份你所有的实 时数据，通过其复制特性，MYSQL能够支持这样的备份应用程序。</p>
+<p>MyISAM：MyISAM是MySQL的ISAM扩展格式和缺省的数据库引擎。除了提供ISAM里所没有的索引和字段管理的大量功能，MyISAM还使用一种表格锁定的机制，来优化多个并发的读写操作，其代价是你需要经常运行OPTIMIZE TABLE命令，来恢复被更新机制所浪费的空间。MyISAM还有一些有用的扩展，例如用来修复数据库文件的MyISAMCHK工具和用来恢复浪费空间的 MyISAMPACK工具。MYISAM强调了快速读取操作，这可能就是为什么MySQL受到了WEB开发如此青睐的主要原因：在WEB开发中你所进行的大量数据操作都是读取操作。所以，大多数虚拟主机提供商和INTERNET平台提供商只允许使用MYISAM格式。MyISAM格式的一个重要缺陷就是不能在表损坏后恢复数据。</p>
+<p>HEAP：HEAP允许只驻留在内存里的临时表格。驻留在内存里让HEAP要比ISAM和MYISAM都快，但是它所管理的数据是不稳定的，而且如果在关机之前没有进行保存，那么所有的数据都会丢失。在数据行被删除的时候，HEAP也不会浪费大量的空间。HEAP表格在你需要使用SELECT表达式来选择和操控数据的时候非常有用。要记住，在用完表格之后就删除表格。</p>
+<p>InnoDB：InnoDB数据库引擎都是造就MySQL灵活性的技术的直接产品，这项技术就是MYSQL+API。在使用MYSQL的时候，你所面对的每一个挑战几乎都源于ISAM和MyISAM数据库引擎不支持事务处理（transaction process）也不支持外来键。尽管要比ISAM和 MyISAM引擎慢很多，但是InnoDB包括了对事务处理和外来键的支持，这两点都是前两个引擎所没有的。如前所述，如果你的设计需要这些特性中的一者 或者两者，那你就要被迫使用后两个引擎中的一个了。<br>​<br>如果感觉自己的确技术高超，你还能够使用MySQL+API来创建自己的数据库引擎。这个API为你提供了操作字段、记录、表格、数据库、连接、安全帐号的功能，以及建立诸如MySQL这样DBMS所需要的所有其他无数功能。深入讲解API已经超出了本文的范围，但是你需要了解MySQL+API的存在及其可交换引擎背后的技术，这一点是很重要的。估计这个插件式数据库引擎的模型甚至能够被用来为MySQL创建本地的XML提供器（XML provider）。（任何读到本文的MySQL+API开发人员可以把这一点当作是个要求。）</p>
+<h2 id="MyISAM与InnoDB的区别"><a href="#MyISAM与InnoDB的区别" class="headerlink" title="MyISAM与InnoDB的区别"></a>MyISAM与InnoDB的区别</h2><p>InnoDB和MyISAM是许多人在使用MySQL时最常用的两个表类型，这两个表类型各有优劣，视具体应用而定。基本的差别为：MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持。MyISAM类型的表强调的是性能，其执行数度比InnoDB类型更快，但是不提供事务支持，而InnoDB提供事务支持已经外部键等高级数据库功能。</p>
+<h3 id="以下是一些细节和具体实现的差别："><a href="#以下是一些细节和具体实现的差别：" class="headerlink" title="以下是一些细节和具体实现的差别："></a>以下是一些细节和具体实现的差别：</h3><p>1.InnoDB不支持FULLTEXT类型的索引。<br>2.InnoDB 中不保存表的具体行数，也就是说，执行select count(<em>) fromtable时，InnoDB要扫描一遍整个表来计算有多少行，但是MyISAM只要简单的读出保存好的行数即可。注意的是，当count(</em>)语句包含where条件时，两种表的操作是一样的。<br>3.对于AUTO_INCREMENT类型的字段，InnoDB中必须包含只有该字段的索引，但是在MyISAM表中，可以和其他字段一起建立联合索引。<br>4.DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除。<br>5.LOAD TABLE FROMMASTER操作对InnoDB是不起作用的，解决方法是首先把InnoDB表改成MyISAM表，导入数据后再改成InnoDB表，但是对于使用的额外的InnoDB特性(例如外键)的表不适用。</p>
+<p>另外，InnoDB表的行锁也不是绝对的，假如在执行一个SQL语句时MySQL不能确定要扫描的范围，InnoDB表同样会锁全表，例如updatetable set num=1 where name like “a%”<br>两种类型最主要的差别就是Innodb支持事务处理与外键和行级锁.而MyISAM不支持.所以MyISAM往往就容易被人认为只适合在小项目中使用。<br>我作为使用MySQL的用户角度出发，Innodb和MyISAM都是比较喜欢的，但是从我目前运维的数据库平台要达到需求：99.9%的稳定性，方便的扩展性和高可用性来说的话，MyISAM绝对是我的首选。</p>
+<h3 id="原因如下"><a href="#原因如下" class="headerlink" title="原因如下"></a>原因如下</h3><p>1、首先我目前平台上承载的大部分项目是读多写少的项目，而MyISAM的读性能是比Innodb强不少的。<br>2、MyISAM的索引和数据是分开的，并且索引是有压缩的，内存使用率就对应提高了不少。能加载更多索引，而Innodb是索引和数据是紧密捆绑的，没有使用压缩从而会造成Innodb比MyISAM体积庞大不小。<br>3、从平台角度来说，经常隔1，2个月就会发生应用开发人员不小心update一个表where写的范围不对，导致这个表没法正常用了，这个时候MyISAM的优越性就体现出来了，随便从当天拷贝的压缩包取出对应表的文件，随便放到一个数据库目录下，然后dump成sql再导回到主库，并把对应的binlog补上。如果是Innodb，恐怕不可能有这么快速度，别和我说让Innodb定期用导出xxx.sql机制备份，因为我平台上最小的一个数据库实例的数据量基本都是几十G大小。<br>4、从我接触的应用逻辑来说，select count(<em>) 和order by是最频繁的，大概能占了整个sql总语句的60%以上的操作，而这种操作Innodb其实也是会锁表的，很多人以为Innodb是行级锁，那个只是where对它主键是有效，非主键的都会锁全表的。<br>5、还有就是经常有很多应用部门需要我给他们定期某些表的数据，MyISAM的话很方便，只要发给他们对应那表的frm.MYD,MYI的文件，让他们自己在对应版本的数据库启动就行，而Innodb就需要导出xxx.sql了，因为光给别人文件，受字典数据文件的影响，对方是无法使用的。<br>6、如果和MyISAM比insert写操作的话，Innodb还达不到MyISAM的写性能，如果是针对基于索引的update操作，虽然MyISAM可能会逊色Innodb,但是那么高并发的写，从库能否追的上也是一个问题，还不如通过多实例分库分表架构来解决。<br>7、如果是用MyISAM的话，merge引擎可以大大加快应用部门的开发速度，他们只要对这个merge表做一些selectcount(</em>)操作，非常适合大项目总量约几亿的rows某一类型(如日志，调查统计)的业务表。<br>当然Innodb也不是绝对不用，用事务的项目如模拟炒股项目，我就是用Innodb的，活跃用户20多万时候，也是很轻松应付了，因此我个人也是很喜欢Innodb的，只是如果从数据库平台应用出发，我还是会首MyISAM。<br>另外，可能有人会说你MyISAM无法抗太多写操作，但是我可以通过架构来弥补，说个我现有用的数据库平台容量：主从数据总量在几百T以上，每天十多亿pv的动态页面，还有几个大项目是通过数据接口方式调用未算进pv总数，(其中包括一个大项目因为初期memcached没部署,导致单台数据库每天处理9千万的查询)。而我的整体数据库服务器平均负载都在0.5-1左右。</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>1、MyISAM管理非事务表，提供高速存储和检索以及全文搜索能力，如果再应用中执行大量select操作，应该选择MyISAM<br>2、InnoDB用于事务处理，具有ACID事务支持等特性，如果在应用中执行大量insert和update操作，应该选择InnoDB</p>
+<h3 id="一般来说-MyISAM适合"><a href="#一般来说-MyISAM适合" class="headerlink" title="一般来说,MyISAM适合"></a>一般来说,MyISAM适合</h3><p>(1)做很多count 的计算；<br>(2)插入不频繁，查询非常频繁；<br>(3)没有事务。</p>
+<h3 id="InnoDB适合"><a href="#InnoDB适合" class="headerlink" title="InnoDB适合"></a>InnoDB适合</h3><p>(1)可靠性要求比较高，或者要求事务；<br>(2)表更新和查询都相当的频繁，并且表锁定的机会比较大的情况指定数据引擎的创建<br>让所有的灵活性成为可能的开关是提供给ANSI SQL的MySQL扩展——TYPE参数。MySQL能够让你在表格这一层指定数据库引擎，所以它们有时候也指的是table formats。下面的示例代码表明了如何创建分别使用MyISAM、ISAM和HEAP引擎的表格。要注意，创建每个表格的代码是相同的，除了最后的 TYPE参数，这一参数用来指定数据引擎。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/03/13/java/JVM的内存区域分配/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
+      <meta itemprop="name" content="LEO">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/earphone.jpg">
     </span>
@@ -521,7 +1427,7 @@
     <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/03/13/mysql/mysql底层索引剖析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
+      <meta itemprop="name" content="LEO">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/earphone.jpg">
     </span>
@@ -635,871 +1541,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2019/03/13/algorithm/红黑树深入剖析/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/03/13/algorithm/红黑树深入剖析/" itemprop="url">
-                  红黑树深入剖析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-13T12:56:04+08:00">
-                2019-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/12/17/java/jar在windows环境设置为开机自启动/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/12/17/java/jar在windows环境设置为开机自启动/" itemprop="url">
-                  jar在windows环境设置为开机自启动
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-17T14:10:10+08:00">
-                2018-12-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="jar包在windows环境设置为开机自启动"><a href="#jar包在windows环境设置为开机自启动" class="headerlink" title="jar包在windows环境设置为开机自启动"></a>jar包在windows环境设置为开机自启动</h2><p>在生产环境中，会遇到服务器重启的问题，要保证java程序能实现开机自启动<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/12/17/java/jar在windows环境设置为开机自启动/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/11/30/tools/使用hexo换了电脑后如何更新博客/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/11/30/tools/使用hexo换了电脑后如何更新博客/" itemprop="url">
-                  使用hexo换了电脑后如何更新博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T21:31:41+08:00">
-                2018-11-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基于hexo-github搭建一个独立博客"><a href="#基于hexo-github搭建一个独立博客" class="headerlink" title="基于hexo-github搭建一个独立博客"></a>基于hexo-github搭建一个独立博客</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http://www.cnblogs.com/MuYunyun/p/5927491.html</span><br><span class="line">https://www.jianshu.com/p/8c0707ce5da4</span><br><span class="line">https://blog.csdn.net/hosea1008/article/details/53384382</span><br><span class="line">https://i.zhouhuix.cn/2016/11/24/%E4%BF%AE%E6%94%B9Hexo%E7%9A%84Next%E4%B8%BB%E9%A2%98/</span><br><span class="line">http://www.jeyzhang.com/hexo-next-add-post-views.html</span><br></pre></td></tr></table></figure>
-<h2 id="使用hexo换了电脑后如何更新博客"><a href="#使用hexo换了电脑后如何更新博客" class="headerlink" title="使用hexo换了电脑后如何更新博客"></a>使用hexo换了电脑后如何更新博客</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">当重装电脑之后，或者想在其他电脑上修改博客，可以使用下列步骤：</span><br><span class="line"></span><br><span class="line">1. 使用git clone https://github.com/xxx/xxx.git ,将仓库克隆到本地.</span><br><span class="line"></span><br><span class="line">2. 在本地依次执行下列指令:</span><br><span class="line"></span><br><span class="line">npm install hexo,</span><br><span class="line">npm install,</span><br><span class="line">npm install hexo-deployer-git</span><br><span class="line"></span><br><span class="line">(记得，不需要hexo init这条指令)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3.然后就可以打包发布了</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/11/30/tools/hexo搭建/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/11/30/tools/hexo搭建/" itemprop="url">
-                  hexo搭建
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T15:46:04+08:00">
-                2018-11-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="hexo搭建"><a href="#hexo搭建" class="headerlink" title="hexo搭建"></a>hexo搭建</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">LEO@LAPTOP-GDA5CI61 MINGW64 /d/workspace-leo/notes (master)</span><br><span class="line">$ hexo new &quot;hello-hexo&quot;</span><br><span class="line">bash: hexo: command not found</span><br><span class="line"></span><br><span class="line">LEO@LAPTOP-GDA5CI61 MINGW64 /d/workspace-leo/notes (master)</span><br><span class="line">$ npm install -g hexo-cli</span><br><span class="line"></span><br><span class="line">LEO@LAPTOP-GDA5CI61 MINGW64 /d/workspace-leo/notes (master)</span><br><span class="line">$ npm install hexo --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在部署HEXO时出现ERROR Deployer not found : github的问题解决办法</span><br><span class="line"></span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/11/30/tools/windows下强制杀死进程/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/11/30/tools/windows下强制杀死进程/" itemprop="url">
-                  windows下强制杀死进程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T15:45:05+08:00">
-                2018-11-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="windows下强制杀死进程"><a href="#windows下强制杀死进程" class="headerlink" title="windows下强制杀死进程"></a>windows下强制杀死进程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">window下当使用某个端口时，发现这个端口被占用，但是正规的关闭这个进程又关闭不了，可以使用强制杀死。</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/30/tools/windows下强制杀死进程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/10/11/bigdata/hadoop集群搭建/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/10/11/bigdata/hadoop集群搭建/" itemprop="url">
-                  hadoop集群搭建
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-11T22:57:05+08:00">
-                2018-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="本次测试所用软件及环境"><a href="#本次测试所用软件及环境" class="headerlink" title="本次测试所用软件及环境"></a>本次测试所用软件及环境</h2><pre><code>Centos7
-jdk-8u171-linux-x64.rpm
-VMware 12 Pro
-hadoop 3.1.1
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/11/bigdata/hadoop集群搭建/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/10/05/tools/idea插件/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leo">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/earphone.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="永无止境">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2018/10/05/tools/idea插件/" itemprop="url">
-                  idea插件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-05T14:52:39+08:00">
-                2018-10-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="idea插件"><a href="#idea插件" class="headerlink" title="idea插件"></a>idea插件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Lombok plugin</span><br><span class="line">Free Mybatis plugin</span><br><span class="line">MyBatis Log Plugin</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1531,8 +1577,8 @@ hadoop 3.1.1
 
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="leo">
-          <p class="site-author-name" itemprop="name">leo</p>
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="LEO">
+          <p class="site-author-name" itemprop="name">LEO</p>
            
               <p class="site-description motion-element" itemprop="description">学习-分享</p>
           
@@ -1542,7 +1588,7 @@ hadoop 3.1.1
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">129</span>
+                <span class="site-state-item-count">137</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1555,7 +1601,7 @@ hadoop 3.1.1
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1601,7 +1647,7 @@ hadoop 3.1.1
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">leo</span>
+  <span class="author" itemprop="copyrightHolder">LEO</span>
 </div>
 
 

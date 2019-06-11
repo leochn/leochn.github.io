@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="google-site-verification" content="cpS108UyUiZt1wwHsxYxwPFwk_N8-9b6Hx6Mu_b3CtQ">
+<meta name="baidu-site-verification" content="rVdkVCw2Ri">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="hadoop,bigdata,linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/earphone.jpg?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="分布式集群hadoop搭建目的： 本文描述了如何安装、配置和管理有实际意义的Hadoop集群">
+<meta name="keywords" content="hadoop,bigdata,linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建hadoop集群">
+<meta property="og:url" content="http://netsite.win/2018/10/12/bigdata/搭建hadoop集群/index.html">
+<meta property="og:site_name" content="永无止境">
+<meta property="og:description" content="分布式集群hadoop搭建目的： 本文描述了如何安装、配置和管理有实际意义的Hadoop集群">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-10T07:42:19.164Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建hadoop集群">
+<meta name="twitter:description" content="分布式集群hadoop搭建目的： 本文描述了如何安装、配置和管理有实际意义的Hadoop集群">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://netsite.win/2018/10/12/bigdata/搭建hadoop集群/">
+
+
+
+
+
+  <title> 搭建hadoop集群 | 永无止境 </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261969478&web_id=1261969478" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">永无止境</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">notes</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://netsite.win/2018/10/12/bigdata/搭建hadoop集群/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LEO">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/earphone.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="永无止境">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                搭建hadoop集群
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T20:02:50+08:00">
+                2018-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="分布式集群hadoop搭建"><a href="#分布式集群hadoop搭建" class="headerlink" title="分布式集群hadoop搭建"></a>分布式集群hadoop搭建</h2><p>目的：</p>
+<p>本文描述了如何安装、配置和管理有实际意义的Hadoop集群</p>
+<a id="more"></a>
+<h3 id="基础环境配置"><a href="#基础环境配置" class="headerlink" title="基础环境配置"></a>基础环境配置</h3><h4 id="配置主机名"><a href="#配置主机名" class="headerlink" title="配置主机名"></a>配置主机名</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">[root@192 ~]<span class="comment"># hostname</span></span><br><span class="line">192.168.175.129</span><br><span class="line">[root@192 ~]<span class="comment"># set-hostname vm1</span></span><br><span class="line">-bash: <span class="built_in">set</span>-hostname: <span class="built_in">command</span> not found</span><br><span class="line">[root@192 ~]<span class="comment"># hostnamectl set-hostname vm1</span></span><br><span class="line">[root@192 ~]<span class="comment"># hostnamectl status</span></span><br><span class="line">   Static hostname: vm1</span><br><span class="line">         Icon name: computer-vm</span><br><span class="line">           Chassis: vm</span><br><span class="line">        Machine ID: 8d7786d147a9477cb9fe0aa0f4162439</span><br><span class="line">           Boot ID: 6bafa600abca45ef8a0a58a4da8d9e43</span><br><span class="line">    Virtualization: vmware</span><br><span class="line">  Operating System: CentOS Linux 7 (Core)</span><br><span class="line">       CPE OS Name: cpe:/o:centos:centos:7</span><br><span class="line">            Kernel: Linux 3.10.0-862.el7.x86_64</span><br><span class="line">      Architecture: x86-64</span><br><span class="line">[root@192 ~]<span class="comment"># reboot</span></span><br><span class="line">Connection closing...Socket close.</span><br><span class="line"></span><br><span class="line">Connection closed by foreign host.</span><br><span class="line"></span><br><span class="line">Disconnected from remote host(VM3-192.168.175.131) at 19:17:38.</span><br><span class="line"></span><br><span class="line">Type `<span class="built_in">help</span><span class="string">' to learn how to use Xshell prompt.</span></span><br><span class="line"><span class="string">[C:\~]$ </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Connecting to 192.168.175.131:22...</span></span><br><span class="line"><span class="string">Connection established.</span></span><br><span class="line"><span class="string">To escape to local shell, press '</span>Ctrl+Alt+]<span class="string">'.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">WARNING! The remote SSH server rejected X11 forwarding request.</span></span><br><span class="line"><span class="string">Last login: Fri Mar 29 19:12:16 2019 from 192.168.175.1</span></span><br><span class="line"><span class="string">[root@vm1 ~]#</span></span><br></pre></td></tr></table></figure>
+<h4 id="修改hosts文件"><a href="#修改hosts文件" class="headerlink" title="修改hosts文件"></a>修改hosts文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># cat /etc/hosts</span></span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">[root@vm1 ~]<span class="comment"># vim /etc/hosts</span></span><br><span class="line">[root@vm1 ~]<span class="comment"># cat /etc/hosts</span></span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.175.129 vm1</span><br><span class="line">192.168.175.130 vm2</span><br><span class="line">192.168.175.131 vm3</span><br><span class="line">[root@vm1 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h4 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h4><h5 id="查看实时已经安装JDK"><a href="#查看实时已经安装JDK" class="headerlink" title="查看实时已经安装JDK"></a>查看实时已经安装JDK</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 software]<span class="comment"># java -version</span></span><br><span class="line">-bash: java: <span class="built_in">command</span> not found</span><br><span class="line">[root@vm1 software]<span class="comment"># rpm -qa | grep java</span></span><br><span class="line">[root@vm1 software]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h5 id="解压文件"><a href="#解压文件" class="headerlink" title="解压文件"></a>解压文件</h5><p>在解压的时候 -C 是解压到指定目录中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 software]<span class="comment"># pwd</span></span><br><span class="line">/software</span><br><span class="line">[root@vm1 software]<span class="comment"># ll</span></span><br><span class="line">total 514044</span><br><span class="line">-rw-r--r--. 1 root root 334559382 Mar 29 20:35 hadoop-3.1.1.tar.gz</span><br><span class="line">-rw-r--r--. 1 root root 191817140 Mar 29 20:35 jdk-8u201-linux-x64.tar.gz</span><br><span class="line">[root@vm1 software]<span class="comment"># tar -zxvf jdk-8u201-linux-x64.tar.gz -C /opt/</span></span><br><span class="line">[root@vm1 software]<span class="comment"># </span></span><br><span class="line">[root@vm1 software]<span class="comment"># cd /opt/jdk1.8.0_201/</span></span><br><span class="line">[root@vm1 jdk1.8.0_201]<span class="comment"># pwd</span></span><br><span class="line">/workspace/jdk1.8.0_201</span><br><span class="line">[root@vm1 jdk1.8.0_201]<span class="comment">#</span></span><br><span class="line">[root@vm1 jdk1.8.0_201]<span class="comment"># vim /etc/profile</span></span><br><span class="line">[root@vm1 jdk1.8.0_201]<span class="comment"># source /etc/profile</span></span><br><span class="line">[root@vm1 jdk1.8.0_201]<span class="comment"># java -version</span></span><br><span class="line">java version <span class="string">"1.8.0_201"</span></span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_201-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)</span><br><span class="line">[root@vm1 jdk1.8.0_201]<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">配置环境变量:</span><br><span class="line">#JAVA_HOME</span><br><span class="line">export JAVA_HOME=/workspace/jdk1.8.0_201</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line"></span><br><span class="line">使更改的配置立即生效:</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h4><h5 id="免密登录原理"><a href="#免密登录原理" class="headerlink" title="免密登录原理"></a>免密登录原理</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">图片...................</span><br></pre></td></tr></table></figure>
+<h5 id="生成公钥和私钥"><a href="#生成公钥和私钥" class="headerlink" title="生成公钥和私钥"></a>生成公钥和私钥</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]$ ssh-keygen </span><br><span class="line">然后敲（三个回车），就会生成两个文件id_rsa（私钥）、id_rsa.pub（公钥）</span><br></pre></td></tr></table></figure>
+<h5 id="实操过程"><a href="#实操过程" class="headerlink" title="实操过程"></a>实操过程</h5><p>需要免密登录的服务器：<br>192.168.175.129<br>192.168.175.130<br>192.168.175.131</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># ssh-keygen</span></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/root/.ssh/id_rsa): </span><br><span class="line">Created directory <span class="string">'/root/.ssh'</span>.</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> /root/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256:hPBvLatljYUDmRZp1/etKBgT8bxKrh4GklUfjqqWm5s root@vm1</span><br><span class="line">The key<span class="string">'s randomart image is:</span></span><br><span class="line"><span class="string">+---[RSA 2048]----+</span></span><br><span class="line"><span class="string">|    . o.oo       |</span></span><br><span class="line"><span class="string">|     +oOo+. .    |</span></span><br><span class="line"><span class="string">|    ..O.+.o. . . |</span></span><br><span class="line"><span class="string">|   o o +oo .  . .|</span></span><br><span class="line"><span class="string">|  o o   S++  . . |</span></span><br><span class="line"><span class="string">|   + . +.O. . .  |</span></span><br><span class="line"><span class="string">|  +   o B ..     |</span></span><br><span class="line"><span class="string">| . + . *         |</span></span><br><span class="line"><span class="string">|  E. .+          |</span></span><br><span class="line"><span class="string">+----[SHA256]-----+</span></span><br><span class="line"><span class="string">[root@vm1 ~]# ll -a</span></span><br><span class="line"><span class="string">total 32</span></span><br><span class="line"><span class="string">dr-xr-x---.  3 root root  163 Mar 29 19:33 .</span></span><br><span class="line"><span class="string">dr-xr-xr-x. 17 root root  224 Nov  3 23:37 ..</span></span><br><span class="line"><span class="string">-rw-------.  1 root root 1255 Nov  3 23:38 anaconda-ks.cfg</span></span><br><span class="line"><span class="string">-rw-------.  1 root root   89 Mar 29 19:17 .bash_history</span></span><br><span class="line"><span class="string">-rw-r--r--.  1 root root   18 Dec 29  2013 .bash_logout</span></span><br><span class="line"><span class="string">-rw-r--r--.  1 root root  176 Dec 29  2013 .bash_profile</span></span><br><span class="line"><span class="string">-rw-r--r--.  1 root root  176 Dec 29  2013 .bashrc</span></span><br><span class="line"><span class="string">-rw-r--r--.  1 root root  100 Dec 29  2013 .cshrc</span></span><br><span class="line"><span class="string">drwx------.  2 root root   38 Mar 29 19:33 .ssh</span></span><br><span class="line"><span class="string">-rw-r--r--.  1 root root  129 Dec 29  2013 .tcshrc</span></span><br><span class="line"><span class="string">-rw-------.  1 root root  621 Mar 29 19:23 .viminfo</span></span><br><span class="line"><span class="string">[root@vm1 ~]# pwd</span></span><br><span class="line"><span class="string">/root</span></span><br><span class="line"><span class="string">[root@vm1 ~]# ssh-copy-id 192.168.175.130</span></span><br><span class="line"><span class="string">/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"</span></span><br><span class="line"><span class="string">The authenticity of host '</span>192.168.175.130 (192.168.175.130)<span class="string">' can'</span>t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:YD0QLGEI9Bcy9hAdOB8AQqz0s4zATq4cYbW1d1d8enI.</span><br><span class="line">ECDSA key fingerprint is MD5:b8:73:79:80:b2:b9:5c:0d:60:bf:e0:d6:20:d4:28:fe.</span><br><span class="line">Are you sure you want to <span class="built_in">continue</span> connecting (yes/no)? yes</span><br><span class="line">/usr/bin/ssh-copy-id: INFO: attempting to <span class="built_in">log</span> <span class="keyword">in</span> with the new key(s), to filter out any that are already installed</span><br><span class="line">/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- <span class="keyword">if</span> you are prompted now it is to install the new keys</span><br><span class="line">root@192.168.175.130<span class="string">'s password: </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Number of key(s) added: 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Now try logging into the machine, with:   "ssh '</span>192.168.175.130<span class="string">'"</span></span><br><span class="line"><span class="string">and check to make sure that only the key(s) you wanted were added.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[root@vm1 ~]# ssh vm2</span></span><br><span class="line"><span class="string">The authenticity of host '</span>vm2 (192.168.175.130)<span class="string">' can'</span>t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:YD0QLGEI9Bcy9hAdOB8AQqz0s4zATq4cYbW1d1d8enI.</span><br><span class="line">ECDSA key fingerprint is MD5:b8:73:79:80:b2:b9:5c:0d:60:bf:e0:d6:20:d4:28:fe.</span><br><span class="line">Are you sure you want to <span class="built_in">continue</span> connecting (yes/no)? yes</span><br><span class="line">Warning: Permanently added <span class="string">'vm2'</span> (ECDSA) to the list of known hosts.</span><br><span class="line">Last login: Fri Mar 29 19:18:51 2019 from 192.168.175.1</span><br><span class="line">[root@vm2 ~]<span class="comment">#</span></span><br><span class="line">[root@vm2 ~]<span class="comment"># exit</span></span><br><span class="line"><span class="built_in">logout</span></span><br><span class="line">Connection to vm2 closed.</span><br><span class="line">[root@vm1 ~]<span class="comment"># ssh 192.168.175.130</span></span><br><span class="line">Last login: Fri Mar 29 19:38:53 2019 from 192.168.175.129</span><br><span class="line">[root@vm2 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h4 id="编写集群分发脚本"><a href="#编写集群分发脚本" class="headerlink" title="编写集群分发脚本"></a>编写集群分发脚本</h4><h5 id="scp可以实现服务器与服务器之间的数据拷贝"><a href="#scp可以实现服务器与服务器之间的数据拷贝" class="headerlink" title="scp可以实现服务器与服务器之间的数据拷贝"></a>scp可以实现服务器与服务器之间的数据拷贝</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 假设远程服务器IP地址为 192.168.1.100</span><br><span class="line"></span><br><span class="line">1.从服务器复制文件到本地：</span><br><span class="line">scp root@192.168.1.100:/data/test.txt /home/myfile/</span><br><span class="line">root@192.168.1.100   root是目标服务器（有你需要拷贝文件的服务器）的用户名，192.168.1.100是IP地址，后面紧跟的 “:” 不要忘记，/data/test.txt 是目标服务器中你要拷贝文件的地址，接一个空格，后面的 /home/myfile/ 是本地接收文件的地址。</span><br><span class="line"></span><br><span class="line">2.从服务器复制文件夹到本地：</span><br><span class="line">scp -r root@192.168.1.100:/data/ /home/myfile/</span><br><span class="line">只需在前面加 -r 即可，就可以拷贝整个文件夹。</span><br><span class="line"></span><br><span class="line">3.从本地复制文件到服务器：</span><br><span class="line">scp /home/myfile/test.txt root@192.168.1.100:/data/</span><br><span class="line"></span><br><span class="line">4.从本地复制文件夹到服务器：</span><br><span class="line">scp -r /home/myfile/ root@192.168.1.100:/data/</span><br></pre></td></tr></table></figure>
+<h5 id="rsync远程同步工具"><a href="#rsync远程同步工具" class="headerlink" title="rsync远程同步工具"></a>rsync远程同步工具</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">rsync远程同步工具,主要用于备份和镜像。具有速度快、 避免复制相同内容和支持符号链接的优点。</span><br><span class="line"></span><br><span class="line">安装:</span><br><span class="line">yum -y install rsync</span><br><span class="line"></span><br><span class="line">rsync和scp区别:用rsync做文件的复制要比scp的速度快,rsync只对差异文件做更新.scp是把所有文件都复制过去。</span><br><span class="line"></span><br><span class="line">基本语法</span><br><span class="line">rsync  -rvl     $pdir/$fname          $user@hadoop$host:$pdir</span><br><span class="line">命令  命令参数    要拷贝的文件路径/名称     目的用户@主机:目的路径</span><br><span class="line">选项</span><br><span class="line">-r 递归</span><br><span class="line">-v 显示复制过程</span><br><span class="line">-l 拷贝符号连接</span><br><span class="line"></span><br><span class="line">案例实操</span><br><span class="line">把本机/data/tmp 目录同步到 vm2 服务器的 root 用户下的/data/tmp 目录</span><br><span class="line">[root@vm1 tmp]# rsync -rvl /data/tmp/ root@vm2:/data</span><br><span class="line">bash: rsync: command not found</span><br><span class="line">rsync: connection unexpectedly closed (0 bytes received so far) [sender]</span><br><span class="line">rsync error: remote command not found (code 127) at io.c(226) [sender=3.1.2]</span><br><span class="line">[root@vm1 tmp]#</span><br><span class="line"></span><br><span class="line">报错原因：</span><br><span class="line">线上的新服务器（目标服务器）,没有安装rsync导致。</span><br><span class="line"></span><br><span class="line">解决办法：</span><br><span class="line">新服务器（目标服务器）执行命令 yum install rsync -y 问题解决。</span><br><span class="line"></span><br><span class="line">[root@vm1 tmp]# rsync -rvl /data/tmp/ root@vm2:/data</span><br><span class="line">sending incremental file list</span><br><span class="line">aaa.txt</span><br><span class="line"></span><br><span class="line">sent 117 bytes  received 35 bytes  304.00 bytes/sec</span><br><span class="line">total size is 6  speedup is 0.04</span><br><span class="line">[root@vm1 tmp]#</span><br><span class="line"></span><br><span class="line">[root@vm1 tmp]# ssh vm2</span><br><span class="line">Last login: Fri Mar 29 19:39:48 2019 from 192.168.175.129</span><br><span class="line">[root@vm2 ~]# ll /data/</span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 6 Mar 30 08:22 aaa.txt</span><br><span class="line">[root@vm2 ~]#</span><br></pre></td></tr></table></figure>
+<h5 id="自动化批量安装JDK"><a href="#自动化批量安装JDK" class="headerlink" title="自动化批量安装JDK"></a>自动化批量安装JDK</h5><p>在vm1服务器上准备自动化脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 bat]<span class="comment"># pwd</span></span><br><span class="line">/workspace/bat</span><br><span class="line">[root@vm1 bat]<span class="comment"># ll</span></span><br><span class="line">total 8</span><br><span class="line">-rwxrwxrwx. 1 root root 288 Mar 31 05:38 boot.sh</span><br><span class="line">-rwxrwxrwx. 1 root root 334 Mar 31 05:38 install.sh</span><br><span class="line">[root@vm1 bat]</span><br></pre></td></tr></table></figure></p>
+<p><strong>jdkboot.sh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">SERVERS=<span class="string">"vm2 vm3"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 完成分发jdk压缩包和install.sh到各子机器的操作</span></span><br><span class="line"><span class="comment">## 并让子机器启动install.sh</span></span><br><span class="line"><span class="keyword">for</span> SERVER <span class="keyword">in</span> <span class="variable">$SERVERS</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    scp /software/jdk-8u201-linux-x64.tar.gz root@<span class="variable">$SERVER</span>:/root</span><br><span class="line">    scp install.sh root@<span class="variable">$SERVER</span>:/root</span><br><span class="line">    ssh root@<span class="variable">$SERVER</span> <span class="built_in">source</span> /root/install.sh</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p><strong>jdkinstall.sh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 进入/root目录下</span></span><br><span class="line"><span class="built_in">cd</span> /root</span><br><span class="line"><span class="comment">## 蒋下载的压缩包解压</span></span><br><span class="line">tar -zxvf jdk-8u201-linux-x64.tar.gz -C /opt/</span><br><span class="line"><span class="comment">## 修改profile配置文件</span></span><br><span class="line">cat &gt;&gt; /etc/profile &lt;&lt; EOF</span><br><span class="line"><span class="comment">#JAVA_HOME</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/jdk1.8.0_201</span><br><span class="line"><span class="built_in">export</span> PATH=\<span class="variable">$PATH</span>:\<span class="variable">$JAVA_HOME</span>/bin</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">## 使更改的配置立即生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<h4 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld    # 停止firewall</span><br><span class="line">systemctl disable firewalld # 禁止firewall开机启动</span><br></pre></td></tr></table></figure>
+<h3 id="配置hadoop集群"><a href="#配置hadoop集群" class="headerlink" title="配置hadoop集群"></a>配置hadoop集群</h3><h4 id="下载hadoop"><a href="#下载hadoop" class="headerlink" title="下载hadoop"></a>下载hadoop</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.下载地址</span><br><span class="line">https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.1.1/hadoop-3.1.1.tar.gz</span><br><span class="line"></span><br><span class="line">2.新建文件</span><br><span class="line">mkdir -p /data/hadoop</span><br><span class="line">-p 确保目录名称存在，如果目录不存在的就新创建一个</span><br></pre></td></tr></table></figure>
+<h4 id="安装hadoop"><a href="#安装hadoop" class="headerlink" title="安装hadoop"></a>安装hadoop</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 software]<span class="comment"># pwd</span></span><br><span class="line">/software</span><br><span class="line">[root@vm1 software]<span class="comment"># ll</span></span><br><span class="line">total 514044</span><br><span class="line">-rw-r--r--. 1 root root 334559382 Mar 29 20:35 hadoop-3.1.1.tar.gz</span><br><span class="line">-rw-r--r--. 1 root root 191817140 Mar 29 20:35 jdk-8u201-linux-x64.tar.gz</span><br><span class="line">[root@vm1 software]<span class="comment"># tar -zxvf hadoop-3.1.1.tar.gz -C /opt</span></span><br><span class="line">[root@vm1 software]<span class="comment"># </span></span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># pwd</span></span><br><span class="line">/opt/hadoop-3.1.1</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># ll</span></span><br><span class="line">total 176</span><br><span class="line">drwxr-xr-x. 2 1000 1001    183 Aug  2  2018 bin</span><br><span class="line">drwxr-xr-x. 3 1000 1001     20 Aug  2  2018 etc</span><br><span class="line">drwxr-xr-x. 2 1000 1001    106 Aug  2  2018 include</span><br><span class="line">drwxr-xr-x. 3 1000 1001     20 Aug  2  2018 lib</span><br><span class="line">drwxr-xr-x. 4 1000 1001    288 Aug  2  2018 libexec</span><br><span class="line">-rw-r--r--. 1 1000 1001 147144 Jul 29  2018 LICENSE.txt</span><br><span class="line">-rw-r--r--. 1 1000 1001  21867 Jul 29  2018 NOTICE.txt</span><br><span class="line">-rw-r--r--. 1 1000 1001   1366 Jul 29  2018 README.txt</span><br><span class="line">drwxr-xr-x. 3 1000 1001   4096 Aug  2  2018 sbin</span><br><span class="line">drwxr-xr-x. 4 1000 1001     31 Aug  2  2018 share</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h4 id="将hadoop添加到环境变量"><a href="#将hadoop添加到环境变量" class="headerlink" title="将hadoop添加到环境变量"></a>将hadoop添加到环境变量</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># vim /etc/profile</span></span><br><span class="line">[root@vm1 ~]<span class="comment"># hadoop</span></span><br><span class="line">-bash: hadoop: <span class="built_in">command</span> not found</span><br><span class="line">[root@vm1 ~]<span class="comment"># source /etc/profile</span></span><br><span class="line">[root@vm1 ~]<span class="comment"># hadoop version</span></span><br><span class="line">Hadoop 3.1.1</span><br><span class="line">Source code repository https://github.com/apache/hadoop -r 2b9a8c1d3a2caf1e733d57f346af3ff0d5ba529c</span><br><span class="line">Compiled by leftnoteasy on 2018-08-02T04:26Z</span><br><span class="line">Compiled with protoc 2.5.0</span><br><span class="line">From <span class="built_in">source</span> with checksum f76ac55e5b5ff0382a9f7df36a3ca5a0</span><br><span class="line">This <span class="built_in">command</span> was run using /opt/hadoop-3.1.1/share/hadoop/common/hadoop-common-3.1.1.jar</span><br><span class="line">[root@vm1 ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">配置环境变量:</span><br><span class="line">#HADOOP_HOME</span><br><span class="line">export HADOOP_HOME=/opt/hadoop-3.1.1</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br><span class="line"></span><br><span class="line">使更改的配置立即生效:</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="集群部署规划"><a href="#集群部署规划" class="headerlink" title="集群部署规划"></a>集群部署规划</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">集群</th>
+<th style="text-align:center">vm1</th>
+<th style="text-align:center">vm2</th>
+<th style="text-align:center">vm3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">hdfs</td>
+<td style="text-align:center">NameNode, DataNode</td>
+<td style="text-align:center">DataNode</td>
+<td style="text-align:center">SecondaryNameNode,DataNode</td>
+</tr>
+<tr>
+<td style="text-align:center">yarn</td>
+<td style="text-align:center">NodeManager</td>
+<td style="text-align:center">ResourceManager,NodeManager</td>
+<td style="text-align:center">NodeManager</td>
+</tr>
+</tbody>
+</table>
+<h4 id="给vm2配置免密登录"><a href="#给vm2配置免密登录" class="headerlink" title="给vm2配置免密登录"></a>给vm2配置免密登录</h4><p>因为vm服务器需要作为ResourceManager的主节点,需要免密登录到vm1,vm2,vm3这3台服务器</p>
+<p>首先 ssh-keygen 生成公钥和私钥，然后执行脚本<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@vm2 ~]<span class="comment"># pwd</span></span><br><span class="line">/root</span><br><span class="line">[root@vm2 ~]<span class="comment"># ll</span></span><br><span class="line">total 187340</span><br><span class="line">-rw-------. 1 root root      1255 Nov  3 23:38 anaconda-ks.cfg</span><br><span class="line">-rwxrwxrwx. 1 root root       553 Apr  2 07:51 sshboot.sh</span><br><span class="line">[root@vm2 ~]<span class="comment">#</span></span><br><span class="line">[root@vm2 ~]<span class="comment"># ./sshboot.sh</span></span><br></pre></td></tr></table></figure></p>
+<p>脚本内容<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">SERVERS=<span class="string">"vm1 vm2 vm3"</span></span><br><span class="line">PASSWORD=123qwe!@<span class="comment">#</span></span><br><span class="line"><span class="comment">## 实现免密登录的函数</span></span><br><span class="line"><span class="function"><span class="title">auto_ssh_copy_id</span></span>() &#123;</span><br><span class="line">    expect -c <span class="string">"set timeout -1;</span></span><br><span class="line"><span class="string">        spawn ssh-copy-id <span class="variable">$1</span>;</span></span><br><span class="line"><span class="string">        expect &#123;</span></span><br><span class="line"><span class="string">            *(yes/no)* &#123;send -- yes\r;exp_continue;&#125;</span></span><br><span class="line"><span class="string">            *assword:* &#123;send -- <span class="variable">$2</span>\r;exp_continue;&#125;</span></span><br><span class="line"><span class="string">            eof        &#123;exit 0;&#125;</span></span><br><span class="line"><span class="string">        &#125;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="title">ssh_copy_id_to_all</span></span>() &#123;</span><br><span class="line">    <span class="keyword">for</span> SERVER <span class="keyword">in</span> <span class="variable">$SERVERS</span></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        auto_ssh_copy_id <span class="variable">$SERVER</span> <span class="variable">$PASSWORD</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">## 调用免密登录配置函数,实现母机器到子机器的免密登录配置</span></span><br><span class="line">ssh_copy_id_to_all</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h4><p><strong>修改hadoop-3.1.1/etc/hadoop里面的文件</strong></p>
+<h5 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定HADOOP所使用的文件系统schema（URI），HDFS的老大（NameNode）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;!-- vm1为当前机器名或者ip号 --&gt;</span><br><span class="line">        &lt;value&gt;hdfs://vm1:9000&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;!-- 指定hadoop运行时产生临时文件的存储目录,tmp目录会自动创建 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/opt/hadoop-3.1.1/tmp&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="hdfs-hadoop-env-sh"><a href="#hdfs-hadoop-env-sh" class="headerlink" title="[hdfs] hadoop-env.sh"></a>[hdfs] hadoop-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/jdk1.8.0_201</span><br></pre></td></tr></table></figure>
+<h5 id="hdfs-hdfs-site-xml"><a href="#hdfs-hdfs-site-xml" class="headerlink" title="[hdfs] hdfs-site.xml"></a>[hdfs] hdfs-site.xml</h5><p><strong>hadoop-3.1.1 默认端口9870</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">     &lt;value&gt;3&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">     &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</span><br><span class="line">     &lt;value&gt;vm3:9870&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="hdfs-workers"><a href="#hdfs-workers" class="headerlink" title="[hdfs] workers"></a>[hdfs] workers</h5><p>hadoop-3.1.1将slaves文件更改为workers，删除localhost<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vm1</span><br><span class="line">vm2</span><br><span class="line">vm3</span><br></pre></td></tr></table></figure></p>
+<h5 id="yarn-yarn-env-sh"><a href="#yarn-yarn-env-sh" class="headerlink" title="[yarn] yarn-env.sh"></a>[yarn] yarn-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/jdk1.8.0_201</span><br></pre></td></tr></table></figure>
+<h5 id="yarn-yarn-site-xml"><a href="#yarn-yarn-site-xml" class="headerlink" title="[yarn] yarn-site.xml"></a>[yarn] yarn-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line">  &lt;!-- 指定YARN的老大（ResourceManager）的地址 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;vm2&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">  &lt;!-- reducer获取数据的方式 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="mapreduce-mapred-env-sh"><a href="#mapreduce-mapred-env-sh" class="headerlink" title="[mapreduce] mapred-env.sh"></a>[mapreduce] mapred-env.sh</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/opt/jdk1.8.0_201</span><br></pre></td></tr></table></figure>
+<h5 id="mapreduce-mapred-site-xml"><a href="#mapreduce-mapred-site-xml" class="headerlink" title="[mapreduce] mapred-site.xml"></a>[mapreduce] mapred-site.xml</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">  &lt;!-- 指定mr运行在yarn上 --&gt;</span><br><span class="line">  &lt;property&gt;</span><br><span class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">  &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="hadoop同步到其他服务器"><a href="#hadoop同步到其他服务器" class="headerlink" title="hadoop同步到其他服务器"></a>hadoop同步到其他服务器</h4><p><strong>hdboot.sh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">SERVERS=<span class="string">"vm2 vm3"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 完成分发install.sh到各子机器的操作</span></span><br><span class="line"><span class="comment">## 并让子机器启动install.sh</span></span><br><span class="line"><span class="keyword">for</span> SERVER <span class="keyword">in</span> <span class="variable">$SERVERS</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    scp -r /opt/hadoop-3.1.1/ root@<span class="variable">$SERVER</span>:/opt/</span><br><span class="line">    scp hdinstall.sh root@<span class="variable">$SERVER</span>:/root</span><br><span class="line">    ssh root@<span class="variable">$SERVER</span> /root/hdinstall.sh</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p><strong>hdinstall.sh</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 修改profile配置文件</span></span><br><span class="line">cat &gt;&gt; /etc/profile &lt;&lt; EOF</span><br><span class="line"><span class="comment">#HADOOP_HOME</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/opt/hadoop-3.1.1</span><br><span class="line"><span class="built_in">export</span> PATH=\<span class="variable">$PATH</span>:\<span class="variable">$HADOOP_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> PATH=\<span class="variable">$PATH</span>:\<span class="variable">$HADOOP_HOME</span>/sbin</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment">## 使更改的配置立即生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="集群启动"><a href="#集群启动" class="headerlink" title="集群启动"></a>集群启动</h4><h5 id="启动NameNode节点，在vm1服务器上启动"><a href="#启动NameNode节点，在vm1服务器上启动" class="headerlink" title="启动NameNode节点，在vm1服务器上启动"></a>启动NameNode节点，在vm1服务器上启动</h5><p><strong>如果集群是第一次启动,需要在格式化namenode</strong></p>
+<p>因为vm1是namenode，vm2、vm3都是datanode，所以只需要对vm1进行初始化操作，也就是对hdfs进行格式化。</p>
+<p> 执行初始化脚本，也就是执行命令：hdfs namenode  -format</p>
+<p>等待一会后，不报错返回 “Exiting with status 0” 为成功，“Exiting with status 1”为失败</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># pwd</span></span><br><span class="line">/opt/hadoop-3.1.1</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># bin/hdfs namenode -format</span></span><br></pre></td></tr></table></figure>
+<h5 id="启动HDFS"><a href="#启动HDFS" class="headerlink" title="启动HDFS"></a>启动HDFS</h5><p><strong>1.启动集群脚本</strong></p>
+<p>在nameNode节点启动集群脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># pwd</span></span><br><span class="line">/opt/hadoop-3.1.1</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># ll</span></span><br><span class="line">total 176</span><br><span class="line">drwxr-xr-x. 2 1000 1001    183 Aug  2  2018 bin</span><br><span class="line">drwxr-xr-x. 3 1000 1001     20 Aug  2  2018 etc</span><br><span class="line">drwxr-xr-x. 2 1000 1001    106 Aug  2  2018 include</span><br><span class="line">drwxr-xr-x. 3 1000 1001     20 Aug  2  2018 lib</span><br><span class="line">drwxr-xr-x. 4 1000 1001    288 Aug  2  2018 libexec</span><br><span class="line">-rw-r--r--. 1 1000 1001 147144 Jul 29  2018 LICENSE.txt</span><br><span class="line">drwxr-xr-x. 2 root root     37 Mar 31 07:41 logs</span><br><span class="line">-rw-r--r--. 1 1000 1001  21867 Jul 29  2018 NOTICE.txt</span><br><span class="line">-rw-r--r--. 1 1000 1001   1366 Jul 29  2018 README.txt</span><br><span class="line">drwxr-xr-x. 3 1000 1001   4096 Aug  2  2018 sbin</span><br><span class="line">drwxr-xr-x. 4 1000 1001     31 Aug  2  2018 share</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># sbin/start-dfs.sh</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.启动是出现错误</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># pwd</span></span><br><span class="line">/opt/hadoop-3.1.1</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># ll</span></span><br><span class="line">total 176</span><br><span class="line">drwxr-xr-x. 2 1000 1001    183 Aug  2  2018 bin</span><br><span class="line">drwxr-xr-x. 3 1000 1001     20 Aug  2  2018 etc</span><br><span class="line">drwxr-xr-x. 2 1000 1001    106 Aug  2  2018 include</span><br><span class="line">drwxr-xr-x. 3 1000 1001     20 Aug  2  2018 lib</span><br><span class="line">drwxr-xr-x. 4 1000 1001    288 Aug  2  2018 libexec</span><br><span class="line">-rw-r--r--. 1 1000 1001 147144 Jul 29  2018 LICENSE.txt</span><br><span class="line">drwxr-xr-x. 2 root root     37 Mar 31 07:54 logs</span><br><span class="line">-rw-r--r--. 1 1000 1001  21867 Jul 29  2018 NOTICE.txt</span><br><span class="line">-rw-r--r--. 1 1000 1001   1366 Jul 29  2018 README.txt</span><br><span class="line">drwxr-xr-x. 3 1000 1001   4096 Aug  2  2018 sbin</span><br><span class="line">drwxr-xr-x. 4 1000 1001     31 Aug  2  2018 share</span><br><span class="line">drwxr-xr-x. 3 root root     17 Mar 31 07:54 tmp</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># sbin/start-dfs.sh</span></span><br><span class="line">Starting namenodes on [vm1]</span><br><span class="line">ERROR: Attempting to operate on hdfs namenode as root</span><br><span class="line">ERROR: but there is no HDFS_NAMENODE_USER defined. Aborting operation.</span><br><span class="line">Starting datanodes</span><br><span class="line">ERROR: Attempting to operate on hdfs datanode as root</span><br><span class="line">ERROR: but there is no HDFS_DATANODE_USER defined. Aborting operation.</span><br><span class="line">Starting secondary namenodes [vm3]</span><br><span class="line">ERROR: Attempting to operate on hdfs secondarynamenode as root</span><br><span class="line">ERROR: but there is no HDFS_SECONDARYNAMENODE_USER defined. Aborting operation.</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p><strong>3.出现错误,解决办法:</strong><br><strong>是因为缺少用户定义造成的，所以分别编辑开始和关闭脚本</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim sbin/start-dfs.sh </span><br><span class="line">vim sbin/stop-dfs.sh </span><br><span class="line"></span><br><span class="line"># 在顶部空白处添加内容： </span><br><span class="line">HDFS_DATANODE_USER=root </span><br><span class="line">HADOOP_SECURE_DN_USER=hdfs </span><br><span class="line">HDFS_NAMENODE_USER=root </span><br><span class="line">HDFS_SECONDARYNAMENODE_USER=root</span><br></pre></td></tr></table></figure>
+<p><strong>4.编辑好之后,分发到其他服务器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scp /opt/hadoop-3.1.1/sbin/start-dfs.sh root@vm2:/opt/hadoop-3.1.1/sbin/</span><br><span class="line">scp /opt/hadoop-3.1.1/sbin/stop-dfs.sh root@vm2:/opt/hadoop-3.1.1/sbin/</span><br><span class="line"></span><br><span class="line">scp /opt/hadoop-3.1.1/sbin/start-dfs.sh root@vm3:/opt/hadoop-3.1.1/sbin/</span><br><span class="line">scp /opt/hadoop-3.1.1/sbin/stop-dfs.sh root@vm3:/opt/hadoop-3.1.1/sbin/</span><br></pre></td></tr></table></figure>
+<h5 id="检查启动的HDFS实时和规划部署的一致"><a href="#检查启动的HDFS实时和规划部署的一致" class="headerlink" title="检查启动的HDFS实时和规划部署的一致"></a>检查启动的HDFS实时和规划部署的一致</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># sbin/start-dfs.sh</span></span><br><span class="line">WARNING: HADOOP_SECURE_DN_USER has been replaced by HDFS_DATANODE_SECURE_USER. Using value of HADOOP_SECURE_DN_USER.</span><br><span class="line">Starting namenodes on [vm1]</span><br><span class="line">Last login: Sun Mar 31 06:46:39 CST 2019 from 192.168.175.1 on pts/1</span><br><span class="line">Starting datanodes</span><br><span class="line">Last login: Sun Mar 31 08:04:50 CST 2019 on pts/0</span><br><span class="line">vm3: WARNING: /opt/hadoop-3.1.1/logs does not exist. Creating.</span><br><span class="line">vm2: WARNING: /opt/hadoop-3.1.1/logs does not exist. Creating.</span><br><span class="line">Starting secondary namenodes [vm3]</span><br><span class="line">Last login: Sun Mar 31 08:04:52 CST 2019 on pts/0</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment">#</span></span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># jps -l</span></span><br><span class="line">16772 sun.tools.jps.Jps</span><br><span class="line">16501 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">16364 org.apache.hadoop.hdfs.server.namenode.NameNode</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment">#</span></span><br><span class="line"></span><br><span class="line">[root@vm2 hadoop]<span class="comment"># jps -l</span></span><br><span class="line">3483 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">3531 sun.tools.jps.Jps</span><br><span class="line">[root@vm2 hadoop]<span class="comment"># </span></span><br><span class="line"></span><br><span class="line">[root@vm3 hadoop-3.1.1]<span class="comment"># jps -l</span></span><br><span class="line">3255 sun.tools.jps.Jps</span><br><span class="line">3224 org.apache.hadoop.hdfs.server.namenode.SecondaryNameNode</span><br><span class="line">3131 org.apache.hadoop.hdfs.server.datanode.DataNode</span><br><span class="line">[root@vm3 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h5 id="浏览器查看HDFS页面管理界面"><a href="#浏览器查看HDFS页面管理界面" class="headerlink" title="浏览器查看HDFS页面管理界面"></a>浏览器查看HDFS页面管理界面</h5><p>关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+<p><a href="http://192.168.175.129:9870/dfshealth.html#tab-overview" target="_blank" rel="noopener">http://192.168.175.129:9870/dfshealth.html#tab-overview</a></p>
+<h5 id="停止HDFS"><a href="#停止HDFS" class="headerlink" title="停止HDFS"></a>停止HDFS</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># pwd</span></span><br><span class="line">/opt/hadoop-3.1.1</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># sbin/stop-dfs.sh</span></span><br><span class="line">WARNING: HADOOP_SECURE_DN_USER has been replaced by HDFS_DATANODE_SECURE_USER. Using value of HADOOP_SECURE_DN_USER.</span><br><span class="line">Stopping namenodes on [vm1]</span><br><span class="line">Last login: Sun Mar 31 08:05:01 CST 2019 on pts/0</span><br><span class="line">Stopping datanodes</span><br><span class="line">Last login: Sun Mar 31 08:56:45 CST 2019 on pts/0</span><br><span class="line">Stopping secondary namenodes [vm3]</span><br><span class="line">Last login: Sun Mar 31 08:56:47 CST 2019 on pts/0</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># jps -l</span></span><br><span class="line">17405 sun.tools.jps.Jps</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h5 id="hadoop多次格式化导致节点不能启动问题"><a href="#hadoop多次格式化导致节点不能启动问题" class="headerlink" title="hadoop多次格式化导致节点不能启动问题"></a>hadoop多次格式化导致节点不能启动问题</h5><p><em>遇到的问题：</em></p>
+<p>hadoop 多次格式化format namenode 导致节点不能启动，出现这个问题的原因是多次格式化会导致节点的clusterID不一致。</p>
+<p><em>解决办法：</em></p>
+<p>1.先停止所有启动的服务</p>
+<p> /opt/hadoop-3.1.1/sbin/stop-all.sh</p>
+<p>2.删除core-site.xml 和hdfs-site.xml文件中配置的文件夹. <strong>注意：这一步在三台机器上都要做</strong></p>
+<p>rm -r /opt/hadoop-3.1.1/tmp,    rm -r /opt/hadoop-3.1.1/logs</p>
+<h5 id="启动yarn-启动ResourceManager和NodeManager"><a href="#启动yarn-启动ResourceManager和NodeManager" class="headerlink" title="启动yarn(启动ResourceManager和NodeManager)"></a>启动yarn(启动ResourceManager和NodeManager)</h5><p><strong>1.启动脚本,在vm2服务器上启动</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># sbin/start-yarn.sh</span></span><br><span class="line">Starting resourcemanager</span><br><span class="line">ERROR: Attempting to operate on yarn resourcemanager as root</span><br><span class="line">ERROR: but there is no YARN_RESOURCEMANAGER_USER defined. Aborting operation.</span><br><span class="line">Starting nodemanagers</span><br><span class="line">ERROR: Attempting to operate on yarn nodemanager as root</span><br><span class="line">ERROR: but there is no YARN_NODEMANAGER_USER defined. Aborting operation.</span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p><strong>2.出错是因为缺少用户定义造成的，所以分别编辑开始和关闭脚本</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim sbin/start-yarn.sh </span><br><span class="line">vim sbin/stop-yarn.sh</span><br><span class="line"># 在顶部空白处添加内容：</span><br><span class="line">YARN_RESOURCEMANAGER_USER=root</span><br><span class="line">HADOOP_SECURE_DN_USER=yarn</span><br><span class="line">YARN_NODEMANAGER_USER=root</span><br></pre></td></tr></table></figure>
+<p><strong>3.编辑好之后,分发到其他服务器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scp /opt/hadoop-3.1.1/sbin/start-yarn.sh root@vm1:/opt/hadoop-3.1.1/sbin/</span><br><span class="line">scp /opt/hadoop-3.1.1/sbin/stop-yarn.sh root@vm1:/opt/hadoop-3.1.1/sbin/</span><br><span class="line"></span><br><span class="line">scp /opt/hadoop-3.1.1/sbin/start-yarn.sh root@vm3:/opt/hadoop-3.1.1/sbin/</span><br><span class="line">scp /opt/hadoop-3.1.1/sbin/stop-yarn.sh root@vm3:/opt/hadoop-3.1.1/sbin/</span><br></pre></td></tr></table></figure>
+<p><strong>4.启动yarn</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># vim sbin/start-yarn.sh </span></span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># vim sbin/stop-yarn.sh </span></span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># sbin/start-yarn.sh </span></span><br><span class="line">Starting resourcemanager</span><br><span class="line">Last login: Tue Apr  2 19:10:32 CST 2019 on pts/0</span><br><span class="line">Starting nodemanagers</span><br><span class="line">ERROR: Attempting to operate on yarn nodemanager as root</span><br><span class="line">ERROR: but there is no YARN_NODEMANAGER_USER defined. Aborting operation.</span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># jps</span></span><br><span class="line">3953 Jps</span><br><span class="line">3171 DataNode</span><br><span class="line">3687 ResourceManager</span><br><span class="line">3407 NodeManager</span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># sbin/stop-yarn.sh </span></span><br><span class="line">Stopping nodemanagers</span><br><span class="line">ERROR: Attempting to operate on yarn nodemanager as root</span><br><span class="line">ERROR: but there is no YARN_NODEMANAGER_USER defined. Aborting operation.</span><br><span class="line">Stopping resourcemanager</span><br><span class="line">Last login: Tue Apr  2 19:12:20 CST 2019 on pts/0</span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># vim sbin/start-yarn.sh </span></span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># vim sbin/stop-yarn.sh </span></span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment"># sbin/start-yarn.sh </span></span><br><span class="line">Starting resourcemanager</span><br><span class="line">Last login: Tue Apr  2 19:13:02 CST 2019 on pts/0</span><br><span class="line">Starting nodemanagers</span><br><span class="line">Last login: Tue Apr  2 19:14:03 CST 2019 on pts/0</span><br><span class="line">vm1: nodemanager is running as process 7389.  Stop it first.</span><br><span class="line">vm3: nodemanager is running as process 3268.  Stop it first.</span><br><span class="line">vm2: nodemanager is running as process 3407.  Stop it first.</span><br><span class="line">[root@vm2 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p><strong>5.启动验证</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@vm2 hadoop-3.1.1]# jps</span><br><span class="line">3171 DataNode</span><br><span class="line">4265 ResourceManager</span><br><span class="line">4638 Jps</span><br><span class="line">3407 NodeManager</span><br><span class="line">[root@vm2 hadoop-3.1.1]#</span><br><span class="line"></span><br><span class="line">[root@vm1 hadoop-3.1.1]# jps</span><br><span class="line">7064 DataNode</span><br><span class="line">7529 Jps</span><br><span class="line">6924 NameNode</span><br><span class="line">7389 NodeManager</span><br><span class="line">[root@vm1 hadoop-3.1.1]#</span><br><span class="line"></span><br><span class="line">[root@vm3 hadoop-3.1.1]# jps</span><br><span class="line">3427 Jps</span><br><span class="line">3268 NodeManager</span><br><span class="line">3180 SecondaryNameNode</span><br><span class="line">3087 DataNode</span><br><span class="line">[root@vm3 hadoop-3.1.1]#</span><br></pre></td></tr></table></figure>
+<h5 id="浏览器查看YARN的管理界面"><a href="#浏览器查看YARN的管理界面" class="headerlink" title="浏览器查看YARN的管理界面"></a>浏览器查看YARN的管理界面</h5><p><a href="http://192.168.175.130:8088/cluster" target="_blank" rel="noopener">http://192.168.175.130:8088/cluster</a></p>
+<h5 id="同时启动HDFS和ResourceManager-NodeManager"><a href="#同时启动HDFS和ResourceManager-NodeManager" class="headerlink" title="同时启动HDFS和ResourceManager,NodeManager"></a>同时启动HDFS和ResourceManager,NodeManager</h5><p><em>1.vm1服务器上启动</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment"># sbin/start-all.sh</span></span><br><span class="line">WARNING: HADOOP_SECURE_DN_USER has been replaced by HDFS_DATANODE_SECURE_USER. Using value of HADOOP_SECURE_DN_USER.</span><br><span class="line">Starting namenodes on [vm1]</span><br><span class="line">Last login: Tue Apr  2 19:45:00 CST 2019 on pts/0</span><br><span class="line">Starting datanodes</span><br><span class="line">Last login: Tue Apr  2 19:47:17 CST 2019 on pts/0</span><br><span class="line">Starting secondary namenodes [vm3]</span><br><span class="line">Last login: Tue Apr  2 19:47:20 CST 2019 on pts/0</span><br><span class="line">Starting resourcemanager</span><br><span class="line">Last login: Tue Apr  2 19:47:28 CST 2019 on pts/0</span><br><span class="line">Starting nodemanagers</span><br><span class="line">Last login: Tue Apr  2 19:47:35 CST 2019 on pts/0</span><br><span class="line">[root@vm1 hadoop-3.1.1]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<p><em>2.启动验证</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]# jps</span><br><span class="line">8339 NameNode</span><br><span class="line">9157 Jps</span><br><span class="line">8478 DataNode</span><br><span class="line">9006 NodeManager</span><br><span class="line">[root@vm1 hadoop-3.1.1]#</span><br><span class="line"></span><br><span class="line">[root@vm2 hadoop-3.1.1]# jps</span><br><span class="line">5110 DataNode</span><br><span class="line">5206 NodeManager</span><br><span class="line">5335 Jps</span><br><span class="line">[root@vm2 hadoop-3.1.1]#</span><br><span class="line"></span><br><span class="line">[root@vm3 hadoop-3.1.1]# jps</span><br><span class="line">3992 Jps</span><br><span class="line">3881 NodeManager</span><br><span class="line">3802 SecondaryNameNode</span><br><span class="line">3708 DataNode</span><br><span class="line">[root@vm3 hadoop-3.1.1]#</span><br></pre></td></tr></table></figure>
+<p><em>3.停止服务</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 hadoop-3.1.1]# sbin/stop-all.sh</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/images/home/wechatpay.jpg" alt="LEO WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/images/home/alipay.jpg" alt="LEO Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+            <a href="/tags/bigdata/" rel="tag"># bigdata</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/05/tools/idea插件/" rel="next" title="idea插件">
+                <i class="fa fa-chevron-left"></i> idea插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/30/tools/windows下强制杀死进程/" rel="prev" title="windows下强制杀死进程">
+                windows下强制杀死进程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/earphone.jpg" alt="LEO">
+          <p class="site-author-name" itemprop="name">LEO</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习-分享</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式集群hadoop搭建"><span class="nav-number">1.</span> <span class="nav-text">分布式集群hadoop搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础环境配置"><span class="nav-number">1.1.</span> <span class="nav-text">基础环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置主机名"><span class="nav-number">1.1.1.</span> <span class="nav-text">配置主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改hosts文件"><span class="nav-number">1.1.2.</span> <span class="nav-text">修改hosts文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装JDK"><span class="nav-number">1.1.3.</span> <span class="nav-text">安装JDK</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看实时已经安装JDK"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">查看实时已经安装JDK</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解压文件"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">解压文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置免密登录"><span class="nav-number">1.1.4.</span> <span class="nav-text">配置免密登录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#免密登录原理"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">免密登录原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#生成公钥和私钥"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">生成公钥和私钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实操过程"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">实操过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写集群分发脚本"><span class="nav-number">1.1.5.</span> <span class="nav-text">编写集群分发脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#scp可以实现服务器与服务器之间的数据拷贝"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">scp可以实现服务器与服务器之间的数据拷贝</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rsync远程同步工具"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">rsync远程同步工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自动化批量安装JDK"><span class="nav-number">1.1.5.3.</span> <span class="nav-text">自动化批量安装JDK</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">1.1.6.</span> <span class="nav-text">关闭防火墙</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置hadoop集群"><span class="nav-number">1.2.</span> <span class="nav-text">配置hadoop集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载hadoop"><span class="nav-number">1.2.1.</span> <span class="nav-text">下载hadoop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装hadoop"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装hadoop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将hadoop添加到环境变量"><span class="nav-number">1.2.3.</span> <span class="nav-text">将hadoop添加到环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群部署规划"><span class="nav-number">1.2.4.</span> <span class="nav-text">集群部署规划</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#给vm2配置免密登录"><span class="nav-number">1.2.5.</span> <span class="nav-text">给vm2配置免密登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改配置文件"><span class="nav-number">1.2.6.</span> <span class="nav-text">修改配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#core-site-xml"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">core-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hdfs-hadoop-env-sh"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">[hdfs] hadoop-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hdfs-hdfs-site-xml"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">[hdfs] hdfs-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hdfs-workers"><span class="nav-number">1.2.6.4.</span> <span class="nav-text">[hdfs] workers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#yarn-yarn-env-sh"><span class="nav-number">1.2.6.5.</span> <span class="nav-text">[yarn] yarn-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#yarn-yarn-site-xml"><span class="nav-number">1.2.6.6.</span> <span class="nav-text">[yarn] yarn-site.xml</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mapreduce-mapred-env-sh"><span class="nav-number">1.2.6.7.</span> <span class="nav-text">[mapreduce] mapred-env.sh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mapreduce-mapred-site-xml"><span class="nav-number">1.2.6.8.</span> <span class="nav-text">[mapreduce] mapred-site.xml</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hadoop同步到其他服务器"><span class="nav-number">1.2.7.</span> <span class="nav-text">hadoop同步到其他服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群启动"><span class="nav-number">1.2.8.</span> <span class="nav-text">集群启动</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#启动NameNode节点，在vm1服务器上启动"><span class="nav-number">1.2.8.1.</span> <span class="nav-text">启动NameNode节点，在vm1服务器上启动</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#启动HDFS"><span class="nav-number">1.2.8.2.</span> <span class="nav-text">启动HDFS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#检查启动的HDFS实时和规划部署的一致"><span class="nav-number">1.2.8.3.</span> <span class="nav-text">检查启动的HDFS实时和规划部署的一致</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#浏览器查看HDFS页面管理界面"><span class="nav-number">1.2.8.4.</span> <span class="nav-text">浏览器查看HDFS页面管理界面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#停止HDFS"><span class="nav-number">1.2.8.5.</span> <span class="nav-text">停止HDFS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hadoop多次格式化导致节点不能启动问题"><span class="nav-number">1.2.8.6.</span> <span class="nav-text">hadoop多次格式化导致节点不能启动问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#启动yarn-启动ResourceManager和NodeManager"><span class="nav-number">1.2.8.7.</span> <span class="nav-text">启动yarn(启动ResourceManager和NodeManager)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#浏览器查看YARN的管理界面"><span class="nav-number">1.2.8.8.</span> <span class="nav-text">浏览器查看YARN的管理界面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#同时启动HDFS和ResourceManager-NodeManager"><span class="nav-number">1.2.8.9.</span> <span class="nav-text">同时启动HDFS和ResourceManager,NodeManager</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LEO</span>
+</div>
+
+
+
+
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> 
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 到访数:
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 访问量:
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+</div>
+
+
+<script type="text/javascript">
+   var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261969478'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1261969478%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
