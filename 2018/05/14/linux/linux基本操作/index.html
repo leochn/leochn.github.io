@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="永无止境">
 <meta property="og:description" content="linux的一些基本操作">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-11T23:06:03.328Z">
+<meta property="og:updated_time" content="2019-08-02T00:33:07.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux基本操作">
 <meta name="twitter:description" content="linux的一些基本操作">
@@ -351,8 +351,8 @@
 
       
         <p>linux的一些基本操作<br><a id="more"></a></p>
-<h2 id="linux基础操作"><a href="#linux基础操作" class="headerlink" title="linux基础操作"></a>linux基础操作</h2><h3 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h3><h4 id="查看当前系统的时间：date"><a href="#查看当前系统的时间：date" class="headerlink" title="查看当前系统的时间：date"></a>查看当前系统的时间：date</h4><p>[root@localhost ~]# date +%Y-%m-%d –date=”-1day”  # 加减也可以 month|year</p>
-<p>设置时间:date -s “2018-05-14 06:50:51”  ## 修改时间</p>
+<h2 id="linux基础操作"><a href="#linux基础操作" class="headerlink" title="linux基础操作"></a>linux基础操作</h2><h3 id="linux常用命令"><a href="#linux常用命令" class="headerlink" title="linux常用命令"></a>linux常用命令</h3><h4 id="查看当前系统的时间：date"><a href="#查看当前系统的时间：date" class="headerlink" title="查看当前系统的时间：date"></a>查看当前系统的时间：date</h4><pre><code>[root@localhost ~]# date +%Y-%m-%d --date=&quot;-1day&quot;  # 加减也可以 month|year
+</code></pre><p>设置时间:date -s “2018-05-14 06:50:51”  ## 修改时间</p>
 <p>修改时间后，需要写入硬件bios才能在重启后依然生效。 hwclock -w</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># date</span></span><br><span class="line">2018年 05月 14日 星期一 06:35:35 CST</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d</span></span><br><span class="line">2018-05-14</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="-1day"</span></span><br><span class="line">2018-05-13</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="+1day"</span></span><br><span class="line">2018-05-15</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="+1month"</span></span><br><span class="line">2018-06-14</span><br><span class="line">[root@localhost ~]<span class="comment"># date +%Y-%m-%d --date="+1year"</span></span><br><span class="line">2019-05-14</span><br><span class="line">[root@localhost ~]<span class="comment"># date -s "2018-05-14 06:50:51"</span></span><br><span class="line">2018年 05月 14日 星期一 06:50:51 CST</span><br><span class="line">[root@localhost ~]<span class="comment"># hwclock -w</span></span><br><span class="line">[root@localhost ~]<span class="comment">#</span></span><br></pre></td></tr></table></figure>
 <h4 id="who查看有谁在线-哪些人登录到了服务器"><a href="#who查看有谁在线-哪些人登录到了服务器" class="headerlink" title="who查看有谁在线(哪些人登录到了服务器)"></a>who查看有谁在线(哪些人登录到了服务器)</h4><p>1.who 查看当前在线</p>
@@ -642,7 +642,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://netsite.win/assets/images/java/springboot远程debug-002.png">
 <meta property="og:image" content="http://netsite.win/assets/images/java/springboot远程debug-004.png">
 <meta property="og:image" content="http://netsite.win/assets/images/java/springboot远程debug-005.png">
-<meta property="og:updated_time" content="2018-11-30T13:19:30.095Z">
+<meta property="og:updated_time" content="2019-10-14T01:56:03.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot远程debug">
 <meta name="twitter:description" content="所谓的远程调试就是服务端程序运行在一台远程服务器上，我们可以在本地服务端的代码（前提是本地的代码必须和远程服务器运行的代码一致）中设置断点，每当有请求到远程服务器时时能够在本地知道远程服务端的此时的内部状态。下面介绍一下Intellij IDEA下对Springboot类型的项目的远程调试功能。">
@@ -360,7 +360,9 @@
 <h2 id="IDEA配置"><a href="#IDEA配置" class="headerlink" title="IDEA配置"></a>IDEA配置</h2><p>首先，打开Edit configurations，点击+号，创建一个RemoteDebug应用。经过以下配置，就可以获得启动远程服务器的参数。</p>
 <p>IDEA配置:</p>
 <p><img src="/assets/images/java/springboot远程debug-001.png" alt="IDEA配置"></p>
-<h2 id="远程服务器启动java应用"><a href="#远程服务器启动java应用" class="headerlink" title="远程服务器启动java应用"></a>远程服务器启动java应用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 .\springboot-watermis-0.0.1-SNAPSHOT.jar</span><br><span class="line">Listening for transport dt_socket at address: 5005</span><br></pre></td></tr></table></figure>
+<h2 id="远程服务器启动java应用"><a href="#远程服务器启动java应用" class="headerlink" title="远程服务器启动java应用"></a>远程服务器启动java应用</h2><p>Java -jar启动添加如下参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 .\springboot-watermis-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-Xdebug是通知JVM工作在DEBUG模式下(这里不加也是可以的)</span><br><span class="line"></span><br><span class="line">-Xrunjdwp是通知JVM使用(java debug wire protocol)来运行调试环境</span><br><span class="line"></span><br><span class="line">transport指定了调试数据的传送方式，dt_socket是指用SOCKET模式</span><br><span class="line"></span><br><span class="line">server参数是指是否支持在server模式的VM中</span><br><span class="line"></span><br><span class="line">suspend指明，是否在调试客户端建立起来后，再执行JVM</span><br></pre></td></tr></table></figure>
 <p>运行后可以看到在监听5005端口：</p>
 <p><img src="/assets/images/java/springboot远程debug-003.png" alt="远程服务器监听端口"></p>
 <p>这样服务端就监听在5005端口了。可以通过以下命令来检查是否监听成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -anp | grep 5005          # linux系统</span><br><span class="line">netstat -ano | findstr 5005       # windows系统</span><br></pre></td></tr></table></figure></p>
@@ -519,7 +521,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

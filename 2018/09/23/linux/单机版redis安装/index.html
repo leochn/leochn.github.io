@@ -96,7 +96,7 @@
 <meta property="og:site_name" content="永无止境">
 <meta property="og:description" content="安装前提需要安装gcc：yum install gcc-c++1[root@node-1 opt]# yum install gcc-c++">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-13T04:54:57.524Z">
+<meta property="og:updated_time" content="2019-08-08T04:38:05.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单机版redis安装">
 <meta name="twitter:description" content="安装前提需要安装gcc：yum install gcc-c++1[root@node-1 opt]# yum install gcc-c++">
@@ -367,7 +367,7 @@
 <h3 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@node-2 bin]<span class="comment"># vim redis.conf </span></span><br><span class="line">[root@node-2 bin]<span class="comment"># ./redis-server redis.conf </span></span><br><span class="line">[root@node-2 bin]<span class="comment"># netstat -ano | grep 6379</span></span><br><span class="line">tcp        0      0 0.0.0.0:6379            0.0.0.0:*               LISTEN      off (0.00/0/0)</span><br><span class="line">tcp6       0      0 :::6379                 :::*                    LISTEN      off (0.00/0/0)</span><br><span class="line">[root@node-2 bin]<span class="comment"># ./redis-cli</span></span><br><span class="line">127.0.0.1:6379&gt; get a</span><br><span class="line">(error) NOAUTH Authentication required.</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="停止redis"><a href="#停止redis" class="headerlink" title="停止redis"></a>停止redis</h3><p>redis-cli连接host,port,password,database</p>
 <p>redis-cli -h xxxx -p 6379 -a password  -n 0(指定几号数据库,默认0号数据库)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@node-2 bin]<span class="comment"># ./redis-cli -a redisadmin shutdown</span></span><br><span class="line">Warning: Using a password with <span class="string">'-a'</span> option on the <span class="built_in">command</span> line interface may not be safe.</span><br><span class="line">[root@node-2 bin]<span class="comment"># ./redis-cli</span></span><br><span class="line">Could not connect to Redis at 127.0.0.1:6379: Connection refused</span><br><span class="line">Could not connect to Redis at 127.0.0.1:6379: Connection refused</span><br><span class="line">not connected&gt;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Redis配置为Service系统服务并开机自启动"><a href="#Redis配置为Service系统服务并开机自启动" class="headerlink" title="Redis配置为Service系统服务并开机自启动"></a>Redis配置为Service系统服务并开机自启动</h2><p>将程序配置为服务后，就可以使用service命令对系统服务进行管理，如：start（启动）、stop（停止）、restart（重启）等。Redis安装后默认不会配置为系统服务。</p>
+<h2 id="Redis配置为Service系统服务并开机自启动"><a href="#Redis配置为Service系统服务并开机自启动" class="headerlink" title="Redis配置为Service系统服务并开机自启动"></a>Redis配置为Service系统服务并开机自启动</h2><p>将程序配置为服务后，就可以使用service命令对系统服务进行管理，如：start（启动）、stop（停止）、restart（重启）等。Redis安装后默认不会配置为系统服务。<br>这个是centos6 的service 命令。</p>
 <h3 id="复制redis-init-script文件"><a href="#复制redis-init-script文件" class="headerlink" title="复制redis_init_script文件"></a>复制redis_init_script文件</h3><p>1.将utils/redis_init_script文件复制/etc/rc.d/init.d/目录，并重命名为redis：</p>
 <p>cp utils/redis_init_script /etc/rc.d/init.d/redis</p>
 <p>注意：</p>
@@ -532,7 +532,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">137</span>
+                <span class="site-state-item-count">139</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
