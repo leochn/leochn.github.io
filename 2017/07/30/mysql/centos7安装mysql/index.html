@@ -72,7 +72,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="centos7,mysql,">
+  <meta name="keywords" content="mysql,centos7,">
 
 
 
@@ -89,14 +89,14 @@
 
 
 <meta name="description" content="本文是 CentOS7下使用yum安装MySQL的一些步骤">
-<meta name="keywords" content="centos7,mysql">
+<meta name="keywords" content="mysql,centos7">
 <meta property="og:type" content="article">
 <meta property="og:title" content="centos7安装mysql">
 <meta property="og:url" content="http://netsite.win/2017/07/30/mysql/centos7安装mysql/index.html">
 <meta property="og:site_name" content="永无止境">
 <meta property="og:description" content="本文是 CentOS7下使用yum安装MySQL的一些步骤">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-30T13:19:30.135Z">
+<meta property="og:updated_time" content="2020-06-07T03:27:37.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos7安装mysql">
 <meta name="twitter:description" content="本文是 CentOS7下使用yum安装MySQL的一些步骤">
@@ -353,7 +353,7 @@
         <p>本文是 CentOS7下使用yum安装MySQL的一些步骤<br><a id="more"></a></p>
 <h2 id="查看mysql的安装路径"><a href="#查看mysql的安装路径" class="headerlink" title="查看mysql的安装路径"></a>查看mysql的安装路径</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@ ~]# whereis mysql</span><br><span class="line">mysql: /usr/lib64/mysql /usr/share/mysql</span><br></pre></td></tr></table></figure>
 <h2 id="查看mysql的安装包"><a href="#查看mysql的安装包" class="headerlink" title="查看mysql的安装包"></a>查看mysql的安装包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@ ~]# rpm -qa|grep mysql</span><br><span class="line">[root@ ~]#</span><br></pre></td></tr></table></figure>
-<h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2><h3 id="从oracle官方网站下载linux系统对应的mysql的yum源包"><a href="#从oracle官方网站下载linux系统对应的mysql的yum源包" class="headerlink" title="从oracle官方网站下载linux系统对应的mysql的yum源包"></a>从oracle官方网站下载linux系统对应的mysql的yum源包</h3><p>mysql57-community-release-el7-11.noarch</p>
+<h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2><h3 id="从oracle官方网站下载linux系统对应的mysql的yum源包"><a href="#从oracle官方网站下载linux系统对应的mysql的yum源包" class="headerlink" title="从oracle官方网站下载linux系统对应的mysql的yum源包"></a>从oracle官方网站下载linux系统对应的mysql的yum源包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://dev.mysql.com/downloads/repo/yum/</span><br><span class="line">mysql57-community-release-el7-11.noarch</span><br></pre></td></tr></table></figure>
 <h3 id="把yum源包上传到linux"><a href="#把yum源包上传到linux" class="headerlink" title="把yum源包上传到linux"></a>把yum源包上传到linux</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@ mysql]# cd /usr/local/src/mysql/</span><br><span class="line">[root@ mysql]# ll</span><br><span class="line">总用量 28</span><br><span class="line">-rw-r--r--. 1 root root 25680 7月  29 20:03 mysql57-community-release-el7-11.noarch.rpm</span><br></pre></td></tr></table></figure>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@ mysql]# yum localinstall mysql57-community-release-el7-11.noarch.rpm</span><br><span class="line">[root@ mysql]# yum install mysql-server</span><br></pre></td></tr></table></figure>
 <h3 id="启动mysqld服务"><a href="#启动mysqld服务" class="headerlink" title="启动mysqld服务"></a>启动mysqld服务</h3><p>[root@ mysql]# systemctl status mysqld</p>
@@ -420,9 +420,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/centos7/" rel="tag"># centos7</a>
-          
             <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/centos7/" rel="tag"># centos7</a>
           
         </div>
       
@@ -517,7 +517,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">139</span>
+                <span class="site-state-item-count">141</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -530,7 +530,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">52</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
